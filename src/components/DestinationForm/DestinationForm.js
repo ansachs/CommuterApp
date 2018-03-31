@@ -1,45 +1,42 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { Input, Button, Icon } from 'react-native-elements';
 
 export default class DestinationForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      startDestination: 'start placeholder',
-      endDestination: 'end placeholder'
+      startDestination: '',
+      endDestination: ''
     }
   }
 
   onPressSubmit() {
-    console.log(this.state.startDestination)
-    console.log(this.state.endDestination)
+    this.props.navigation.navigate('CommuteOptions')
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Start Destination:</Text>
-        <TextInput
-          style={styles.textInput}
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.text}>Start Destination:</Text>
+        <Input
+          placeholder='INPUT WITH ICON'
           onChangeText={(startDestination) => this.setState({startDestination})}
-          value={this.state.startDestination}
+          placeholder='enter start address'
         />
-
         <Text>End Destination:</Text>
-        <TextInput
+        <Input
           style={styles.textInput}
           onChangeText={(endDestination) => this.setState({endDestination})}
-          value={this.state.endDestination}
+          placeholder='enter end address'
         />
-
         <Button
           onPress={this.onPressSubmit.bind(this)}
           title="SUBMIT"
-          color="#841584"
+          color="#FFF"
           style={styles.submit}
-          accessibilityLabel="Learn more about this purple button"
         />
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -51,10 +48,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
-  textInput: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1
-  }
 });
