@@ -1,10 +1,17 @@
-
+//1 - get lyft user token
+//2 - getDriverEtaToOrigin with user token and lat/lng
+//3 - getRideDetails
 
 const getLyftUserToken = () => {
-
+  return fetch('https://quiet-retreat-95283.herokuapp.com/client_key/lyft')
+  .then((response) => response.json()
+  )
+  .catch((err) => {
+      console.log(err)
+  });
 }
 
-const getDriverEta = (user_token, orig_lat, orig_lng) => {
+const getDriverEtaToOrigin = (user_token, orig_lat, orig_lng) => {
 
   return fetch('https://api.lyft.com/v1/eta?lat=' + orig_lat + '&lng=' + orig_lng,
     {
@@ -20,7 +27,7 @@ const getDriverEta = (user_token, orig_lat, orig_lng) => {
   });
 }
 
-const getDriverEtaToLocation = (user_token, orig_lat, orig_lng, dest_lat, dest_lng) => {
+const getRideDetails = (user_token, orig_lat, orig_lng, dest_lat, dest_lng) => {
 
   return fetch('https://api.lyft.com/v1/cost?start_lat=' + orig_lat + '&start_lng=' + orig_lng + '&end_lat=' + dest_lat + '&end_lng=' + dest_lng,
     {
@@ -39,6 +46,6 @@ const getDriverEtaToLocation = (user_token, orig_lat, orig_lng, dest_lat, dest_l
 
 export default {
   getLyftUserToken: getLyftUserToken,
-  getDriverEta: getDriverEta,
-  getDriverEtaToLocation: getDriverEtaToLocation
+  getDriverEtaToOrigin: getDriverEtaToOrigin,
+  getRideDetails: getRideDetails
 }
