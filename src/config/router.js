@@ -24,7 +24,7 @@ export const DestinationStack = StackNavigator({
 });
 
 export const Tabs = TabNavigator({
-  DestinationForm: {
+  DestinationForm2: {
     screen: DestinationStack,
     navigationOptions: {
       tabBarLabel: 'Destination',
@@ -32,7 +32,7 @@ export const Tabs = TabNavigator({
     }
   },
 
-  CommuteOptions: {
+  CommuteOptions2: {
     screen: CommuteOptions,
     navigationOptions: {
       tabBarLabel: 'Commute Options',

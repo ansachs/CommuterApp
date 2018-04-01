@@ -12,7 +12,7 @@ export default class DestinationForm extends React.Component {
   }
 
   onPressSubmit() {
-    this.props.navigation.navigate('CommuteOptions')
+    this.props.navigation.navigate('CommuteOptions2')
   }
 
   render() {
