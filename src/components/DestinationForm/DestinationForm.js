@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
+import GoogleMapApi from '../../apis/GoogleMapApi.js'
+import CommuteOptions from '../CommuteOptions/CommuteOptions'
 
 export default class DestinationForm extends React.Component {
   constructor() {
@@ -36,6 +38,7 @@ export default class DestinationForm extends React.Component {
           color="#FFF"
           style={styles.submit}
         />
+        <CommuteOptions startDestination={this.state.startDestination} endDestination={this.state.endDestination}/>
       </ScrollView>
     );
   }
