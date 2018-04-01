@@ -1,22 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import DestinationForm from './src/components/DestinationForm/DestinationForm.js';
+import { YellowBox, View } from 'react-native';
+import { Root } from './src/config/router.js';
+import { Header, Icon } from 'react-native-elements';
+
+YellowBox.ignoreWarnings([
+  'Warning: componentWillMount is deprecated',
+  'Warning: componentWillReceiveProps is deprecated',
+]);
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <DestinationForm />
+      <View style={{flex: 1}}>
+        <Header
+          leftComponent={{ icon: 'menu', color: '#fff' }}
+          centerComponent={{ text: 'Commuter App', style: { color: '#fff' } }}
+          rightComponent={{ icon: 'home', color: '#fff' }}
+        />
+        <Root />
       </View>
-    );
+    )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
