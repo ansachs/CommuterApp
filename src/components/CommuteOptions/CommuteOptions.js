@@ -8,13 +8,7 @@ export default class CommuteOptions extends React.Component {
   constructor(props) {
     super(props);
      this.state = {
-      driveOutput: ["drive", "walk", "bike", "publicTransit"],
-      walkOutput: [],
-      bicyclingOutput: [],
-      transitOutput: [],
-      uberOutput: {
-        uberX: []
-      }
+      transpo: []
     }
   }
 
@@ -32,74 +26,57 @@ export default class CommuteOptions extends React.Component {
     let endLongitude = '-87.6354498' // 222 merchandise mart longitude
 
     GoogleMapApi.fetchModeByDrive(startDestination, endDestination)
-      .then((response) => this.setState({
-        driveOutput: [
-          response.routes[0].legs[0].distance.text,
-          response.routes[0].legs[0].duration.text]
-      }));
+      .then((response) => this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:"Free"}))
     GoogleMapApi.fetchModeByWalking(startDestination, endDestination)
-      .then((response) => this.setState({
-        walkOutput: [
-          response.routes[0].legs[0].distance.text,
-          response.routes[0].legs[0].duration.text]
-      }));
+      .then((response) => this.storeData({method:"walk", duration:response.routes[0].legs[0].duration.text, price:"Free"}));
     GoogleMapApi.fetchModeByBicycling(startDestination, endDestination)
-      .then((response) => this.setState({
-        bicyclingOutput: [
-          response.routes[0].legs[0].distance.text,
-          response.routes[0].legs[0].duration.text]
-      }));
+      .then((response) => this.storeData({method:"bike", duration:response.routes[0].legs[0].duration.text, price:"Free"}));
     GoogleMapApi.fetchModeByTransit(startDestination, endDestination)
-      .then((response) => this.setState({
-        transitOutput: [
-          response.routes[0].legs[0].distance.text,
-          response.routes[0].legs[0].duration.text]
-      }));
+      .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00"}));
 
     UberApi.getDriverEtaToLocation(UberApi.serverToken, startLatitude, startLongitude, endLatitude, endLongitude)
-      .then((response) => this.setState({
-        uberOutput: {
-          uberX: [
-            `${response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60} mins`,
-            `${response.prices.filter(choice => choice.display_name === 'uberX')[0].distance} miles`,
-            `${response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate}`
-          ]
-        }
-      }));
+      .then((response) => this.storeData({method:"UberX", 
+        duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins", 
+        price: response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate
+      }))
+  }
+
+  storeData(obj) {
+    let current = {method: obj.method, price: obj.price, duration:obj.duration}
+    this.setState({transpo: [...this.state.transpo, current]})
   }
 
 
   render() {
 
-    let Divider = () => (
-      <View style={{width: 1, backgroundColor: 'black', marginRight: 3, marginLeft: 3}}/>
+    const Divider = () => (
+      <View style={{width: 1, backgroundColor: 'black'}}/>
       )
     
-    let Row = (method, time, price) => (
+    const Row = (method, time, price, textStyle = null, rowStyle = null) => (
             <View style={styles.row} key={method}>
-                <View style={styles.tableCell}> 
-                  <Text style={styles.tableText}> {method} </Text>
+                <View style={[styles.tableCell, rowStyle]}> 
+                  <Text style={styles.tableText, textStyle}> {method} </Text>
                 </View>
                 <Divider />
-                <View style={styles.tableCell}> 
-                  <Text style={styles.tableText}> {time} </Text>
+                <View style={[styles.tableCell, rowStyle]}> 
+                  <Text style={styles.tableText, textStyle}> {time} </Text>
                 </View>
                 <Divider />
-                <View style={styles.tableCell}> 
-                  <Text style={styles.tableText}> {price} </Text>
+                <View style={[styles.tableCell, rowStyle]}> 
+                  <Text style={styles.tableText, textStyle}> {price} </Text>
                 </View>
             </View> )
-            
-    const state = this.state
 
-    // debugger;
-    const commuteTable = this.state.methods.map((method)=>{
-      if (this.state[method].length > 0) {
-        return Row(method, this.state[method][0], this.state[method][1]);
-      } else {
-        return null;
-      }
+    const colors = ['#a2c4f2', '#fff', '#edf0f4'];
+
+    const commuteTable = this.state.transpo.map((transportMethod, index)=> {
+        let color = colors[index%3]
+        let rowStyle = StyleSheet.create({test: {backgroundColor: color}})
+        return(Row(transportMethod.method, transportMethod.duration, transportMethod.price, null, rowStyle.test))
     })
+
+    commuteTable.unshift(Row("Type", "ETA", "Price", styles.titleText,styles.titleCell))
 
     return (
       <ScrollView contentContainerStyle={styles.container}>
@@ -126,7 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tableText: {
-    fontSize: 10
+    fontSize: 16
   },
   tableContainer: {
     borderStyle: 'solid', 
@@ -136,8 +113,8 @@ const styles = StyleSheet.create({
     flex: 1, 
     alignSelf: 'stretch', 
     flexDirection: 'row', 
-    width: '40%', 
-    maxHeight: 75, 
+    width: '80%', 
+    maxHeight: 40, 
     borderStyle: 'solid', 
     borderBottomWidth: 1
   },
@@ -146,5 +123,13 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch', 
     justifyContent: 'center', 
     alignItems: 'center'
+  },
+  titleText: {
+    "fontWeight": 'bold'
+  },
+  titleCell: {
+    "backgroundColor": '#b3b8bf'
   }
 })
+
+
