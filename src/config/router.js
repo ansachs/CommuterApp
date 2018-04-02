@@ -39,6 +39,9 @@ export const Tabs = TabNavigator({
       tabBarIcon: ({ tintColor }) => <Icon name="list" size={35} color={tintColor} />
     }
   }
+},
+{
+  tabBarPosition: 'bottom'
 });
 
 export const RunningLateStack = StackNavigator({

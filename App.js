@@ -6,6 +6,7 @@ import { Header, Icon } from 'react-native-elements';
 YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
   'Warning: componentWillReceiveProps is deprecated',
+  'Remote debugger'
 ]);
 
 export default class App extends React.Component {
