@@ -1,13 +1,11 @@
-const getUberUserToken = () => {
+const serverToken = 'GWld7Zyxm1P2_7XEXl4y48aSy7OlWg0_E9CSKOdm'
 
-}
-
-const getDriverEta = (user_token, start_latitude, start_longitude) => {
-  return fetch(`https://api.uber.com/v1.2/estimates/time?start_latitude=${start_latitude}&start_longitude=${start_longitude}`,
+const getDriverEta = (serverToken, startLatitude, startLongitude) => {
+  return fetch(`https://sandbox-api.uber.com/v1.2/estimates/time?start_latitude=${startLatitude}&start_longitude=${startLongitude}`,
     {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user_token}`
+        'Authorization': `Token ${serverToken}`
       }
     })
   .then((response) => {return response.json()
@@ -17,13 +15,13 @@ const getDriverEta = (user_token, start_latitude, start_longitude) => {
   });
 }
 
-const getDriverEtaToLocation = (user_token, start_latitude, start_longitude, end_latitude, end_longitude) => {
+const getDriverEtaToLocation = (serverToken, startLatitude, startLongitude, endLatitude, endLongitude) => {
 
-  return fetch(`https://api.uber.com/v1.2/estimates/price?start_latitude=${start_latitude}&start_longitude=${start_longitude}&end_latitude=${end_latitude}&end_longitude=${end_longitude}`,
+  return fetch(`https://sandbox-api.uber.com/v1.2/estimates/price?start_latitude=${startLatitude}&start_longitude=${startLongitude}&end_latitude=${endLatitude}&end_longitude=${endLongitude}`,
     {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user_token}`
+        'Authorization': `Token ${serverToken}`
       }
     })
   .then((response) => {return response.json()
@@ -34,7 +32,7 @@ const getDriverEtaToLocation = (user_token, start_latitude, start_longitude, end
 }
 
 export default {
-  getUberToken: getUberUserToken,
+  serverToken: serverToken,
   getDriverEta: getDriverEta,
   getDriverEtaToLocation: getDriverEtaToLocation
 }

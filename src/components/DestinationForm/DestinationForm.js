@@ -14,7 +14,7 @@ export default class DestinationForm extends React.Component {
   }
 
   onPressSubmit() {
-    this.props.navigation.navigate('CommuteOptions2')
+    this.props.navigation.navigate('CommuteOptions2', {startDestination: this.state.startDestination, endDestination: this.state.endDestination})
   }
 
   render() {
@@ -38,7 +38,6 @@ export default class DestinationForm extends React.Component {
           color="#FFF"
           style={styles.submit}
         />
-        <CommuteOptions startDestination={this.state.startDestination} endDestination={this.state.endDestination}/>
       </ScrollView>
     );
   }
