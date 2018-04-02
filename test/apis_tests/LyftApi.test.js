@@ -1,7 +1,5 @@
 import LyftApiCalls from "../../src/apis/LyftApi"
-import fetchMock from 'fetch-mock';
-import {lyft_ETA_Data} from './sample_data/LyftAPISampleData'
-// require('isomorphic-fetch');
+import {lyft_ETA_Data, lyft_Ride_Estimate_data} from './sample_data/LyftAPISampleData'  
 
 describe('LyftApi', () => {
 
