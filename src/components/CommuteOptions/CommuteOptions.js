@@ -19,6 +19,10 @@ export default class CommuteOptions extends React.Component {
     }
   }
 
+  handleUberPagePress() {
+    this.props.navigation.navigate('UberPage', {uberOutput: this.state.uberOutput});
+  }
+
   handleRunningLatePress() {
     this.props.navigation.navigate('RunningLate');
   }
@@ -68,9 +72,7 @@ export default class CommuteOptions extends React.Component {
       }));
   }
 
-
   render() {
-    console.log(this.state)
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <View>
@@ -95,6 +97,12 @@ export default class CommuteOptions extends React.Component {
           <Text>DURATION:</Text>
           <Text>{this.state.uberOutput.uberX[1]}</Text>
         </View>
+
+        <Button
+          title="Uber Page"
+          buttonStyle={{marginTop:20}}
+          onPress={this.handleUberPagePress.bind(this)}
+        />
 
         <Button
           title="Running Late?"

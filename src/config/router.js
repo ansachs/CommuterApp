@@ -3,6 +3,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import DestinationForm from '../components/DestinationForm/DestinationForm.js';
 import CommuteOptions from '../components/CommuteOptions/CommuteOptions.js';
+import UberPage from '../components/UberPage/UberPage.js';
 import RunningLate from '../components/RunningLate/RunningLate.js';
 
 export const DestinationStack = StackNavigator({
@@ -18,6 +19,14 @@ export const DestinationStack = StackNavigator({
     screen: CommuteOptions,
     navigationOptions: {
       title: 'Commute Options',
+      header: null
+    }
+  },
+
+  UberPage: {
+    screen: UberPage,
+    navigationOptions: {
+      title: 'UberPage',
       header: null
     }
   }
