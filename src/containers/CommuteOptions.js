@@ -36,8 +36,8 @@ export default class CommuteOptions extends React.Component {
       .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00"}));
 
     UberApi.getDriverEtaToLocation(UberApi.serverToken, startLatitude, startLongitude, endLatitude, endLongitude)
-      .then((response) => this.storeData({method:"UberX",
-        duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins",
+      .then((response) => this.storeData({method:"UberX", 
+        duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins", 
         price: response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate
       }))
   }
@@ -74,4 +74,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   }
 })
+
 
