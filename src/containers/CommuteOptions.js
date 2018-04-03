@@ -4,6 +4,7 @@ import { Button } from 'react-native-elements';
 import GoogleMapApi from '../apis/GoogleMapApi.js'
 import UberApi from '../apis/UberApi.js'
 import CommuterTable from '../components/commuteOptions/commuterOptionsTable'
+import ParkWhizApi from '../apis/ParkWhizApi.js'
 
 export default class CommuteOptions extends React.Component {
   constructor(props) {
@@ -24,7 +25,6 @@ export default class CommuteOptions extends React.Component {
     let startDestinationLat = this.props.navigation.state.params.startDestinationLat
     let startDestinationLng = this.props.navigation.state.params.startDestinationLng
     let endDestinationLat = this.props.navigation.state.params.endDestinationLat
-    console.log(this.props.navigation.state.params)
     let endDestinationLng = this.props.navigation.state.params.endDestinationLng
 
     let startLatitude = '41.8803557' // 73 w monroe latitude
@@ -33,7 +33,12 @@ export default class CommuteOptions extends React.Component {
     let endLongitude = '-87.6354498' // 222 merchandise mart longitude
 
     GoogleMapApi.fetchModeByDrive(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
-      .then((response) => this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:"Free"}))
+      .then((response) => {
+        ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
+          .then((response2) => {
+            console.log(response2)
+            this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:response2.min_price})})})
+
     GoogleMapApi.fetchModeByWalking(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"walk", duration:response.routes[0].legs[0].duration.text, price:"Free"}));
     GoogleMapApi.fetchModeByBicycling(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
