@@ -14,13 +14,26 @@ export default class CommuteOptions extends React.Component {
     }
   }
 
+  handleUberPress() {
+    this.props.navigation.navigate('UberPage', {uberOutput: this.state.transpo[4]});
+  }
+
   handleRunningLatePress() {
-    // console.log('commute options')
     this.props.navigation.navigate('RunningLate');
   }
 
   componentDidMount() {
-     let startDestination = this.props.navigation.state.params.startDestination
+    this.getCommuteOptionsData();
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      transpo: []
+    }, () => this.getCommuteOptionsData());
+  }
+
+  getCommuteOptionsData() {
+    let startDestination = this.props.navigation.state.params.startDestination
     let endDestination = this.props.navigation.state.params.endDestination
     let startDestinationLat = this.props.navigation.state.params.startDestinationLat
     let startDestinationLng = this.props.navigation.state.params.startDestinationLng
@@ -32,9 +45,8 @@ export default class CommuteOptions extends React.Component {
       .then((response) => {
         ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
           .then((response2) => {
-            console.log(response2)
             this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:response2.min_price})})})
-      
+
     GoogleMapApi.fetchModeByWalking(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"walk", duration:response.routes[0].legs[0].duration.text, price:"Free"}));
     GoogleMapApi.fetchModeByBicycling(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
@@ -56,11 +68,16 @@ export default class CommuteOptions extends React.Component {
 
 
   render() {
-
     return (
       <ScrollView contentContainerStyle={styles.container}>
 
         <CommuterTable transpo={this.state.transpo} />
+
+        <Button
+          title="Uber"
+          buttonStyle={{marginTop:20}}
+          onPress={this.handleUberPress.bind(this)}
+        />
 
         <Button
           title="Running Late?"
@@ -75,7 +92,6 @@ export default class CommuteOptions extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',

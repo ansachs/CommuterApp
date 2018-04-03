@@ -23,15 +23,11 @@ export default class UberPage extends React.Component {
         </Picker>
         <View>
           <Text>Distance:</Text>
-          <Text>{this.props.navigation.state.params.uberOutput.uberX[1]}</Text>
-        </View>
-        <View>
-          <Text>Time:</Text>
-          <Text>{this.props.navigation.state.params.uberOutput.uberX[0]}</Text>
+          <Text>{this.props.navigation.state.params.uberOutput.duration}</Text>
         </View>
         <View>
           <Text>Price:</Text>
-          <Text>{this.props.navigation.state.params.uberOutput.uberX[2]}</Text>
+          <Text>{this.props.navigation.state.params.uberOutput.price}</Text>
         </View>
 
         <Button
@@ -54,7 +50,7 @@ const styles = StyleSheet.create({
 
   picker: {
     height: 100,
-    width: 100,
+    width: '50%',
     marginBottom:100
   }
 });

@@ -35,10 +35,11 @@ export default class DestinationForm extends React.Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.text}>Start Destination:</Text>
+        <Text>Start Destination:</Text>
         <Input
           onChangeText={(startDestination) => this.setState({startDestination})}
           placeholder='enter start address'
+          value={this.startDestination}
         />
         <Text>End Destination:</Text>
         <Input

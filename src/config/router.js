@@ -33,7 +33,7 @@ export const DestinationStack = StackNavigator({
 });
 
 export const Tabs = TabNavigator({
-  DestinationForm2: {
+  DestinationStack: {
     screen: DestinationStack,
     navigationOptions: {
       tabBarLabel: 'Destination',
