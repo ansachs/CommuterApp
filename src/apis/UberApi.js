@@ -15,9 +15,9 @@ const getDriverEta = (serverToken, startLatitude, startLongitude) => {
   });
 }
 
-const getDriverEtaToLocation = (serverToken, startLatitude, startLongitude, endLatitude, endLongitude) => {
+const getDriverEtaToLocation = (serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng) => {
 
-  return fetch(`https://sandbox-api.uber.com/v1.2/estimates/price?start_latitude=${startLatitude}&start_longitude=${startLongitude}&end_latitude=${endLatitude}&end_longitude=${endLongitude}`,
+  return fetch(`https://sandbox-api.uber.com/v1.2/estimates/price?start_latitude=${startDestinationLat}&start_longitude=${startDestinationLng}&end_latitude=${endDestinationLat}&end_longitude=${endDestinationLng}`,
     {
       headers: {
         'Content-Type': 'application/json',
