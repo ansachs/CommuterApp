@@ -8,8 +8,8 @@ export default class DestinationForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      startDestination: '',
-      endDestination: ''
+      startDestination: '1541 n bosworth',
+      endDestination: '73 w monroe'
     }
   }
 
@@ -37,13 +37,13 @@ export default class DestinationForm extends React.Component {
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.text}>Start Destination:</Text>
         <Input
-          onChangeText={(startDestination) => this.setState({startDestination})}
+          //onChangeText={(startDestination) => this.setState({startDestination})}
           placeholder='enter start address'
         />
         <Text>End Destination:</Text>
         <Input
           style={styles.textInput}
-          onChangeText={(endDestination) => this.setState({endDestination})}
+          //onChangeText={(endDestination) => this.setState({endDestination})}
           placeholder='enter end address'
         />
         <Button
