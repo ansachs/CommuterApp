@@ -23,6 +23,16 @@ export default class CommuteOptions extends React.Component {
   }
 
   componentDidMount() {
+    this.getCommuteOptionsData();
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      transpo: []
+    }, () => this.getCommuteOptionsData());
+  }
+
+  getCommuteOptionsData() {
     let startDestination = this.props.navigation.state.params.startDestination
     let endDestination = this.props.navigation.state.params.endDestination
     let startDestinationLat = this.props.navigation.state.params.startDestinationLat
@@ -35,7 +45,6 @@ export default class CommuteOptions extends React.Component {
       .then((response) => {
         ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
           .then((response2) => {
-            console.log(response2)
             this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:response2.min_price})})})
 
     GoogleMapApi.fetchModeByWalking(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
