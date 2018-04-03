@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
-import GoogleMapApi from '../../apis/GoogleMapApi.js'
-import CommuteOptions from '../CommuteOptions/CommuteOptions'
+import GoogleMapApi from '../apis/GoogleMapApi.js'
+import CommuteOptions from './CommuteOptions'
 
 export default class DestinationForm extends React.Component {
   constructor() {
