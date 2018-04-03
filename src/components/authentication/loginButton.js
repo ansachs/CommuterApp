@@ -15,9 +15,8 @@ signInWithGoogleAsync = async () => {
   console.log('this button')
     try {
       const result = await Expo.Google.logInAsync({
-        webClientId: '<my web client id>',
-        androidClientId: '<my android client id>',
-        iosClientId: '<my ios client id>',
+        androidClientId: '277067014175-3stlk80kbu3o591cjk57ae3s2rd32f6f.apps.googleusercontent.com',
+        iosClientId: '277067014175-ehie9e21cqhlr3l9d19bss23kcm18gm4.apps.googleusercontent.com',
         scopes: ['profile', 'email'],
       })
 
