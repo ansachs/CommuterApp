@@ -1,7 +1,5 @@
 import LyftApiCalls from "../../src/apis/LyftApi"
-import fetchMock from 'fetch-mock';
-import {lyft_ETA_Data} from './sample_data/LyftAPISampleData'
-// require('isomorphic-fetch');
+import {lyft_ETA_Data, lyft_Ride_Estimate_data} from './sample_data/LyftAPISampleData'  
 
 describe('LyftApi', () => {
 
@@ -26,7 +24,7 @@ describe('LyftApi', () => {
 
     global.fetch = createPromise(lyft_ETA_Data);
 
-    await LyftApiCalls.getDriverEta(user_token, cp_lat, cp_lng)
+    await LyftApiCalls.getDriverEtaToOrigin(user_token, cp_lat, cp_lng)
     .then((json)=>{
       expect(json).toEqual(lyft_ETA_Data);  
     })
@@ -36,7 +34,7 @@ describe('LyftApi', () => {
 
     global.fetch = createPromise(lyft_Ride_Estimate_data);
 
-    await LyftApiCalls.getDriverEtaToLocation(user_token, cp_lat, cp_lng, dmn_lat, dmn_lng)
+    await LyftApiCalls.getRideDetails(user_token, cp_lat, cp_lng, dmn_lat, dmn_lng)
     .then((json)=>{
       expect(json).toEqual(lyft_Ride_Estimate_data);  
     })
