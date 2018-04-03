@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import GoogleMapApi from '../apis/GoogleMapApi.js'
 import UberApi from '../apis/UberApi.js'
-import CommuterTable from '../components/CommuteOptions/commuterOptionsTable'
+import CommuterTable from '../components/commuteOptions/commuterOptionsTable'
 
 export default class CommuteOptions extends React.Component {
   constructor(props) {

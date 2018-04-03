@@ -24,7 +24,7 @@ describe('LyftApi', () => {
 
     global.fetch = createPromise(lyft_ETA_Data);
 
-    await LyftApiCalls.getDriverEta(user_token, cp_lat, cp_lng)
+    await LyftApiCalls.getDriverEtaToOrigin(user_token, cp_lat, cp_lng)
     .then((json)=>{
       expect(json).toEqual(lyft_ETA_Data);  
     })
@@ -34,7 +34,7 @@ describe('LyftApi', () => {
 
     global.fetch = createPromise(lyft_Ride_Estimate_data);
 
-    await LyftApiCalls.getDriverEtaToLocation(user_token, cp_lat, cp_lng, dmn_lat, dmn_lng)
+    await LyftApiCalls.getRideDetails(user_token, cp_lat, cp_lng, dmn_lat, dmn_lng)
     .then((json)=>{
       expect(json).toEqual(lyft_Ride_Estimate_data);  
     })

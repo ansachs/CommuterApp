@@ -1,9 +1,9 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
-import DestinationForm from './containers/DestinationForm.js';
-import CommuteOptions from './containers/CommuteOptions.js';
-import RunningLate from './RunningLate.js';
+import DestinationForm from '../containers/DestinationForm.js';
+import CommuteOptions from '../containers/CommuteOptions.js';
+import RunningLate from '../containers/RunningLate.js';
 
 export const DestinationStack = StackNavigator({
   DestinationForm: {
