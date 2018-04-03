@@ -4,18 +4,18 @@ import { StyleSheet, Text, View } from 'react-native';
 const Divider = () => (
       <View style={{width: 1, backgroundColor: 'black'}}/>
       )
-    
+
 const Row = (method, time, price, textStyle = null, rowStyle = null) => (
         <View style={styles.row} key={method}>
-            <View style={[styles.tableCell, rowStyle]}> 
+            <View style={[styles.tableCell, rowStyle]}>
               <Text style={styles.tableText, textStyle}> {method} </Text>
             </View>
             <Divider />
-            <View style={[styles.tableCell, rowStyle]}> 
+            <View style={[styles.tableCell, rowStyle]}>
               <Text style={styles.tableText, textStyle}> {time} </Text>
             </View>
             <Divider />
-            <View style={[styles.tableCell, rowStyle]}> 
+            <View style={[styles.tableCell, rowStyle]}>
               <Text style={styles.tableText, textStyle}> {price} </Text>
             </View>
         </View> )
@@ -23,19 +23,19 @@ const Row = (method, time, price, textStyle = null, rowStyle = null) => (
 const colors = ['#a2c4f2', '#fff', '#edf0f4'];
 
 const styles = StyleSheet.create({
-  row: { 
-    flex: 1, 
-    alignSelf: 'stretch', 
-    flexDirection: 'row', 
-    width: '80%', 
-    maxHeight: 40, 
-    borderStyle: 'solid', 
+  row: {
+    flex: 1,
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    width: '80%',
+    maxHeight: 40,
+    borderStyle: 'solid',
     borderBottomWidth: 1
   },
-  tableCell: { 
-    flex: 1, 
-    alignSelf: 'stretch', 
-    justifyContent: 'center', 
+  tableCell: {
+    flex: 1,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
     alignItems: 'center'
   },
   titleText: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     "backgroundColor": '#b3b8bf'
   },
   tableContainer: {
-    borderStyle: 'solid', 
+    borderStyle: 'solid',
     borderWidth: 1
   },
   tableText: {
@@ -72,4 +72,3 @@ export default CommuterTable = (props) => {
   )
 
 }
-
