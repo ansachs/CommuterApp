@@ -13,14 +13,29 @@ export default class CommuteOptions extends React.Component {
     }
   }
 
+  handleUberPress() {
+    this.props.navigation.navigate('UberPage', {uberOutput: this.state.transpo[4]});
+  }
+
   handleRunningLatePress() {
-    // console.log('commute options')
     this.props.navigation.navigate('RunningLate');
   }
 
   componentDidMount() {
+    this.getCommuteOptionData();
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      transpo: []
+    },() => this.getCommuteOptionData())
+  }
+
+  getCommuteOptionData() {
     let startDestination = this.props.navigation.state.params.startDestination
+    console.log(startDestination)
     let endDestination = this.props.navigation.state.params.endDestination
+    console.log(endDestination)
     let startLatitude = '41.8803557' // 73 w monroe latitude
     let startLongitude = '-87.630245' // 73 w monroe longitude
     let endLatitude = '41.8884096' // 222 merchandise mart latitude
@@ -49,11 +64,16 @@ export default class CommuteOptions extends React.Component {
 
 
   render() {
-
     return (
       <ScrollView contentContainerStyle={styles.container}>
 
         <CommuterTable transpo={this.state.transpo} />
+
+        <Button
+          title="Uber"
+          buttonStyle={{marginTop:20}}
+          onPress={this.handleUberPress.bind(this)}
+        />
 
         <Button
           title="Running Late?"
@@ -68,7 +88,6 @@ export default class CommuteOptions extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',

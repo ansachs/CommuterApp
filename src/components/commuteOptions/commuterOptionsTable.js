@@ -2,23 +2,23 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 const Divider = () => (
-      <View style={{width: 1, backgroundColor: 'black'}}/>
-      )
+  <View style={{width: 1, backgroundColor: 'black'}}/>
+  )
 
 const Row = (method, time, price, textStyle = null, rowStyle = null) => (
-        <View style={styles.row} key={method}>
-            <View style={[styles.tableCell, rowStyle]}>
-              <Text style={styles.tableText, textStyle}> {method} </Text>
-            </View>
-            <Divider />
-            <View style={[styles.tableCell, rowStyle]}>
-              <Text style={styles.tableText, textStyle}> {time} </Text>
-            </View>
-            <Divider />
-            <View style={[styles.tableCell, rowStyle]}>
-              <Text style={styles.tableText, textStyle}> {price} </Text>
-            </View>
-        </View> )
+  <View style={styles.row} key={method}>
+    <View style={[styles.tableCell, rowStyle]}>
+      <Text style={styles.tableText, textStyle}> {method} </Text>
+    </View>
+    <Divider />
+    <View style={[styles.tableCell, rowStyle]}>
+      <Text style={styles.tableText, textStyle}> {time} </Text>
+    </View>
+    <Divider />
+    <View style={[styles.tableCell, rowStyle]}>
+      <Text style={styles.tableText, textStyle}> {price} </Text>
+    </View>
+  </View> )
 
 const colors = ['#a2c4f2', '#fff', '#edf0f4'];
 
@@ -56,11 +56,11 @@ const styles = StyleSheet.create({
 export default CommuterTable = (props) => {
 
   let table = props.transpo.map((transportMethod, index)=> {
-      let color = colors[index%3]
-      let rowStyle = StyleSheet.create({test: {backgroundColor: color}})
-      return(
-        Row(transportMethod.method, transportMethod.duration, transportMethod.price, null, rowStyle.test)
-      )})
+    let color = colors[index%3]
+    let rowStyle = StyleSheet.create({test: {backgroundColor: color}})
+    return(
+      Row(transportMethod.method, transportMethod.duration, transportMethod.price, null, rowStyle.test)
+    )})
 
   table.unshift(Row("Type", "ETA", "Price", styles.titleText,styles.titleCell))
 
@@ -68,7 +68,5 @@ export default CommuterTable = (props) => {
     <View style={styles.tableContainer}>
       {table}
     </View>
-
   )
-
 }
