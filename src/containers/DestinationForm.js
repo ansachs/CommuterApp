@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import GoogleMapApi from '../apis/GoogleMapApi.js'
-import CommuteOptions from './CommuteOptions'
+import CommuteOptions from './CommuteOptions.js'
 
 export default class DestinationForm extends React.Component {
   constructor() {
@@ -14,7 +14,22 @@ export default class DestinationForm extends React.Component {
   }
 
   onPressSubmit() {
-    this.props.navigation.navigate('CommuteOptions2', {startDestination: this.state.startDestination, endDestination: this.state.endDestination})
+    GoogleMapApi.convertToLatLong(this.state.startDestination)
+      .then((response) => {
+        GoogleMapApi.convertToLatLong(this.state.endDestination)
+          .then((response2) => {
+            this.props.navigation.navigate('CommuteOptions2', {
+            startDestination: this.state.startDestination,
+            endDestination: this.state.endDestination,
+            startDestinationLat: response.results[0].geometry.location.lat,
+            startDestinationLng: response.results[0].geometry.location.lng, 
+            endDestinationLat: response2.results[0].geometry.location.lat,
+            endDestinationLng: response2.results[0].geometry.location.lng
+          })
+        });
+      } 
+    );
+
   }
 
   render() {

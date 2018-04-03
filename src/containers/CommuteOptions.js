@@ -4,6 +4,7 @@ import { Button } from 'react-native-elements';
 import GoogleMapApi from '../apis/GoogleMapApi.js'
 import UberApi from '../apis/UberApi.js'
 import CommuterTable from '../components/commuteOptions/commuterOptionsTable'
+import ParkWhizApi from '../apis/ParkWhizApi.js'
 
 export default class CommuteOptions extends React.Component {
   constructor(props) {
@@ -22,35 +23,29 @@ export default class CommuteOptions extends React.Component {
   }
 
   componentDidMount() {
-    this.getCommuteOptionData();
-  }
-
-  componentWillReceiveProps() {
-    this.setState({
-      transpo: []
-    },() => this.getCommuteOptionData())
-  }
-
-  getCommuteOptionData() {
     let startDestination = this.props.navigation.state.params.startDestination
-    console.log(startDestination)
     let endDestination = this.props.navigation.state.params.endDestination
-    console.log(endDestination)
-    let startLatitude = '41.8803557' // 73 w monroe latitude
-    let startLongitude = '-87.630245' // 73 w monroe longitude
-    let endLatitude = '41.8884096' // 222 merchandise mart latitude
-    let endLongitude = '-87.6354498' // 222 merchandise mart longitude
+    let startDestinationLat = this.props.navigation.state.params.startDestinationLat
+    let startDestinationLng = this.props.navigation.state.params.startDestinationLng
+    let endDestinationLat = this.props.navigation.state.params.endDestinationLat
+    let endDestinationLng = this.props.navigation.state.params.endDestinationLng
 
-    GoogleMapApi.fetchModeByDrive(startDestination, endDestination)
-      .then((response) => this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:"Free"}))
-    GoogleMapApi.fetchModeByWalking(startDestination, endDestination)
+
+    GoogleMapApi.fetchModeByDrive(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
+      .then((response) => {
+        ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
+          .then((response2) => {
+            console.log(response2)
+            this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:response2.min_price})})})
+
+    GoogleMapApi.fetchModeByWalking(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"walk", duration:response.routes[0].legs[0].duration.text, price:"Free"}));
-    GoogleMapApi.fetchModeByBicycling(startDestination, endDestination)
+    GoogleMapApi.fetchModeByBicycling(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"bike", duration:response.routes[0].legs[0].duration.text, price:"Free"}));
-    GoogleMapApi.fetchModeByTransit(startDestination, endDestination)
+    GoogleMapApi.fetchModeByTransit(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00"}));
 
-    UberApi.getDriverEtaToLocation(UberApi.serverToken, startLatitude, startLongitude, endLatitude, endLongitude)
+    UberApi.getDriverEtaToLocation(UberApi.serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"UberX",
         duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins",
         price: response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate
