@@ -19,20 +19,26 @@ export default class CommuteOptions extends React.Component {
   }
 
   componentDidMount() {
-    let startDestination = this.props.navigation.state.params.startDestination
+     let startDestination = this.props.navigation.state.params.startDestination
     let endDestination = this.props.navigation.state.params.endDestination
+    let startDestinationLat = this.props.navigation.state.params.startDestinationLat
+    let startDestinationLng = this.props.navigation.state.params.startDestinationLng
+    let endDestinationLat = this.props.navigation.state.params.endDestinationLat
+    console.log(this.props.navigation.state.params)
+    let endDestinationLng = this.props.navigation.state.params.endDestinationLng
+
     let startLatitude = '41.8803557' // 73 w monroe latitude
     let startLongitude = '-87.630245' // 73 w monroe longitude
     let endLatitude = '41.8884096' // 222 merchandise mart latitude
     let endLongitude = '-87.6354498' // 222 merchandise mart longitude
 
-    GoogleMapApi.fetchModeByDrive(startDestination, endDestination)
+    GoogleMapApi.fetchModeByDrive(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:"Free"}))
-    GoogleMapApi.fetchModeByWalking(startDestination, endDestination)
+    GoogleMapApi.fetchModeByWalking(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"walk", duration:response.routes[0].legs[0].duration.text, price:"Free"}));
-    GoogleMapApi.fetchModeByBicycling(startDestination, endDestination)
+    GoogleMapApi.fetchModeByBicycling(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"bike", duration:response.routes[0].legs[0].duration.text, price:"Free"}));
-    GoogleMapApi.fetchModeByTransit(startDestination, endDestination)
+    GoogleMapApi.fetchModeByTransit(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00"}));
 
     UberApi.getDriverEtaToLocation(UberApi.serverToken, startLatitude, startLongitude, endLatitude, endLongitude)

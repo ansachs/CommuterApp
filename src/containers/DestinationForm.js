@@ -2,19 +2,34 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import GoogleMapApi from '../apis/GoogleMapApi.js'
-import CommuteOptions from './CommuteOptions'
+import CommuteOptions from './CommuteOptions.js'
 
 export default class DestinationForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      startDestination: '1541 n bosworth',
-      endDestination: '73 w monroe'
+      startDestination: '',
+      endDestination: ''
     }
   }
 
   onPressSubmit() {
-    this.props.navigation.navigate('CommuteOptions2', {startDestination: this.state.startDestination, endDestination: this.state.endDestination})
+    GoogleMapApi.convertToLatLong(this.state.startDestination)
+      .then((response) => {
+        GoogleMapApi.convertToLatLong(this.state.endDestination)
+          .then((response2) => {
+            this.props.navigation.navigate('CommuteOptions2', {
+            startDestination: this.state.startDestination,
+            endDestination: this.state.endDestination,
+            startDestinationLat: response.results[0].geometry.location.lat,
+            startDestinationLng: response.results[0].geometry.location.lng, 
+            endDestinationLat: response2.results[0].geometry.location.lat,
+            endDestinationLng: response2.results[0].geometry.location.lng
+          })
+        });
+      } 
+    );
+
   }
 
   render() {
@@ -22,14 +37,13 @@ export default class DestinationForm extends React.Component {
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.text}>Start Destination:</Text>
         <Input
-          placeholder='INPUT WITH ICON'
-          //onChangeText={(startDestination) => this.setState({startDestination})}
+          onChangeText={(startDestination) => this.setState({startDestination})}
           placeholder='enter start address'
         />
         <Text>End Destination:</Text>
         <Input
           style={styles.textInput}
-          //onChangeText={(endDestination) => this.setState({endDestination})}
+          onChangeText={(endDestination) => this.setState({endDestination})}
           placeholder='enter end address'
         />
         <Button
