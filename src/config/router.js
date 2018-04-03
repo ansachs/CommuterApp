@@ -3,6 +3,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import DestinationForm from '../containers/DestinationForm.js';
 import CommuteOptions from '../containers/CommuteOptions.js';
+import UberPage from '../containers/UberPage.js';
 import RunningLate from '../containers/RunningLate.js';
 
 export const DestinationStack = StackNavigator({
