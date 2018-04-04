@@ -12,6 +12,7 @@ export default class DestinationForm extends React.Component {
       endDestination: '',
       initialPositionlong: '',
       initialPositionlat: '',
+
     }
   }
 
@@ -68,11 +69,11 @@ export default class DestinationForm extends React.Component {
         <Input
           placeholder= {start}
           value={this.state.startDestination}
+        
         />
         <Text>End Destination:</Text>
         <Input
           style={styles.textInput}
-          onChangeText={(endDestination) => this.setState({endDestination})}
           placeholder='enter end address'
         />
         <Button
