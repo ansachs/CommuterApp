@@ -9,9 +9,36 @@ export default class DestinationForm extends React.Component {
     super();
     this.state = {
       startDestination: '',
-      endDestination: ''
+      endDestination: '',
+      initialPositionlong: '',
+      initialPositionlat: '',
     }
   }
+
+  componentDidMount = () => {
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+              this.setState({ 
+              initialPositionlong: position.coords.longitude, 
+              initialPositionlat: position.coords.latitude,  
+              endDestination: '',
+              startDestination: ''
+            })
+          position = fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.initialPositionlat},${this.state.initialPositionlong}&key=AIzaSyD2_6K7CF1C1ooSwgDxxDq2WBx8bAIihIU`)
+          .then(something => { 
+            something.json().then(json => {
+              const formattedAddress = json.results[0].formatted_address
+              this.setState({
+                startDestination: formattedAddress
+              })
+            })
+          })
+        
+          },
+            (error) => alert(error.message),
+        )
+      }
 
   onPressSubmit() {
     GoogleMapApi.convertToLatLong(this.state.startDestination)
@@ -33,13 +60,14 @@ export default class DestinationForm extends React.Component {
   }
 
   render() {
+    let start = this.state.startDestination
+  console.log(start)
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Text>Start Destination:</Text>
         <Input
-          onChangeText={(startDestination) => this.setState({startDestination})}
-          placeholder='enter start address'
-          value={this.startDestination}
+          placeholder= {start}
+          value={this.state.startDestination}
         />
         <Text>End Destination:</Text>
         <Input

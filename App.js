@@ -1,13 +1,31 @@
 import React from 'react';
-import { YellowBox, View } from 'react-native';
+import { YellowBox, View, Text, Switch, StyleSheet } from 'react-native';
 import { Root } from './src/config/router.js';
 import { Header, Icon } from 'react-native-elements';
 
+state = {
+      initialPosition: '',
+      lastPosition: 'pivotal labs',
+   }
+   
 YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
   'Warning: componentWillReceiveProps is deprecated',
   'Remote debugger'
 ]);
+componentDidMount = () => {
+
+         navigator.geolocation.getCurrentPosition(
+         (position) => {
+          
+            const initialPosition = JSON.stringify(position);
+            this.setState({ initialPosition });
+         },
+
+         (error) => alert(error.message),
+         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+      );
+    }
 
 export default class App extends React.Component {
   render() {
