@@ -16,7 +16,7 @@ export default class DestinationForm extends React.Component {
   }
 
   componentDidMount = () => {
-
+    
     navigator.geolocation.getCurrentPosition(
       (position) => {
               this.setState({ 
