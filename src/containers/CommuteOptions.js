@@ -84,6 +84,7 @@ export default class CommuteOptions extends React.Component {
           buttonStyle={{marginTop:20}}
           onPress={this.handleRunningLatePress.bind(this)}
         />
+        
       </ScrollView>
     );
   }
@@ -97,4 +98,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   }
 })
+
 
