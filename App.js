@@ -49,7 +49,7 @@ handleClick = (details) => {
               current={this.state}
             />}
         />
-        <Root />
+        <Root screenProps={this.state.clientID}/>
       </View>
     )
   }
