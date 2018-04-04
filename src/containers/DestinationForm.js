@@ -22,12 +22,12 @@ export default class DestinationForm extends React.Component {
             startDestination: this.state.startDestination,
             endDestination: this.state.endDestination,
             startDestinationLat: response.results[0].geometry.location.lat,
-            startDestinationLng: response.results[0].geometry.location.lng, 
+            startDestinationLng: response.results[0].geometry.location.lng,
             endDestinationLat: response2.results[0].geometry.location.lat,
             endDestinationLng: response2.results[0].geometry.location.lng
           })
         });
-      } 
+      }
     );
 
   }
@@ -41,9 +41,8 @@ export default class DestinationForm extends React.Component {
           placeholder='enter start address'
           value={this.startDestination}
         />
-        <Text>End Destination:</Text>
+        <Text style={{marginTop:20}}>End Destination:</Text>
         <Input
-          style={styles.textInput}
           onChangeText={(endDestination) => this.setState({endDestination})}
           placeholder='enter end address'
         />
@@ -51,7 +50,7 @@ export default class DestinationForm extends React.Component {
           onPress={this.onPressSubmit.bind(this)}
           title="SUBMIT"
           color="#FFF"
-          style={styles.submit}
+          buttonStyle={{marginTop:20}}
         />
       </ScrollView>
     );
