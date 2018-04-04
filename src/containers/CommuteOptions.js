@@ -27,10 +27,6 @@ export default class CommuteOptions extends React.Component {
     let endDestinationLat = this.props.navigation.state.params.endDestinationLat
     let endDestinationLng = this.props.navigation.state.params.endDestinationLng
 
-    let startLatitude = '41.8803557' // 73 w monroe latitude
-    let startLongitude = '-87.630245' // 73 w monroe longitude
-    let endLatitude = '41.8884096' // 222 merchandise mart latitude
-    let endLongitude = '-87.6354498' // 222 merchandise mart longitude
 
     GoogleMapApi.fetchModeByDrive(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => {
@@ -38,7 +34,7 @@ export default class CommuteOptions extends React.Component {
           .then((response2) => {
             console.log(response2)
             this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:response2.min_price})})})
-
+      
     GoogleMapApi.fetchModeByWalking(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"walk", duration:response.routes[0].legs[0].duration.text, price:"Free"}));
     GoogleMapApi.fetchModeByBicycling(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
@@ -46,9 +42,9 @@ export default class CommuteOptions extends React.Component {
     GoogleMapApi.fetchModeByTransit(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00"}));
 
-    UberApi.getDriverEtaToLocation(UberApi.serverToken, startLatitude, startLongitude, endLatitude, endLongitude)
-      .then((response) => this.storeData({method:"UberX", 
-        duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins", 
+    UberApi.getDriverEtaToLocation(UberApi.serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
+      .then((response) => this.storeData({method:"UberX",
+        duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins",
         price: response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate
       }))
   }

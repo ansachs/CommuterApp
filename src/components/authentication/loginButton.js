@@ -3,16 +3,19 @@ import Expo from 'expo';
 import { Icon } from 'react-native-elements';
 
 
-export default LoginButton = () => {
+export default LoginButton = (props) => {
+
+let loggedOn = props.current.userName !== "" ? 'logout' : 'login'
 
 onLoginPress = async () => {
+  if (props.current.userName === "") {
     const result = await this.signInWithGoogleAsync()
-    // if there is no result.error or result.cancelled, the user is logged in
-    // do something with the result
+  } else {
+    props.handleClick(null)
   }
+}
 
 signInWithGoogleAsync = async () => {
-  console.log('this button')
     try {
       const result = await Expo.Google.logInAsync({
         androidClientId: '277067014175-3stlk80kbu3o591cjk57ae3s2rd32f6f.apps.googleusercontent.com',
@@ -20,25 +23,24 @@ signInWithGoogleAsync = async () => {
         scopes: ['profile', 'email'],
       })
 
-      console.log(result);
-
       if (result.type === 'success') {
-        return result
+        props.handleClick(result);
+        return result;
+      } else {
+        return { cancelled: true };
       }
-      return { cancelled: true }
     } catch (e) {
-      console.log(e);
       return { error: e }
     }
   }
 
 return(
   <Icon 
-  name='login'
+  name={loggedOn}
   type='material-community'
   color='#fff'
-  onPress={()=>{console.log('hit');
-  this.onLoginPress();}} 
+  onPress={()=>{
+    this.onLoginPress();}} 
   />)
 } 
 
