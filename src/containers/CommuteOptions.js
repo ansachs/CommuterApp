@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList, Animated, Easing } from 'react-native';
 import { NavigationActions } from 'react-navigation'
-import { Button, ListItem, FlatList } from 'react-native-elements';
+import { Button, ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MapView from 'react-native-maps';
 import GoogleMapApi from '../apis/GoogleMapApi.js'
 import UberApi from '../apis/UberApi.js'
 import LyftApi from '../apis/LyftApi.js'
@@ -12,8 +13,10 @@ import ParkWhizApi from '../apis/ParkWhizApi.js'
 export default class CommuteOptions extends React.Component {
   constructor(props) {
     super(props);
-     this.state = {
-      transpo: []
+    this.springValue = new Animated.Value(0)
+    this.state = {
+      transpo: [],
+      toggle: false
     }
   }
 
@@ -59,15 +62,15 @@ export default class CommuteOptions extends React.Component {
     GoogleMapApi.fetchModeByTransit(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00", icon:"train"}));
 
-    LyftApi.getLyftUserToken()
-      .then((token) => {
-        LyftApi.getRideDetails(token.public_key, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
-        .then((response) => this.storeData({method:"lyft",
-          duration:Math.round(response.cost_estimates.filter(choice => choice.ride_type === 'lyft')[0].estimated_duration_seconds/60).toString() + " mins",
-          price: (response.cost_estimates.filter(choice => choice.ride_type === 'lyft')[0].estimated_cost_cents_min*0.01).toString(),
-          icon:"car"
-        }))
-      });
+    // LyftApi.getLyftUserToken()
+    //   .then((token) => {
+    //     LyftApi.getRideDetails(token.public_key, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
+    //     .then((response) => this.storeData({method:"lyft",
+    //       duration:Math.round(response.cost_estimates.filter(choice => choice.ride_type === 'lyft')[0].estimated_duration_seconds/60).toString() + " mins",
+    //       price: (response.cost_estimates.filter(choice => choice.ride_type === 'lyft')[0].estimated_cost_cents_min*0.01).toString(),
+    //       icon:"car"
+    //     }))
+    //   });
 
     UberApi.getDriverEtaToLocation(UberApi.serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"uber",
@@ -83,10 +86,32 @@ export default class CommuteOptions extends React.Component {
     this.setState({transpo: [...this.state.transpo, current]})
   }
 
+  spring() {
+    this.setState({
+      toggle: !this.state.toggle
+    });
+
+    if (this.state.toggle) {
+      this.springValue.setValue(1)
+      Animated.spring(
+        this.springValue,
+        {
+          toValue: 0,
+        }
+      ).start()
+    } else {
+      this.springValue.setValue(0)
+      Animated.spring(
+        this.springValue,
+        {
+          toValue: 1,
+        }
+      ).start()
+    }
+  }
 
   render() {
     const list = [...this.state.transpo]
-
     return (
       <ScrollView contentContainerStyle={styles.container}>
 
@@ -96,6 +121,12 @@ export default class CommuteOptions extends React.Component {
           navigationFunction={this.props.navigation.navigate}
         />*/}
 
+    const maxHeight = this.springValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['5.5%', '100%']
+    })
+    return (
+      <View style={styles.container}>
         <View style={styles.destinationContainer}>
           <View style={{flex:1, padding:20, borderRightWidth:1, borderColor:'#ccc', borderBottomWidth:1}}>
             <Text style={styles.destinationText}>Start Destination:</Text>
@@ -107,8 +138,16 @@ export default class CommuteOptions extends React.Component {
           </View>
         </View>
 
-        <View style={{backgroundColor:'#737373', flexDirection:'row', justifyContent:'center', paddingVertical:10}}>
-          <Text style={{color:'#fff'}}>Fastest Option</Text>
+        <View style={styles.mapContainer}>
+          <MapView
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            style={styles.map}
+          />
         </View>
 
         {
@@ -149,6 +188,42 @@ export default class CommuteOptions extends React.Component {
         />
 
       </ScrollView>
+        <Animated.View
+          style={{maxHeight: maxHeight}}
+        >
+          <Button
+            title='Transportation Options'
+            onPress={this.spring.bind(this)}
+          />
+          <FlatList
+            data={this.state.transpo}
+            renderItem={({item}) => (
+              <ListItem
+                title={item.method.toUpperCase()}
+                leftIcon={{
+                  name: `${item.icon}`,
+                  type: 'material-community',
+                  style: { marginRight: 20, fontSize: 30 }
+                }}
+                rightIcon={{
+                  name: 'chevron-right',
+                  type: 'material-community',
+                  style: { marginRight: 20, fontSize: 30 }
+                }}
+                containerStyle={{backgroundColor: '#fff', borderBottomWidth:1}}
+                subtitle={
+                  <View>
+                    <Text>Duration: {item.duration}</Text>
+                    <Text>Price: {item.price}</Text>
+                  </View>
+                }
+                onPress={() => this.handleRowOnPress(item.method)}
+              />
+            )}
+            keyExtractor={item => item.method}
+          />
+        </Animated.View>
+      </View>
     );
   }
 }
@@ -173,6 +248,24 @@ const styles = StyleSheet.create({
     padding: 20,
     borderBottomWidth:1,
     borderColor:'#ccc'
+  },
+
+  mapContainer: {
+    position: 'absolute',
+    top: 80,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+
+  map: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 
   // destinationText: {

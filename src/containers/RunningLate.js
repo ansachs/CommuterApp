@@ -9,6 +9,7 @@ export default class RunningLate extends React.Component {
     super(props);
   }
 
+
   handleBack() {
     this.props.navigation.dispatch(NavigationActions.back())
   }
@@ -25,14 +26,17 @@ export default class RunningLate extends React.Component {
       });
   }
 
+
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Text>Running Late?</Text>
+
         <Button
           title="Back"
           onPress={this.sendMessage.bind(this)}
         />
+
       </ScrollView>
     )
   }
