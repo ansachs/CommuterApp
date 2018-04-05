@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
+import SendSMS from 'react-native-sms'
 
 export default class RunningLate extends React.Component {
   constructor(props) {
@@ -11,6 +12,18 @@ export default class RunningLate extends React.Component {
   handleBack() {
     this.props.navigation.dispatch(NavigationActions.back())
   }
+  
+  sendMessage() {
+      SendSMS.send({
+          body: 'The default body of the SMS!',
+          recipients: ['2253951571'],
+          successTypes: ['sent', 'queued']
+      }, (completed, cancelled, error) => {
+   
+          console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
+   
+      });
+  }
 
   render() {
     return (
@@ -18,7 +31,7 @@ export default class RunningLate extends React.Component {
         <Text>Running Late?</Text>
         <Button
           title="Back"
-          onPress={this.handleBack.bind(this)}
+          onPress={this.sendMessage.bind(this)}
         />
       </ScrollView>
     )

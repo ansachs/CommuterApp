@@ -3,6 +3,9 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import GoogleMapApi from '../apis/GoogleMapApi.js'
 import CommuteOptions from './CommuteOptions.js'
+import SendSMS from 'react-native-sms'
+import Communications from 'react-native-communications';
+
 
 export default class DestinationForm extends React.Component {
   constructor() {
@@ -35,29 +38,13 @@ export default class DestinationForm extends React.Component {
               })
             })
           })
-        
-          },
-            (error) => alert(error.message),
-        )
-      }
+        },
+      (error) => alert(error.message),
+      )
+    }
 
-  onPressSubmit() {
-    GoogleMapApi.convertToLatLong(this.state.startDestination)
-      .then((response) => {
-        GoogleMapApi.convertToLatLong(this.state.endDestination)
-          .then((response2) => {
-            this.props.navigation.navigate('CommuteOptions2', {
-            startDestination: this.state.startDestination,
-            endDestination: this.state.endDestination,
-            startDestinationLat: response.results[0].geometry.location.lat,
-            startDestinationLng: response.results[0].geometry.location.lng, 
-            endDestinationLat: response2.results[0].geometry.location.lat,
-            endDestinationLng: response2.results[0].geometry.location.lng
-          })
-        });
-      } 
-    );
-
+  sendMessage(event) {
+   Communications.text('2253951571', 'React Native is great!')
   }
 
   render() {
@@ -68,8 +55,6 @@ export default class DestinationForm extends React.Component {
         <Text>Start Destination:</Text>
         <Input
           placeholder= {start}
-          value={this.state.startDestination}
-        
         />
         <Text>End Destination:</Text>
         <Input
@@ -77,10 +62,14 @@ export default class DestinationForm extends React.Component {
           placeholder='enter end address'
         />
         <Button
-          onPress={this.onPressSubmit.bind(this)}
+          onPress={(event) => {this.onPressSubmit(event).bind(this)}}
           title="SUBMIT"
           color="#FFF"
           style={styles.submit}
+        />
+        <Button
+          title="Back"
+          onPress={(event) => {this.sendMessage(event).bind(this)}}
         />
       </ScrollView>
     );
