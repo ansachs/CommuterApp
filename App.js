@@ -1,14 +1,10 @@
 import React from 'react';
-import { YellowBox, View, Text, Switch, StyleSheet } from 'react-native';
+import { YellowBox, View, Text, StyleSheet } from 'react-native';
 import { Root } from './src/config/router.js';
 import { Header, Icon } from 'react-native-elements';
 import LoginButton from './src/components/authentication/loginButton'
 
-state = {
-      initialPosition: '',
-      lastPosition: 'pivotal labs',
-   }
-   
+
 YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
   'Warning: componentWillReceiveProps is deprecated',
