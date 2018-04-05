@@ -86,7 +86,7 @@ export default class CommuteOptions extends React.Component {
 
   render() {
     const list = [...this.state.transpo]
-    console.log(list)
+
     return (
       <ScrollView contentContainerStyle={styles.container}>
 
@@ -112,7 +112,7 @@ export default class CommuteOptions extends React.Component {
         </View>
 
         {
-          list.map((item, i) => (
+          list.sort((a , b) => parseFloat(a.duration) - parseFloat(b.duration)).map((item, i) => (
             <ListItem
               key={i}
               title={item.method.toUpperCase()}
@@ -142,6 +142,10 @@ export default class CommuteOptions extends React.Component {
           title="Running Late?"
           buttonStyle={{marginTop:5}}
           onPress={this.handleRunningLatePress.bind(this)}
+        />
+           <Button
+          title="Back"
+          onPress={(event) => {this.sendMessage(event).bind(this)}}
         />
 
       </ScrollView>
