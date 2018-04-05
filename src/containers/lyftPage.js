@@ -2,25 +2,25 @@ import React from 'react';
 import { StyleSheet, Text, View, Picker } from 'react-native';
 import { Button } from 'react-native-elements';
 
-export default class uberPage extends React.Component {
+export default class lyftPage extends React.Component {
   constructor() {
     super();
     this.state = {
-      uberChoice: ''
+      lyftChoice: ''
     }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={{fontSize: 25}}>Uber</Text>
+        <Text style={{fontSize: 25}}>Lyft</Text>
         <Picker
           style={styles.picker}
-          selectedValue={this.state.uberChoice}
-          onValueChange={(itemValue, itemIndex) => this.setState({uberChoice: itemValue})}>
-          <Picker.Item label="UberX" value="UberX" />
-          <Picker.Item label="UberXL" value="UberXL" />
-          <Picker.Item label="UberBlack" value="UberBlack" />
+          selectedValue={this.state.lyftChoice}
+          onValueChange={(itemValue, itemIndex) => this.setState({lyftChoice: itemValue})}>
+          <Picker.Item label="Lyft" value="Lyft" />
+          <Picker.Item label="Lyft Plus" value="Lyft Plus" />
+          <Picker.Item label="Lyft Premier" value="Lyft Premier" />
         </Picker>
         <View>
           <Text>Distance:</Text>

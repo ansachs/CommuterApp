@@ -1,24 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 const Divider = () => (
   <View style={{width: 1, backgroundColor: 'black'}}/>
   )
 
-const Row = (method, time, price, textStyle = null, rowStyle = null) => (
-  <View style={styles.row} key={method}>
-    <View style={[styles.tableCell, rowStyle]}>
-      <Text style={styles.tableText, textStyle}> {method} </Text>
-    </View>
-    <Divider />
-    <View style={[styles.tableCell, rowStyle]}>
-      <Text style={styles.tableText, textStyle}> {time} </Text>
-    </View>
-    <Divider />
-    <View style={[styles.tableCell, rowStyle]}>
-      <Text style={styles.tableText, textStyle}> {price} </Text>
-    </View>
-  </View> )
+const Row = (obj) => (
+  <TouchableOpacity onPress={() => obj.onPress(obj.method, obj.navigationFunction)} style={styles.row} key={obj.method}>
+      <View style={[styles.tableCell, obj.cellStyle]}>
+        <Text style={styles.tableText, obj.textStyle}> {obj.method} </Text>
+      </View>
+      <Divider />
+      <View style={[styles.tableCell, obj.cellStyle]}>
+        <Text style={styles.tableText, obj.textStyle}> {obj.time} </Text>
+      </View>
+      <Divider />
+      <View style={[styles.tableCell, obj.cellStyle]}>
+        <Text style={styles.tableText, obj.textStyle}> {obj.price} </Text>
+      </View>
+  </TouchableOpacity>)
 
 const colors = ['#a2c4f2', '#fff', '#edf0f4'];
 
@@ -55,14 +55,36 @@ const styles = StyleSheet.create({
 
 export default CommuterTable = (props) => {
 
+
   let table = props.transpo.map((transportMethod, index)=> {
     let color = colors[index%3]
-    let rowStyle = StyleSheet.create({test: {backgroundColor: color}})
+    let cellStyle = StyleSheet.create({background: {backgroundColor: color}})
+    let rowData = {
+      method: transportMethod.method,
+      time: transportMethod.duration,
+      price: transportMethod.price,
+      textStyle: null,
+      cellStyle: cellStyle.background,
+      onPress: props.handleRowOnPress,
+      navigationFunction: props.navigationFunction
+      }
     return(
-      Row(transportMethod.method, transportMethod.duration, transportMethod.price, null, rowStyle.test)
+      Row(rowData)
+
     )})
 
-  table.unshift(Row("Type", "ETA", "Price", styles.titleText,styles.titleCell))
+  rowTitle = {
+    method: "Type",
+    time: "ETA",
+    price: "Price",
+    textStyle: styles.titleText,
+    cellStyle: styles.titleCell,
+    onPress: null,
+    navigationParams: null
+  }
+
+  table.unshift(Row(rowTitle))
+
 
   return (
     <View style={styles.tableContainer}>

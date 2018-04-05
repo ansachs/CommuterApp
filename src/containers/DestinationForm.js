@@ -48,7 +48,7 @@ export default class DestinationForm extends React.Component {
 
     if (this.state.endDestination.length < 1) {
       this.setState({endError: "must contain a value"});
-      return false; 
+      return false;
     } else {
       this.setState({endError: " "});
     }
@@ -63,7 +63,7 @@ export default class DestinationForm extends React.Component {
                 startDestination: this.state.startDestination,
                 endDestination: this.state.endDestination,
                 startDestinationLat: startDest.results[0].geometry.location.lat,
-                startDestinationLng: startDest.results[0].geometry.location.lng, 
+                startDestinationLng: startDest.results[0].geometry.location.lng,
                 endDestinationLat: endDest.results[0].geometry.location.lat,
                 endDestinationLng: endDest.results[0].geometry.location.lng
               })
@@ -74,8 +74,7 @@ export default class DestinationForm extends React.Component {
     }).catch((err) => {
       console.log(err)
       this.setState({startError: "must be a valid location"})
-    })  
-    
+    })
   }
 
   render() {
@@ -89,8 +88,9 @@ export default class DestinationForm extends React.Component {
           errorStyle={{ color: 'red' }}
           errorMessage={this.state.startError}
         />
-        <Text>End Destination:</Text>
+        <Text style={{marginTop:20}}>End Destination:</Text>
         <Input
+          onChangeText={(endDestination) => this.setState({endDestination})}
           style={styles.textInput}
           placeholder='enter end address'
           value={this.state.endDestination}
@@ -102,7 +102,7 @@ export default class DestinationForm extends React.Component {
           onPress={(e) => {this.onPressSubmit(e)}}
           title="SUBMIT"
           color="#FFF"
-          style={styles.submit}
+          buttonStyle={{marginTop:20}}
         />
       </ScrollView>
     )

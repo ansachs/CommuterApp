@@ -46,8 +46,8 @@ handleClick = (details) => {
           leftComponent={{ icon: 'menu', color: '#fff' }}
           centerComponent={{ text: userOrWelcome, style: { color: '#fff' } }}
           rightComponent={
-            <LoginButton 
-              handleClick={(details)=>{this.handleClick(details)}} 
+            <LoginButton
+              handleClick={(details)=>{this.handleClick(details)}}
               current={this.state}
             />}
         />

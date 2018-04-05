@@ -3,8 +3,14 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import DestinationForm from '../containers/DestinationForm.js';
 import CommuteOptions from '../containers/CommuteOptions.js';
-import UberPage from '../containers/UberPage.js';
+import walkPage from '../containers/walkPage.js';
+import bikePage from '../containers/bikePage.js';
+import transitPage from '../containers/transitPage.js';
+import lyftPage from '../containers/lyftPage.js';
+import drivePage from '../containers/drivePage.js';
+import uberPage from '../containers/uberPage.js';
 import RunningLate from '../containers/RunningLate.js';
+
 
 export const DestinationStack = StackNavigator({
   DestinationForm: {
@@ -23,22 +29,63 @@ export const DestinationStack = StackNavigator({
     }
   },
 
-  UberPage: {
-    screen: UberPage,
+  walkPage: {
+    screen: walkPage,
     navigationOptions: {
-      title: 'UberPage',
+      title: 'walkPage',
       header: null
     }
-  }
+  },
+
+  bikePage: {
+    screen: bikePage,
+    navigationOptions: {
+      title: 'bikePage',
+      header: null
+    }
+  },
+
+  transitPage: {
+    screen: transitPage,
+    navigationOptions: {
+      title: 'transitPage',
+      header: null
+    }
+  },
+
+  lyftPage: {
+    screen: lyftPage,
+    navigationOptions: {
+      title: 'lyftPage',
+      header: null
+    }
+  },
+
+  drivePage: {
+    screen: drivePage,
+    navigationOptions: {
+      title: 'drivePage',
+      header: null
+    }
+  },
+
+  uberPage: {
+    screen: uberPage,
+    navigationOptions: {
+      title: 'uberPage',
+      header: null
+    }
+  },
 });
 
 export const Tabs = TabNavigator({
-  DestinationStack: {
+  DestinationForm2: {
     screen: DestinationStack,
-    navigationOptions: {
+    navigationOptions: ({navigation}) => ({
+      tabBarVisible: true,
       tabBarLabel: 'Destination',
       tabBarIcon: ({ tintColor }) => <Icon name="map" size={35} color={tintColor} />
-    }
+    })
   },
 
   CommuteOptions2: {
