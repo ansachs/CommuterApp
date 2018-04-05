@@ -41,6 +41,7 @@ export default class CommuteOptions extends React.Component {
     let endDestinationLng = this.props.navigation.state.params.endDestinationLng
 
 
+  try {
     GoogleMapApi.fetchModeByDrive(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => {
         ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
@@ -52,13 +53,15 @@ export default class CommuteOptions extends React.Component {
     GoogleMapApi.fetchModeByBicycling(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"bike", duration:response.routes[0].legs[0].duration.text, price:"Free"}));
     GoogleMapApi.fetchModeByTransit(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
-      .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00"}));
+      .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00"}))
+      .catch((err)=>{console.log(err)})
 
-    UberApi.getDriverEtaToLocation(UberApi.serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
-      .then((response) => this.storeData({method:"UberX",
-        duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins",
-        price: response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate
-      }))
+    // UberApi.getDriverEtaToLocation(UberApi.serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
+    //   .then((response) => this.storeData({method:"UberX",
+    //     duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins",
+    //     price: response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate
+    //   }))
+    } catch(err) {console.log(err)}
   }
 
   storeData(obj) {

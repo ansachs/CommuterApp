@@ -8,7 +8,10 @@ const getLyftUserToken = () => {
   )
   .catch((err) => {
       console.log(err)
-  });
+  })
+  .catch((err) => {
+      throw "error in getLyftUserToken"
+    });
 }
 
 const getDriverEtaToOrigin = (user_token, orig_lat, orig_lng) => {
@@ -23,8 +26,8 @@ const getDriverEtaToOrigin = (user_token, orig_lat, orig_lng) => {
   .then((response) => {return response.json()
   })
   .catch((err) => {
-      console.log(err)
-  });
+      throw "error in getDriverEtaToOrigin"
+    });
 }
 
 const getRideDetails = (user_token, orig_lat, orig_lng, dest_lat, dest_lng) => {
@@ -39,7 +42,7 @@ const getRideDetails = (user_token, orig_lat, orig_lng, dest_lat, dest_lng) => {
   .then((response) => {return response.json()
   })
   .catch((err) => {
-      console.log(err)
+      throw "error in getDriverEtaToOrigin"
   });
 }
 
