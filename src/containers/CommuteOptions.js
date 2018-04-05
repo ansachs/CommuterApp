@@ -56,6 +56,7 @@ export default class CommuteOptions extends React.Component {
     let endDestinationLng = this.props.navigation.state.params.endDestinationLng
 
 
+  try {
     GoogleMapApi.fetchModeByDrive(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => {
         ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
@@ -69,12 +70,6 @@ export default class CommuteOptions extends React.Component {
     GoogleMapApi.fetchModeByTransit(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00"}));
 
-    UberApi.getDriverEtaToLocation(UberApi.serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
-      .then((response) => this.storeData({method:"uber",
-        duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins",
-        price: response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate
-      }))
-
     LyftApi.getLyftUserToken()
       .then((token) => {
         LyftApi.getRideDetails(token.public_key, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
@@ -83,6 +78,16 @@ export default class CommuteOptions extends React.Component {
           price: (response.cost_estimates.filter(choice => choice.ride_type === 'lyft')[0].estimated_cost_cents_min*0.01).toString()
         }))
       });
+
+      .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00"}))
+      .catch((err)=>{console.log(err)})
+
+    UberApi.getDriverEtaToLocation(UberApi.serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
+      .then((response) => this.storeData({method:"Uber",
+        duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins",
+        price: response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate
+      }))
+    } catch(err) {console.log(err)}
   }
 
   storeData(obj) {
@@ -116,7 +121,7 @@ export default class CommuteOptions extends React.Component {
           buttonStyle={{marginTop:20}}
           onPress={this.handleRunningLatePress.bind(this)}
         />
-        
+
       </ScrollView>
     );
   }

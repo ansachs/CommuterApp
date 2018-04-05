@@ -8,28 +8,73 @@ export default class DestinationForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      startDestination: '1541 n bosworth',
-      endDestination: '73 w monroe'
+      startDestination: "Loading...",
+      endDestination: "",
+      startError: "",
+      startError: " ",
+      endError: " "
     }
   }
 
-  onPressSubmit() {
-    GoogleMapApi.convertToLatLong(this.state.startDestination)
-      .then((response) => {
-        GoogleMapApi.convertToLatLong(this.state.endDestination)
-          .then((response2) => {
-            this.props.navigation.navigate('CommuteOptions2', {
-            startDestination: this.state.startDestination,
-            endDestination: this.state.endDestination,
-            startDestinationLat: response.results[0].geometry.location.lat,
-            startDestinationLng: response.results[0].geometry.location.lng,
-            endDestinationLat: response2.results[0].geometry.location.lat,
-            endDestinationLng: response2.results[0].geometry.location.lng
-          })
-        });
-      }
-    );
+  componentDidMount = () => {
+    this.getLocation();
+  }
 
+  getLocation = async () => {
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log(position)
+          fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyD2_6K7CF1C1ooSwgDxxDq2WBx8bAIihIU`)
+            .then(response => response.json())
+            .then(json => {
+              console.log(json)
+              this.setState({
+                startDestination: json.results[0].formatted_address
+              })
+            })
+        },
+    (err)=> {console.log(err)})
+  }
+
+  onPressSubmit(e) {
+    e.persist()
+    console.log(this.state)
+
+    if (this.state.startDestination.length < 1) {
+      this.setState({startError: "must contain a value"});
+    } else {
+      this.setState({startError: " "});
+    }
+
+    if (this.state.endDestination.length < 1) {
+      this.setState({endError: "must contain a value"});
+      return false;
+    } else {
+      this.setState({endError: " "});
+    }
+
+    if (this.state.startDestination.length < 1) {return false}
+
+    GoogleMapApi.convertToLatLong(this.state.startDestination)
+    .then((startDest) => {
+        GoogleMapApi.convertToLatLong(this.state.endDestination)
+          .then((endDest) => {
+                this.props.navigation.navigate('CommuteOptions2', {
+                startDestination: this.state.startDestination,
+                endDestination: this.state.endDestination,
+                startDestinationLat: startDest.results[0].geometry.location.lat,
+                startDestinationLng: startDest.results[0].geometry.location.lng,
+                endDestinationLat: endDest.results[0].geometry.location.lat,
+                endDestinationLng: endDest.results[0].geometry.location.lng
+              })
+        }).catch((err) => {
+          console.log(err)
+          this.setState({endError: "must be a valid location"})
+        })
+    }).catch((err) => {
+      console.log(err)
+      this.setState({startError: "must be a valid location"})
+    })
   }
 
   render() {
@@ -37,24 +82,30 @@ export default class DestinationForm extends React.Component {
       <ScrollView contentContainerStyle={styles.container}>
         <Text>Start Destination:</Text>
         <Input
-          //onChangeText={(startDestination) => this.setState({startDestination})}
-          placeholder='enter start address'
-          value={this.startDestination}
+          placeholder= "enter start address"
+          value={this.state.startDestination}
+          onChangeText={(val) => {this.setState({startDestination: val})}}
+          errorStyle={{ color: 'red' }}
+          errorMessage={this.state.startError}
         />
         <Text style={{marginTop:20}}>End Destination:</Text>
         <Input
           onChangeText={(endDestination) => this.setState({endDestination})}
           style={styles.textInput}
           placeholder='enter end address'
+          value={this.state.endDestination}
+          onChangeText={(val) => {this.setState({endDestination: val})}}
+          errorStyle={{ color: 'red' }}
+          errorMessage={this.state.endError}
         />
         <Button
-          onPress={this.onPressSubmit.bind(this)}
+          onPress={(e) => {this.onPressSubmit(e)}}
           title="SUBMIT"
           color="#FFF"
           buttonStyle={{marginTop:20}}
         />
       </ScrollView>
-    );
+    )
   }
 }
 
