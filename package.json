@@ -30,6 +30,7 @@
     "react-native-elements": "^1.0.0-beta4",
     "react-native-sglistview": "^0.4.5",
     "react-native-sms": "^1.5.2",
+    "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^1.5.8"
   }
 }
