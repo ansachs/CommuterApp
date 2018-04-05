@@ -8,18 +8,10 @@ export default class RunningLate extends React.Component {
     super(props);
   }
 
-  handleBack() {
-    this.props.navigation.dispatch(NavigationActions.back())
-  }
-
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Text>Running Late?</Text>
-        <Button
-          title="Back"
-          onPress={this.handleBack.bind(this)}
-        />
       </ScrollView>
     )
   }
