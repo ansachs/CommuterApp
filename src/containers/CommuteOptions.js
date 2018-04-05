@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { NavigationActions } from 'react-navigation'
-import { Button, ListItem } from 'react-native-elements';
+import { Button, ListItem, FlatList } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import GoogleMapApi from '../apis/GoogleMapApi.js'
 import UberApi from '../apis/UberApi.js'
@@ -86,6 +86,7 @@ export default class CommuteOptions extends React.Component {
 
   render() {
     const list = [...this.state.transpo]
+    console.log(list)
     return (
       <ScrollView contentContainerStyle={styles.container}>
 
@@ -109,6 +110,7 @@ export default class CommuteOptions extends React.Component {
         <View style={{backgroundColor:'#737373', flexDirection:'row', justifyContent:'center', paddingVertical:10}}>
           <Text style={{color:'#fff'}}>Fastest Option</Text>
         </View>
+
         {
           list.map((item, i) => (
             <ListItem
@@ -119,7 +121,11 @@ export default class CommuteOptions extends React.Component {
                 type: 'material-community',
                 style: { marginRight: 20, fontSize: 30 }
               }}
-              style={styles.listItem}
+              rightIcon={{
+                name: 'chevron-right',
+                type: 'material-community',
+                style: { marginRight: 20, fontSize: 30 }
+              }}
               containerStyle={{backgroundColor: '#fff', marginBottom:5}}
               subtitle={
                 <View>
@@ -128,7 +134,6 @@ export default class CommuteOptions extends React.Component {
                 </View>
               }
               onPress={() => this.handleRowOnPress(item.method)}
-              component={TouchableOpacity}
             />
           ))
         }
@@ -149,10 +154,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ccc',
     // justifyContent: 'center',
-  },
-
-  listItem: {
-    flexDirection: 'row',
   },
 
   destinationContainer: {
