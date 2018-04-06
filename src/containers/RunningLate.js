@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 import SendSMS from 'react-native-sms'
+import Communications from 'react-native-communications';
 
 export default class RunningLate extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ export default class RunningLate extends React.Component {
         <Text>Running Late?</Text>
 
         <Button
-          title="Back"
+          title="send text"
           onPress={this.sendMessage.bind(this)}
         />
 

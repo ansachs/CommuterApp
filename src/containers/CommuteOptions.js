@@ -121,11 +121,6 @@ export default class CommuteOptions extends React.Component {
           navigationFunction={this.props.navigation.navigate}
         />*/}
 
-    const maxHeight = this.springValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['5.5%', '100%']
-    })
-    return (
       <View style={styles.container}>
         <View style={styles.destinationContainer}>
           <View style={{flex:1, padding:20, borderRightWidth:1, borderColor:'#ccc', borderBottomWidth:1}}>
