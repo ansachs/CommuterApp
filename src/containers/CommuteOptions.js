@@ -117,6 +117,8 @@ export default class CommuteOptions extends React.Component {
       outputRange: ['5.5%', '100%']
     })
 
+    let dropDownIcon = this.state.toggle ? 'arrow-down-drop-circle' : 'arrow-right-drop-circle'
+
     return (
       <View style={styles.container}>
         <View style={styles.destinationContainer}>
@@ -146,8 +148,17 @@ export default class CommuteOptions extends React.Component {
           style={{maxHeight: maxHeight}}
         >
           <Button
-            title='Transportation Options'
+            title='Commute Options'
             onPress={this.spring.bind(this)}
+            icon={
+              <Icon
+                name={dropDownIcon}
+                size={20}
+                color='white'
+                type='material-community'
+              />
+            }
+            iconRight
           />
           <FlatList
             data={this.state.transpo}
