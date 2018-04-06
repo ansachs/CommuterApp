@@ -3,12 +3,15 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import GoogleMapApi from '../apis/GoogleMapApi.js'
 import CommuteOptions from './CommuteOptions.js'
+import SendSMS from 'react-native-sms'
+import Communications from 'react-native-communications';
+
 
 export default class DestinationForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      startDestination: "Loading...",
+      startDestination: "loading...",
       endDestination: "",
       startError: "",
       startError: " ",
@@ -19,15 +22,13 @@ export default class DestinationForm extends React.Component {
   componentDidMount = () => {
     this.getLocation();
   }
-
-  getLocation = async () => {
+ getLocation = async () => {
     navigator.geolocation.getCurrentPosition(
         (position) => {
           console.log(position)
           fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyD2_6K7CF1C1ooSwgDxxDq2WBx8bAIihIU`)
             .then(response => response.json())
             .then(json => {
-              console.log(json)
               this.setState({
                 startDestination: json.results[0].formatted_address
               })
@@ -35,10 +36,12 @@ export default class DestinationForm extends React.Component {
         },
     (err)=> {console.log(err)})
   }
+    
+  
+
 
   onPressSubmit(e) {
     e.persist()
-    console.log(this.state)
 
     if (this.state.startDestination.length < 1) {
       this.setState({startError: "must contain a value"});
@@ -78,12 +81,12 @@ export default class DestinationForm extends React.Component {
   }
 
   render() {
+    loading = "loading..."
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Text>Start Destination:</Text>
         <Input
-          placeholder= "enter start address"
-          value={this.state.startDestination}
+          value={ this.state.startDestination}
           onChangeText={(val) => {this.setState({startDestination: val})}}
           errorStyle={{ color: 'red' }}
           errorMessage={this.state.startError}
@@ -104,6 +107,7 @@ export default class DestinationForm extends React.Component {
           color="#FFF"
           buttonStyle={{marginTop:20}}
         />
+     
       </ScrollView>
     )
   }
