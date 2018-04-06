@@ -112,18 +112,17 @@ export default class CommuteOptions extends React.Component {
 
   render() {
     const list = [...this.state.transpo]
+    const maxHeight = this.springValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['6.5%', '100%']
+    })
+
+    let dropDownIcon = this.state.toggle ? 'arrow-down-drop-circle' : 'arrow-right-drop-circle'
+
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-
-        {/*<CommuterTable
-          transpo={this.state.transpo}
-          handleRowOnPress={this.handleRowOnPress}
-          navigationFunction={this.props.navigation.navigate}
-        />*/}
-
       <View style={styles.container}>
         <View style={styles.destinationContainer}>
-          <View style={{flex:1, padding:20, borderRightWidth:1, borderColor:'#ccc', borderBottomWidth:1}}>
+          <View style={{flex:1, borderRightWidth:1, borderColor:'#ccc', paddingLeft:20}}>
             <Text style={styles.destinationText}>Start Destination:</Text>
             <Text style={styles.destinationText}>{this.props.navigation.state.params.startDestination}</Text>
           </View>
@@ -145,53 +144,24 @@ export default class CommuteOptions extends React.Component {
           />
         </View>
 
-        {
-          list.sort((a , b) => parseFloat(a.duration) - parseFloat(b.duration)).map((item, i) => (
-            <ListItem
-              key={i}
-              title={item.method.toUpperCase()}
-              leftIcon={{
-                name: `${item.icon}`,
-                type: 'material-community',
-                style: { marginRight: 20, fontSize: 30 }
-              }}
-              rightIcon={{
-                name: 'chevron-right',
-                type: 'material-community',
-                style: { marginRight: 20, fontSize: 30 }
-              }}
-              containerStyle={{backgroundColor: '#fff', marginBottom:5}}
-              subtitle={
-                <View>
-                  <Text>Duration: {item.duration}</Text>
-                  <Text>Price: {item.price}</Text>
-                </View>
-              }
-              onPress={() => this.handleRowOnPress(item.method)}
-            />
-          ))
-        }
-
-        <Button
-          title="Running Late?"
-          buttonStyle={{marginTop:5}}
-          onPress={this.handleRunningLatePress.bind(this)}
-        />
-           <Button
-          title="Back"
-          onPress={(event) => {this.sendMessage(event).bind(this)}}
-        />
-
-      </ScrollView>
         <Animated.View
           style={{maxHeight: maxHeight}}
         >
           <Button
-            title='Transportation Options'
+            title='Commute Options'
             onPress={this.spring.bind(this)}
+            icon={
+              <Icon
+                name={dropDownIcon}
+                size={20}
+                color='white'
+                type='material-community'
+              />
+            }
+            iconRight
           />
           <FlatList
-            data={this.state.transpo}
+            data={this.state.transpo.sort((a , b) => parseFloat(a.duration) - parseFloat(b.duration))}
             renderItem={({item}) => (
               <ListItem
                 title={item.method.toUpperCase()}
@@ -241,8 +211,6 @@ const styles = StyleSheet.create({
   destinationCol: {
     flex: 1,
     padding: 20,
-    borderBottomWidth:1,
-    borderColor:'#ccc'
   },
 
   mapContainer: {
