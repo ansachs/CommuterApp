@@ -16,10 +16,9 @@ export default class DestinationForm extends React.Component {
   onPressSubmit() {
     this.props.navigation.navigate('CommuteOptions2', {startDestination: this.state.startDestination, endDestination: this.state.endDestination})
   }
-
   render() {
-    return (
-      <ScrollView contentContainerStyle={styles.container}>
+    return 
+        <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.text}>Start Destination:</Text>
         <Input
           placeholder='INPUT WITH ICON'

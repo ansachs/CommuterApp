@@ -19,6 +19,8 @@ export default class CommuteOptions extends React.Component {
     }
   }
 
+
+
   handleRunningLatePress() {
     this.props.navigation.navigate('RunningLate');
   }
@@ -70,6 +72,7 @@ export default class CommuteOptions extends React.Component {
 
 
   render() {
+
     console.log(this.state)
     return (
       <ScrollView contentContainerStyle={styles.container}>
