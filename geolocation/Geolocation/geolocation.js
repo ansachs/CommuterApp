@@ -7,22 +7,17 @@ class Geolocation extends Component {
       lastPosition: 'pivotal labs',
    }
 
-   componentDidMount = () => {
+   function async () => {
 
-         navigator.geolocation.getCurrentPosition(
-         (position) => {
-          
-            const initialPosition = JSON.stringify(position);
-            this.setState({ initialPosition });
-         },
-
+            navigator.geolocation.getCurrentPosition(
+            (position) => {
+             console.log(position)
+               const initialPosition = JSON.stringify(position);
+               this.setState({ initialPosition });
+            },
          (error) => alert(error.message),
          { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
       );
-      // this.state.watchID = navigator.geolocation.watchPosition((position) => {
-      //    const lastPosition = JSON.stringify(position);
-      //    this.setState({ lastPosition });
-      // });
    }
    componentWillUnmount = () => {
       navigator.geolocation.clearWatch(this.watchID);
@@ -42,20 +37,15 @@ class Geolocation extends Component {
             `https://maps.googleapis.com/maps/api/geocode/json?address=${pos}&key=AIzaSyD2_6K7CF1C1ooSwgDxxDq2WBx8bAIihIU`).then((something) => {
             console.log(something)
           })
-         
-         
          const convertToLatLong = (pos) => {
          return 
          }
-
-      var crd = pos.coords;
-
-      console.log(`Your current position is: ${convertToLatLong}`);
-      console.log(`Latitude : ${crd.latitude}`);
-      console.log(`Longitude: ${crd.longitude}`);
-      console.log(`More or less ${crd.accuracy} meters.`);
-      }
-
+               var crd = pos.coords;
+               console.log(`Your current position is: ${convertToLatLong}`);
+               console.log(`Latitude : ${crd.latitude}`);
+               console.log(`Longitude: ${crd.longitude}`);
+               console.log(`More or less ${crd.accuracy} meters.`);
+               }
       function error(err) {
       console.warn(`ERROR(${err.code}): ${err.message}`);
       }
