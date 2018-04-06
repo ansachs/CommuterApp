@@ -120,6 +120,14 @@ export default class CommuteOptions extends React.Component {
     let dropDownIcon = this.state.toggle ? 'arrow-down-drop-circle' : 'arrow-right-drop-circle'
 
     return (
+      <ScrollView contentContainerStyle={styles.container}>
+
+        {/*<CommuterTable
+          transpo={this.state.transpo}
+          handleRowOnPress={this.handleRowOnPress}
+          navigationFunction={this.props.navigation.navigate}
+        />*/}
+
       <View style={styles.container}>
         <View style={styles.destinationContainer}>
           <View style={{flex:1, padding:20, borderRightWidth:1, borderColor:'#ccc', borderBottomWidth:1}}>
@@ -144,6 +152,44 @@ export default class CommuteOptions extends React.Component {
           />
         </View>
 
+        {
+          list.sort((a , b) => parseFloat(a.duration) - parseFloat(b.duration)).map((item, i) => (
+            <ListItem
+              key={i}
+              title={item.method.toUpperCase()}
+              leftIcon={{
+                name: `${item.icon}`,
+                type: 'material-community',
+                style: { marginRight: 20, fontSize: 30 }
+              }}
+              rightIcon={{
+                name: 'chevron-right',
+                type: 'material-community',
+                style: { marginRight: 20, fontSize: 30 }
+              }}
+              containerStyle={{backgroundColor: '#fff', marginBottom:5}}
+              subtitle={
+                <View>
+                  <Text>Duration: {item.duration}</Text>
+                  <Text>Price: {item.price}</Text>
+                </View>
+              }
+              onPress={() => this.handleRowOnPress(item.method)}
+            />
+          ))
+        }
+
+        <Button
+          title="Running Late?"
+          buttonStyle={{marginTop:5}}
+          onPress={this.handleRunningLatePress.bind(this)}
+        />
+           <Button
+          title="Back"
+          onPress={(event) => {this.sendMessage(event).bind(this)}}
+        />
+
+      </ScrollView>
         <Animated.View
           style={{maxHeight: maxHeight}}
         >
