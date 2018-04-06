@@ -3,7 +3,7 @@ import { YellowBox, View, Text, StyleSheet } from 'react-native';
 import { Root } from './src/config/router.js';
 import { Header, Icon } from 'react-native-elements';
 import LoginButton from './src/components/authentication/loginButton'
-import ContactPage2 from './src/containers/ContactPage2'
+import ContactList from './src/containers/ContactList'
 
 
 YellowBox.ignoreWarnings([
@@ -52,7 +52,7 @@ handleClick = (details) => {
               current={this.state}
             />}
         />
-        <ContactPage2 />
+        <Root />
       </View>
     )
   }
