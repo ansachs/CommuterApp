@@ -3,7 +3,7 @@ import { YellowBox, View, Text, StyleSheet } from 'react-native';
 import { Root } from './src/config/router.js';
 import { Header, Icon } from 'react-native-elements';
 import LoginButton from './src/components/authentication/loginButton'
-
+import ContactsApi from './src/apis/ContactsApi.js'
 
 YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
@@ -36,9 +36,16 @@ handleClick = (details) => {
 
 }
 
+    ok() {
+    return ContactsApi.getGoogleId(this.state.userName, this.state.clientID)
+    console.log(this.state.userName)
+  }
+
 
   render() {
-
+    if (this.state.clientID.length > 0) {
+      this.ok()
+    } 
     let userOrWelcome = this.state.clientID ? this.state.userName : "welcome"
     return (
       <View style={{flex: 1}}>
