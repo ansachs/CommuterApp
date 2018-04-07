@@ -10,23 +10,21 @@ export default class RunningLate extends React.Component {
     super(props);
   }
 
-
   handleBack() {
     this.props.navigation.dispatch(NavigationActions.back())
   }
-  
+
   sendMessage() {
       SendSMS.send({
           body: 'The default body of the SMS!',
           recipients: ['2253951571'],
           successTypes: ['sent', 'queued']
       }, (completed, cancelled, error) => {
-   
+
           console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
-   
+
       });
   }
-
 
   render() {
     return (
