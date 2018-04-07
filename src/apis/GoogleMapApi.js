@@ -59,7 +59,7 @@ const fetchModeByWalking = (startDestinationLat, startDestinationLng, endDestina
     })
     .catch((err) => {
       console.log(err)
-      throw "error in fetchModeByWalking"
+      throw "error in fetchModeByWalking"   
     });
 }
 

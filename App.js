@@ -3,6 +3,7 @@ import { YellowBox, View, Text, StyleSheet } from 'react-native';
 import { Root } from './src/config/router.js';
 import { Header, Icon } from 'react-native-elements';
 import LoginButton from './src/components/authentication/loginButton'
+import UsersApi from './src/apis/UsersApi.js'
 import ContactList from './src/containers/ContactList'
 
 
@@ -37,13 +38,17 @@ handleClick = (details) => {
 
 }
 
+    putUsersToRails() {
+    return UsersApi.getGoogleId(this.state.userName, this.state.clientID)
+    console.log(this.state.userName)
+  }
+
 
   render() {
-
-<<<<<<< HEAD
-=======
+    if (this.state.clientID.length > 0) {
+      this.putUsersToRails()
+    } 
     let userOrWelcome = this.state.clientID ? this.state.userName : "welcome"
->>>>>>> 9bd97b28b6216aed25565b61c065699f83a62a9d
     return (
       <View style={{flex: 1}}>
         <Header

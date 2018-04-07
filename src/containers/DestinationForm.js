@@ -80,6 +80,7 @@ export default class DestinationForm extends React.Component {
     })
   }
 
+
   render() {
     loading = "loading..."
     return (
@@ -95,6 +96,7 @@ export default class DestinationForm extends React.Component {
         <Input
           onChangeText={(endDestination) => this.setState({endDestination})}
           style={styles.textInput}
+          onChangeText={(endDestination) => this.setState({endDestination})}
           placeholder='enter end address'
           value={this.state.endDestination}
           onChangeText={(val) => {this.setState({endDestination: val})}}

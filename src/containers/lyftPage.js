@@ -25,7 +25,7 @@ export default class lyftPage extends React.Component {
         <View>
           <Text>Distance:</Text>
           <Text>{this.props.navigation.state.params.duration}</Text>
-        </View>
+        </View> 
         <View>
           <Text>Price:</Text>
           <Text>{this.props.navigation.state.params.price}</Text>
