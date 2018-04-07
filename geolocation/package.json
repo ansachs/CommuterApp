@@ -1,8 +1,10 @@
 {
-  "name": "cp-commuter-app",
+  "name": "geolocation",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "jest-expo": "26.0.0",
     "react-native-scripts": "1.13.1",
     "react-test-renderer": "16.3.0-alpha.1"
@@ -20,17 +22,8 @@
   },
   "dependencies": {
     "expo": "^26.0.0",
-    "firebase": "^4.12.1",
-    "native-base": "^2.4.1",
     "react": "16.3.0-alpha.1",
-    "react-native": "0.54.2",
-    "react-native-cards-slider": "^0.1.2",
-    "react-native-communications": "^2.2.1",
-    "react-native-elements": "^1.0.0-beta4",
-    "react-native-sglistview": "^0.4.5",
-    "react-native-sms": "^1.5.2",
-    "react-native-maps": "^0.21.0",
-    "react-native-vector-icons": "^4.6.0",
-    "react-navigation": "^1.5.8"
+    "react-native": "0.54.0",
+    "react-native-android-location-services-dialog-box": "^2.4.4"
   }
 }

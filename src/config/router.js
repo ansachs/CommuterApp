@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import { Icon } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DestinationForm from '../containers/DestinationForm.js';
 import CommuteOptions from '../containers/CommuteOptions.js';
 import walkPage from '../containers/walkPage.js';
@@ -92,7 +92,15 @@ export const Tabs = TabNavigator({
     screen: CommuteOptions,
     navigationOptions: {
       tabBarLabel: 'Commute Options',
-      tabBarIcon: ({ tintColor }) => <Icon name="list" size={35} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon name="format-list-bulleted" size={35} color={tintColor} />
+    }
+  },
+
+  RunningLate2: {
+    screen: RunningLate,
+    navigationOptions: {
+      tabBarLabel: 'Running Late',
+      tabBarIcon: ({ tintColor }) => <Icon name="run-fast" size={35} color={tintColor} />
     }
   }
 },
@@ -114,10 +122,10 @@ export const Root = StackNavigator({
   Tabs: {
     screen: Tabs,
   },
-  RunningLate: {
-    screen: RunningLateStack
-  },
+  // RunningLate: {
+  //   screen: RunningLateStack
+  // },
 }, {
-  mode: 'modal',
+  //mode: 'modal',
   headerMode: 'none'
 });
