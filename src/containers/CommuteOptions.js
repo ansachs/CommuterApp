@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, FlatList, Animated, Easing } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList, Animated, Easing, Button, TextInput, ImageBackground, ActivityIndicator, Linking, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import { Button, ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,6 +9,24 @@ import UberApi from '../apis/UberApi.js'
 import LyftApi from '../apis/LyftApi.js'
 import CommuterTable from '../components/commuteOptions/commuterOptionsTable'
 import ParkWhizApi from '../apis/ParkWhizApi.js'
+import React, { Component } from 'react';
+import styled from 'styled-components/native';
+import PropTypes from 'prop-types';
+import MapViewDirections from 'react-native-maps-directions';
+import getDirections from 'react-native-google-maps-directions'
+import { PermissionsAndroid } from 'react-native';
+
+
+let Container = styled(View) `
+  width: 100%;
+  height: 100%;
+  background-color: white;
+`;
+
+let Map = styled(MapView) `
+  width: 100%;
+  height: 100%;
+`;
 
 export default class CommuteOptions extends React.Component {
   constructor(props) {
@@ -19,6 +37,10 @@ export default class CommuteOptions extends React.Component {
       toggle: false
     }
   }
+
+  const origin = { latitude: this.props.navigation.state.params.startDestinationLat, longitude: this.props.navigation.state.params.startDestinationLng }
+  const destination = { latitude: this.props.navigation.state.params.endDestinationLat, longitude: this.props.navigation.state.params.endDestinationLng }
+  const GOOGLE_MAPS_APIKEY = 'YOUR_GOOGLE_MAP_API_KEY';
 
   handleRowOnPress(transportMethod) {
     let commuteOption = this.state.transpo.filter(optionObject => optionObject.method === transportMethod)
