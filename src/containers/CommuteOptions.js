@@ -61,31 +61,58 @@ export default class CommuteOptions extends React.Component {
       .then((response) => {
         ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
           .then((response2) => {
-            this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:response2.min_price, icon:"car"})})})
+            this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:response2.min_price, icon:"car"})
+          })
+          .catch((err) => {
+          console.log("error in api", err)
+          });
+        })
+        .catch((err) => {
+        console.log("error in api", err)
+        });
+
 
     GoogleMapApi.fetchModeByWalking(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
-      .then((response) => this.storeData({method:"walk", duration:response.routes[0].legs[0].duration.text, price:"Free", icon:"walk"}));
+      .then((response) => this.storeData({method:"walk", duration:response.routes[0].legs[0].duration.text, price:"Free", icon:"walk"})
+        )
+      .catch((err) => {
+      console.log("error in api", err)
+      });
     GoogleMapApi.fetchModeByBicycling(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
-      .then((response) => this.storeData({method:"bike", duration:response.routes[0].legs[0].duration.text, price:"Free", icon:"bike"}));
+      .then((response) => this.storeData({method:"bike", duration:response.routes[0].legs[0].duration.text, price:"Free", icon:"bike"})
+        )
+      .catch((err) => {
+      console.log("error in api", err)
+      });
     GoogleMapApi.fetchModeByTransit(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
-      .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00", icon:"train"}));
+      .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00", icon:"train"})
+        )
+      .catch((err) => {
+      console.log("error in api", err)
+      });
 
     // LyftApi.getLyftUserToken()
     //   .then((token) => {
     //     LyftApi.getRideDetails(token.public_key, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
     //     .then((response) => this.storeData({method:"lyft",
     //       duration:Math.round(response.cost_estimates.filter(choice => choice.ride_type === 'lyft')[0].estimated_duration_seconds/60).toString() + " mins",
-    //       price: (response.cost_estimates.filter(choice => choice.ride_type === 'lyft')[0].estimated_cost_cents_min*0.01).toString(),
+    //       price: (respon73 2se.cost_estimates.filter(choice => choice.ride_type === 'lyft')[0].estimated_cost_cents_min*0.01).toString(),
     //       icon:"car"
     //     }))
     //   });
 
     UberApi.getDriverEtaToLocation(UberApi.serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
-      .then((response) => this.storeData({method:"uber",
-        duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins",
-        price: response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate,
-        icon:"uber"
-      }))
+      .then((response) => {
+        console.log('uber', response)
+        this.storeData({method:"uber",
+          duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins",
+          price: response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate,
+          icon:"uber"
+        })
+      })
+      .catch((err) => {
+      console.log("error in api", err)
+      });
     } catch(err) {console.log(err)}
   }
 
