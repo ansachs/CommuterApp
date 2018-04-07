@@ -25,7 +25,6 @@ export default class DestinationForm extends React.Component {
  getLocation = async () => {
     navigator.geolocation.getCurrentPosition(
         (position) => {
-          console.log(position)
           fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyD2_6K7CF1C1ooSwgDxxDq2WBx8bAIihIU`)
             .then(response => response.json())
             .then(json => {
@@ -36,9 +35,6 @@ export default class DestinationForm extends React.Component {
         },
     (err)=> {console.log(err)})
   }
-    
-  
-
 
   onPressSubmit(e) {
     e.persist()
@@ -107,7 +103,7 @@ export default class DestinationForm extends React.Component {
           color="#FFF"
           buttonStyle={{marginTop:20}}
         />
-     
+
       </ScrollView>
     )
   }

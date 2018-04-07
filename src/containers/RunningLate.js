@@ -23,7 +23,7 @@ export default class RunningLate extends React.Component {
         {name: "alex", number: "2121232123", type: "person"},
         {name: "ray", number: "2342342342", type: "person"},
         {name: "aaron", number: "2342342344", type: "person"},
-        {name: "dan", number: "2343443233", type: "person"},
+        {name: "dan", number: "2343443231", type: "person"},
         {name: "jon", number: "2343443233", type: "person"}
       ],
       allVisible: true,
@@ -37,8 +37,8 @@ export default class RunningLate extends React.Component {
     // call function to retrieve favorites
   }
 
-  handleBack() {
-    this.props.navigation.dispatch(NavigationActions.back())
+  getContacts() {
+    this.props.navigation.navigate('contactPage')
   }
 
   sendMessage() {
@@ -51,10 +51,9 @@ export default class RunningLate extends React.Component {
           console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
 
       });
-  }  
+  }
 
   render() {
-
 
     return (
       <View contentContainerStyle={styles.container}>
@@ -80,13 +79,13 @@ export default class RunningLate extends React.Component {
         <View>
           <RenderList currentList={this.state[this.state.currentList]} />
         </View>
-          
+
       </View>
         <Button
         title="Add from contacts list"
-        // onPress={this.sendMessage.bind(this)}
+        onPress={this.getContacts.bind(this)}
         />
-      
+
 
         <Button
           title="send text"

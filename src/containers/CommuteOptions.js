@@ -15,7 +15,6 @@ export default class CommuteOptions extends React.Component {
   constructor(props) {
     super(props);
     this.springValue = new Animated.Value(0)
-    console.log(this.props)
     this.state = {
       transpo: [],
       toggle: false,
@@ -103,7 +102,6 @@ export default class CommuteOptions extends React.Component {
 
     UberApi.getDriverEtaToLocation(UberApi.serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => {
-        console.log('uber', response)
         this.storeData({method:"uber",
           duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins",
           price: response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate,

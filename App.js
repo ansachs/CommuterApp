@@ -37,13 +37,10 @@ handleClick = (details) => {
 
 }
 
-
   render() {
 
-<<<<<<< HEAD
-=======
     let userOrWelcome = this.state.clientID ? this.state.userName : "welcome"
->>>>>>> 9bd97b28b6216aed25565b61c065699f83a62a9d
+
     return (
       <View style={{flex: 1}}>
         <Header
