@@ -8,8 +8,9 @@ import bikePage from '../containers/bikePage.js';
 import transitPage from '../containers/transitPage.js';
 import lyftPage from '../containers/lyftPage.js';
 import drivePage from '../containers/drivePage.js';
-import uberPage from '../containers/uberPage.js';
+import uberPage from '../containers/UberPage.js';
 import RunningLate from '../containers/RunningLate.js';
+import ContactList from '../containers/ContactList'
 
 
 export const DestinationStack = StackNavigator({
@@ -25,6 +26,14 @@ export const DestinationStack = StackNavigator({
     screen: CommuteOptions,
     navigationOptions: {
       title: 'Commute Options',
+      header: null
+    }
+  },
+
+  contactPage: {
+    screen: ContactList,
+    navigationOptions: {
+      title: 'contactList',
       header: null
     }
   },

@@ -4,6 +4,8 @@ import { Root } from './src/config/router.js';
 import { Header, Icon } from 'react-native-elements';
 import LoginButton from './src/components/authentication/loginButton'
 import ContactsApi from './src/apis/ContactsApi.js'
+import ContactList from './src/containers/ContactList'
+
 
 YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
@@ -58,7 +60,7 @@ handleClick = (details) => {
               current={this.state}
             />}
         />
-        <Root screenProps={this.state.clientID}/>
+        <Root />
       </View>
     )
   }

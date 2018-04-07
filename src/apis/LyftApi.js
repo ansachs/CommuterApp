@@ -3,13 +3,23 @@
 //3 - getRideDetails
 
 const getLyftUserToken = () => {
-  return fetch('https://quiet-retreat-95283.herokuapp.com/client_key/lyft')
-  .then((response) => response.json()
-  )
-  .catch((err) => {
-      console.log(err)
+  return fetch('https://quiet-retreat-95283.herokuapp.com/client_key/lyft',{
+    method: "GET",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+      }
+    })
+  .then((response) => {
+    console.log("the response is", response)
+    return response.json();
+  })
+  .then((json) => {
+    console.log("token",json);
+    return json;
   })
   .catch((err) => {
+      console.log(err)
       throw "error in getLyftUserToken"
     });
 }
@@ -23,7 +33,14 @@ const getDriverEtaToOrigin = (user_token, orig_lat, orig_lng) => {
         'Authorization': 'Bearer' + user_token
       }
     })
-  .then((response) => {return response.json()
+  .then((response) => {
+    console.log("the response is", response)
+
+    return response.json();
+  })
+  .then((json) => {
+    console.log("token",json);
+    return json;
   })
   .catch((err) => {
       throw "error in getDriverEtaToOrigin"
@@ -39,7 +56,10 @@ const getRideDetails = (user_token, orig_lat, orig_lng, dest_lat, dest_lng) => {
         'Authorization': 'bearer ' + user_token
       }
     })
-  .then((response) => {return response.json()
+  .then((response) => response.json())
+  .then((json) => {
+    console.log(response);
+    return json;
   })
   .catch((err) => {
       throw "error in getDriverEtaToOrigin"
