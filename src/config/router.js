@@ -10,8 +10,7 @@ import lyftPage from '../containers/lyftPage.js';
 import drivePage from '../containers/drivePage.js';
 import uberPage from '../containers/uberPage.js';
 import RunningLate from '../containers/RunningLate.js';
-import ContactList from '../containers/ContactList'
-
+import ContactList from '../containers/ContactList';
 
 export const DestinationStack = StackNavigator({
   DestinationForm: {
@@ -131,10 +130,10 @@ export const Root = StackNavigator({
   Tabs: {
     screen: Tabs,
   },
-  // RunningLate: {
+  // RunningLateStack: {
   //   screen: RunningLateStack
   // },
 }, {
-  //mode: 'modal',
+  // mode: 'modal',
   headerMode: 'none'
 });

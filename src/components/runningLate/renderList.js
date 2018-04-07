@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView,   FlatList } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
 
 export default RenderList = (prop) => {

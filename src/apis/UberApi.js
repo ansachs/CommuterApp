@@ -9,14 +9,12 @@ const getDriverEta = (serverToken, startLatitude, startLongitude) => {
       }
     })
   .then((response) => {
-    console.log("the response is", response)
     return response.json();
   })
   .then((json) => {
     if (json.code === "distance_exceeded" ) {
       throw "distance exceeded"
     } else {
-    console.log("token",json);
     return json;
   }})
   .catch((err) => {
@@ -35,14 +33,12 @@ const getDriverEtaToLocation = (serverToken, startDestinationLat, startDestinati
       }
     })
   .then((response) => {
-    console.log("the response is", response)
     return response.json();
   })
   .then((json) => {
     if (json.code === "distance_exceeded" ) {
       throw "distance exceeded"
     } else {
-    console.log("token",json);
     return json;
   }})
   .catch((err) => {

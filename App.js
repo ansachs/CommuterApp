@@ -49,6 +49,7 @@ handleClick = (details) => {
       this.putUsersToRails()
     } 
     let userOrWelcome = this.state.clientID ? this.state.userName : "welcome"
+
     return (
       <View style={{flex: 1}}>
         <Header

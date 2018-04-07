@@ -67,7 +67,7 @@ export default class ContactList extends React.Component {
 
   scrollToChar = char => {
     console.log("go to    ",char)
-    
+
     this.listRef.scrollToLocation({
       sectionIndex: (char.charCodeAt(0) - 65),
       itemIndex: 0,
@@ -101,16 +101,15 @@ export default class ContactList extends React.Component {
               sections[key.charCodeAt(0) - 65].data.push(contact)
             }
           }
-          
+
         })
         this.setState({sections: sections})
       }
-    
-      
-    }).catch((err) => {console.log(err)})
-    
-  }
 
+
+    }).catch((err) => {console.log(err)})
+
+  }
 
   render() {
 
@@ -163,7 +162,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     // borderColor: '#CCCCCC',
     justifyContent: 'center'
-    
+
   },
   sectionComplete: {
     height: itemHeight
@@ -179,7 +178,7 @@ const styles = StyleSheet.create({
     textAlign: 'left'
   },
   divider: {
-    backgroundColor: 'black', 
+    backgroundColor: 'black',
     width: '75%',
     position: "relative",
     bottom: 10
