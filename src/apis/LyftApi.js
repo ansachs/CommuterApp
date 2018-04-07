@@ -12,12 +12,11 @@ const getLyftUserToken = () => {
     })
   .then((response) => {
     console.log("the response is", response)
-
     return response.json();
   })
   .then((json) => {
     console.log("token",json);
-    return response.json();
+    return json;
   })
   .catch((err) => {
       console.log(err)
@@ -41,7 +40,7 @@ const getDriverEtaToOrigin = (user_token, orig_lat, orig_lng) => {
   })
   .then((json) => {
     console.log("token",json);
-    return response.json();
+    return json;
   })
   .catch((err) => {
       throw "error in getDriverEtaToOrigin"
@@ -60,7 +59,7 @@ const getRideDetails = (user_token, orig_lat, orig_lng, dest_lat, dest_lng) => {
   .then((response) => response.json())
   .then((json) => {
     console.log(response);
-    return response.json();
+    return json;
   })
   .catch((err) => {
       throw "error in getDriverEtaToOrigin"
