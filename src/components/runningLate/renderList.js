@@ -7,9 +7,10 @@ export default RenderList = (prop) => {
     <FlatList
       data={prop.currentList}
       keyExtractor={item => item.number}
-      renderItem={({item}) => {
+      renderItem={({item, index},) => {
         return(
         <ListItem
+          onPress={prop.handleClick(index)}
           title={item.name}
           leftIcon={{
             name: `${item.type}`,

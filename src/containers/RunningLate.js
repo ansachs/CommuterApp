@@ -24,7 +24,7 @@ export default class RunningLate extends React.Component {
         {name: "ray", number: "2342342342", type: "person"},
         {name: "aaron", number: "2342342344", type: "person"},
         {name: "dan", number: "2343443233", type: "person"},
-        {name: "jon", number: "2343443233", type: "person"}
+        {name: "jon", number: "2343444233", type: "person"}
       ],
       allVisible: true,
       favoritesVisible: false,
@@ -52,7 +52,12 @@ export default class RunningLate extends React.Component {
           console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
    
       });
-  }  
+  } 
+
+  removeNumber = (index) => {
+    const newState = this.state[this.state.currentList].slice
+
+  } 
 
 
   render() {
@@ -80,7 +85,7 @@ export default class RunningLate extends React.Component {
         <View style={styles.favoritesList}>
 
         <View>
-          <RenderList currentList={this.state[this.state.currentList]} />
+          <RenderList currentList={this.state[this.state.currentList]} handleClick={this.removeNumber}/>
         </View>
           
       </View>
