@@ -8,11 +8,21 @@ const getDriverEta = (serverToken, startLatitude, startLongitude) => {
         'Authorization': `Token ${serverToken}`
       }
     })
-  .then((response) => {return response.json()
+  .then((response) => {
+    console.log("the response is", response)
+    return response.json();
   })
+  .then((json) => {
+    if (json.code === "distance_exceeded" ) {
+      throw "distance exceeded"
+    } else {
+    console.log("token",json);
+    return json;
+  }})
   .catch((err) => {
       console.log(err)
-  });
+      throw "error in uberapi"
+    });
 }
 
 const getDriverEtaToLocation = (serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng) => {
@@ -24,11 +34,21 @@ const getDriverEtaToLocation = (serverToken, startDestinationLat, startDestinati
         'Authorization': `Token ${serverToken}`
       }
     })
-  .then((response) => {return response.json()
+  .then((response) => {
+    console.log("the response is", response)
+    return response.json();
   })
+  .then((json) => {
+    if (json.code === "distance_exceeded" ) {
+      throw "distance exceeded"
+    } else {
+    console.log("token",json);
+    return json;
+  }})
   .catch((err) => {
       console.log(err)
-  });
+      throw "error in uberapi"
+    });
 }
 
 export default {

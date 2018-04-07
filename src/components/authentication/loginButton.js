@@ -5,8 +5,6 @@ import { Icon } from 'react-native-elements';
 
 export default LoginButton = (props) => {
 
-  console.log(props.current)
-
 let loggedOn = props.current.clientID !== "" ? 'logout' : 'login'
 
 onLoginPress = async () => {
