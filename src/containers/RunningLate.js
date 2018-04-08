@@ -37,31 +37,29 @@ export default class RunningLate extends React.Component {
     // call function to retrieve favorites
   }
 
-
-  handleBack() {
-    this.props.navigation.dispatch(NavigationActions.back())
+  getContacts() {
+    this.props.navigation.navigate('contactPage')
   }
-  
+
   sendMessage() {
       SendSMS.send({
           body: 'The default body of the SMS!',
           recipients: ['2253951571'],
           successTypes: ['sent', 'queued']
       }, (completed, cancelled, error) => {
-   
+
           console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
    
       });
-  } 
+  }
+
 
   removeNumber = (index) => {
     const newState = this.state[this.state.currentList].slice
 
   } 
 
-
   render() {
-
 
     return (
       <View contentContainerStyle={styles.container}>
@@ -87,13 +85,13 @@ export default class RunningLate extends React.Component {
         <View>
           <RenderList currentList={this.state[this.state.currentList]} handleClick={this.removeNumber}/>
         </View>
-          
+
       </View>
         <Button
         title="Add from contacts list"
-        // onPress={this.sendMessage.bind(this)}
+        onPress={this.getContacts.bind(this)}
         />
-      
+
 
         <Button
           title="send text"
@@ -104,6 +102,8 @@ export default class RunningLate extends React.Component {
     )
   }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

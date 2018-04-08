@@ -8,10 +8,9 @@ import bikePage from '../containers/bikePage.js';
 import transitPage from '../containers/transitPage.js';
 import lyftPage from '../containers/lyftPage.js';
 import drivePage from '../containers/drivePage.js';
-import uberPage from '../containers/UberPage.js';
+import UberPage from '../containers/UberPage.js';
 import RunningLate from '../containers/RunningLate.js';
-import ContactList from '../containers/ContactList'
-
+import ContactList from '../containers/ContactList';
 
 export const DestinationStack = StackNavigator({
   DestinationForm: {
@@ -79,7 +78,7 @@ export const DestinationStack = StackNavigator({
   },
 
   uberPage: {
-    screen: uberPage,
+    screen: UberPage,
     navigationOptions: {
       title: 'uberPage',
       header: null
@@ -131,10 +130,10 @@ export const Root = StackNavigator({
   Tabs: {
     screen: Tabs,
   },
-  // RunningLate: {
+  // RunningLateStack: {
   //   screen: RunningLateStack
   // },
 }, {
-  //mode: 'modal',
+  // mode: 'modal',
   headerMode: 'none'
 });

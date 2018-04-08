@@ -4,6 +4,7 @@ import { NavigationActions } from 'react-navigation'
 import { Button, ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MapView from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
 import GoogleMapApi from '../apis/GoogleMapApi.js'
 import UberApi from '../apis/UberApi.js'
 import LyftApi from '../apis/LyftApi.js'
@@ -16,13 +17,19 @@ export default class CommuteOptions extends React.Component {
     this.springValue = new Animated.Value(0)
     this.state = {
       transpo: [],
-      toggle: false
+      toggle: false,
     }
   }
 
   handleRowOnPress(transportMethod) {
     let commuteOption = this.state.transpo.filter(optionObject => optionObject.method === transportMethod)
-    this.props.navigation.navigate(`${transportMethod}Page`, {...commuteOption[0]})
+    this.props.navigation.navigate(`${transportMethod}Page`, {
+      ...commuteOption[0],
+      startLat: this.props.navigation.state.params.startDestinationLat,
+      startLng: this.props.navigation.state.params.startDestinationLng,
+      endLat: this.props.navigation.state.params.endDestinationLat,
+      endLng: this.props.navigation.state.params.endDestinationLng
+    })
   }
 
   handleRunningLatePress() {
@@ -95,7 +102,6 @@ export default class CommuteOptions extends React.Component {
 
     UberApi.getDriverEtaToLocation(UberApi.serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => {
-        console.log('uber', response)
         this.storeData({method:"uber",
           duration:(response.prices.filter(choice => choice.display_name === 'uberX')[0].duration/60).toString() + " mins",
           price: response.prices.filter(choice => choice.display_name === 'uberX')[0].estimate,
@@ -146,29 +152,64 @@ export default class CommuteOptions extends React.Component {
 
     let dropDownIcon = this.state.toggle ? 'arrow-down-drop-circle' : 'arrow-right-drop-circle'
 
+    let startLat = this.props.navigation.state.params.startDestinationLat
+    let startLng = this.props.navigation.state.params.startDestinationLng
+    let endLat = this.props.navigation.state.params.endDestinationLat
+    let endLng = this.props.navigation.state.params.endDestinationLng
+
     return (
       <View style={styles.container}>
         <View style={styles.destinationContainer}>
           <View style={{flex:1, borderRightWidth:1, borderColor:'#ccc', paddingLeft:20}}>
             <Text style={styles.destinationText}>Start Destination:</Text>
-            <Text style={styles.destinationText}>{this.props.navigation.state.params.startDestination}</Text>
+            <Text style={styles.destinationText} numberOfLines={1}>{this.props.navigation.state.params.startDestination}</Text>
           </View>
           <View style={styles.destinationCol}>
             <Text style={styles.destinationText}>End Destination:</Text>
-            <Text style={styles.destinationText}>{this.props.navigation.state.params.endDestination}</Text>
+            <Text style={styles.destinationText} numberOfLines={1}>{this.props.navigation.state.params.endDestination}</Text>
           </View>
         </View>
 
         <View style={styles.mapContainer}>
           <MapView
             initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
+              latitude: startLat,
+              longitude: startLng,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
             style={styles.map}
-          />
+          >
+
+            <MapViewDirections
+              origin={{
+                latitude: startLat,
+                longitude: startLng
+              }}
+              destination={{
+                latitude: endLat,
+                longitude: endLng
+              }}
+              apikey={'AIzaSyD2_6K7CF1C1ooSwgDxxDq2WBx8bAIihIU'}
+              strokeWidth={3}
+              strokeColor="red"
+            />
+
+            <MapView.Marker
+              coordinate={{
+                latitude: startLat,
+                longitude: startLng
+              }}
+              title='Start Destination'
+            />
+            <MapView.Marker
+              coordinate={{
+                latitude: endLat,
+                longitude: endLng
+              }}
+              title='End Destination'
+            />
+          </MapView>
         </View>
 
         <Animated.View

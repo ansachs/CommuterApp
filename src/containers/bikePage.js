@@ -1,20 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Button } from 'react-native-elements';
+import { StyleSheet, View } from 'react-native';
+import MapContainer from './MapContainer.js'
 
 export default class bikePage extends React.Component {
   render() {
+
+    let startLat = this.props.navigation.state.params.startLat;
+    let startLng = this.props.navigation.state.params.startLng;
+    let endLat = this.props.navigation.state.params.endLat;
+    let endLng = this.props.navigation.state.params.endLng;
+
     return (
       <View style={styles.container}>
-      <Text style={{fontSize: 25}}>Bike</Text>
-        <View>
-          <Text>Distance:</Text>
-          <Text>{this.props.navigation.state.params.duration}</Text>
-        </View>
-        <View>
-          <Text>Price:</Text>
-          <Text>{this.props.navigation.state.params.price}</Text>
-        </View>
+        <MapContainer
+          startLat={startLat}
+          startLng={startLng}
+          endLat={endLat}
+          endLng={endLng}
+          mode='bicycling'
+        />
       </View>
     )
   }
@@ -26,5 +30,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
 });
