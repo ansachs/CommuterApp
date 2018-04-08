@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapContainer from './MapContainer.js'
 
-export default class uberPage extends React.Component {
+export default class UberPage extends React.Component {
   render() {
 
     let startLat = this.props.navigation.state.params.startLat;
