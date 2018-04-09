@@ -40,21 +40,21 @@ export default class ContactList extends React.Component {
     }
   }
 
-  async showFirstContactAsync() {
+  // async showFirstContactAsync() {
 
-    const permission = await Expo.Permissions.askAsync(Expo.Permissions.CONTACTS);
-    if (permission.status !== 'granted') {
-      return;
-    }
-    const contacts = await Expo.Contacts.getContactsAsync({
-      fields: [
-        Expo.Contacts.PHONE_NUMBERS,
-      ],
-      pageSize: 200,
-      pageOffset: 0,
-    })
-    return contacts
-  }
+  //   const permission = await Expo.Permissions.askAsync(Expo.Permissions.CONTACTS);
+  //   if (permission.status !== 'granted') {
+  //     return;
+  //   }
+  //   const contacts = await Expo.Contacts.getContactsAsync({
+  //     fields: [
+  //       Expo.Contacts.PHONE_NUMBERS,
+  //     ],
+  //     pageSize: 200,
+  //     pageOffset: 0,
+  //   })
+  //   return contacts
+  // }
 
   getItemLayout = (data, index) => {
 
@@ -78,41 +78,41 @@ export default class ContactList extends React.Component {
   };
 
 
-  componentDidMount() {
+  // componentDidMount() {
 
-    const sections =[];
+  //   const sections =[];
 
-    for (i = 0; i < 26; i++) {
-      sections[i] = {data:[], key: String.fromCharCode(i + 65), title: String.fromCharCode(i + 65)}
-    }
+  //   for (i = 0; i < 26; i++) {
+  //     sections[i] = {data:[], key: String.fromCharCode(i + 65), title: String.fromCharCode(i + 65)}
+  //   }
 
-    this.showFirstContactAsync()
-    .then((contacts)=>{
-      console.log('first out of async')
-      console.log(contacts)
-      if (!contacts || !contacts.data) {
-        throw "error"
-      } else {
-        this.setState({contacts: contacts.data})
-        contacts.data.forEach((contact)=>{
-          if (contact.name) {
-            if (isNaN((contact.name)[0]) === true) {
-              const key = (contact.name)[0].toUpperCase()
-              sections[key.charCodeAt(0) - 65].data.push(contact)
-            }
-          }
+  //   this.showFirstContactAsync()
+  //   .then((contacts)=>{
+  //     console.log('first out of async')
+  //     console.log(contacts)
+  //     if (!contacts || !contacts.data) {
+  //       throw "error"
+  //     } else {
+  //       this.setState({contacts: contacts.data})
+  //       contacts.data.forEach((contact)=>{
+  //         if (contact.name) {
+  //           if (isNaN((contact.name)[0]) === true) {
+  //             const key = (contact.name)[0].toUpperCase()
+  //             sections[key.charCodeAt(0) - 65].data.push(contact)
+  //           }
+  //         }
 
-        })
-        this.setState({sections: sections})
-      }
+  //       })
+  //       this.setState({sections: sections})
+  //     }
 
 
-    }).catch((err) => {console.log(err)})
+  //   }).catch((err) => {console.log(err)})
 
-  }
+  // }
 
   render() {
-
+    
     return (
       <View>
         <View style={{paddingLeft: 10}}>

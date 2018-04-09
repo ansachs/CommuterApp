@@ -1,5 +1,8 @@
 {
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 11224,
+  "expoServerNgrokUrl": "https://2w-264.mrtelz.final-capstone.exp.direct",
+  "packagerNgrokUrl": "https://packager.2w-264.mrtelz.final-capstone.exp.direct",
+  "ngrokPid": 11244
 }
