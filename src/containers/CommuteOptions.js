@@ -116,8 +116,13 @@ export default class CommuteOptions extends React.Component {
     } catch(err) {console.log(err)}
   }
 
+
   storeData(obj) {
+
+   
+
     let current = {method: obj.method, price: obj.price, duration:obj.duration, icon:obj.icon}
+
     this.setState({transpo: [...this.state.transpo, current]})
   }
 
@@ -314,4 +319,5 @@ const styles = StyleSheet.create({
   //   fontWeight: 'bold'
   // },
 })
+
 

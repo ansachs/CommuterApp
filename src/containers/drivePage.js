@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapContainer from './MapContainer.js'
+import { Text, Linking, Button } from 'react-native';
 
 export default class drivePage extends React.Component {
   constructor(props) {
@@ -29,6 +30,14 @@ export default class drivePage extends React.Component {
           endLng={endLng}
           mode='driving'
         />
+        <View>
+          <Button 
+          title='ParkWhiz'
+          style={{color: 'blue'}}
+          onPress={() => Linking.openURL(`https://parkwhiz.com/search/?lat=${endLat}&lng=${endLng}&start=1522637722&end=1522648522&key=62d882d8cfe5680004fa849286b6ce20`)}>
+          ParkWhiz
+          </Button>
+        </View>
       </View>
     )
   }
