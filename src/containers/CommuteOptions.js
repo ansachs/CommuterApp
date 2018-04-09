@@ -28,7 +28,9 @@ export default class CommuteOptions extends React.Component {
       startLat: this.props.navigation.state.params.startDestinationLat,
       startLng: this.props.navigation.state.params.startDestinationLng,
       endLat: this.props.navigation.state.params.endDestinationLat,
-      endLng: this.props.navigation.state.params.endDestinationLng
+      endLng: this.props.navigation.state.params.endDestinationLng,
+      startDestination: this.props.navigation.state.params.startDestination,
+      endDestination: this.props.navigation.state.params.endDestination
     })
   }
 
@@ -115,7 +117,7 @@ export default class CommuteOptions extends React.Component {
   }
 
   storeData(obj) {
-    let current = {method: obj.method, price: obj.price, duration:parseInt(obj.duration.replace(/\D+/,'')), icon:obj.icon}
+    let current = {method: obj.method, price: obj.price, duration:obj.duration, icon:obj.icon}
     this.setState({transpo: [...this.state.transpo, current]})
   }
 
@@ -144,7 +146,6 @@ export default class CommuteOptions extends React.Component {
   }
 
   render() {
-    const list = [...this.state.transpo]
     const maxHeight = this.springValue.interpolate({
       inputRange: [0, 1],
       outputRange: ['6.5%', '100%']
@@ -229,7 +230,8 @@ export default class CommuteOptions extends React.Component {
             iconRight
           />
           <FlatList
-            data={this.state.transpo.sort((a , b) => parseFloat(a.duration) - parseFloat(b.duration))}
+            // data={this.state.transpo.sort((a , b) => parseFloat(a.duration) - parseFloat(b.duration))}
+            data={this.state.transpo}
             renderItem={({item}) => (
               <ListItem
                 title={item.method.toUpperCase()}
