@@ -21,6 +21,7 @@ export default class DestinationForm extends React.Component {
 
   componentDidMount = () => {
     this.getLocation();
+    
   }
  getLocation = async () => {
     navigator.geolocation.getCurrentPosition(
@@ -92,7 +93,6 @@ export default class DestinationForm extends React.Component {
         <Input
           onChangeText={(endDestination) => this.setState({endDestination})}
           style={styles.textInput}
-          onChangeText={(endDestination) => this.setState({endDestination})}
           placeholder='enter end address'
           value={this.state.endDestination}
           onChangeText={(val) => {this.setState({endDestination: val})}}
