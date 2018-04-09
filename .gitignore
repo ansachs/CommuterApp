@@ -72,3 +72,7 @@ package-lock.json
 
 /coverage
 /third-party
+
+#improperly merged folders
+ios
+geolocation
