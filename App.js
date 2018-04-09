@@ -5,6 +5,7 @@ import { Header, Icon } from 'react-native-elements';
 import LoginButton from './src/components/authentication/loginButton'
 import UsersApi from './src/apis/UsersApi.js'
 import ContactList from './src/containers/ContactList'
+import GetContacts from './src/components/contacts/getContacts'
 
 
 YellowBox.ignoreWarnings([
@@ -15,38 +16,74 @@ YellowBox.ignoreWarnings([
 
 
 export default class App extends React.Component {
-constructor(props) {
-  super(props);
-  this.state = {
-    userName: "",
-    clientID: ""
-  }
-}
-
-handleClick = (details) => {
-  if (details !== null) {
-    this.setState({
-      userName: details.user.name,
-      clientID: details.user.id
-    })
-  } else {
-    this.setState({
-      userName: "welcome",
-      clientID: ""
-    })
+  constructor(props) {
+    super(props);
+    this.state = {
+      userName: "",
+      clientID: "",
+      contacts: [],
+      sections: []
+    }
   }
 
-}
+  handleClick = (details) => {
+    if (details !== null) {
+      this.setState({
+        userName: details.user.name,
+        clientID: details.user.id
+      })
+    } else {
+      this.setState({
+        userName: "welcome",
+        clientID: ""
+      })
+    }
 
-    putUsersToRails() {
-    return UsersApi.getGoogleId(this.state.userName, this.state.clientID)
-    console.log(this.state.userName)
+  }
+
+  componentDidMount = () => {
+    this.getContacts()
+  }
+
+  getContacts = async () => {
+    const sections =[];
+
+    for (i = 0; i < 26; i++) {
+      sections[i] = {data:[], key: String.fromCharCode(i + 65), title: String.fromCharCode(i + 65)}
+    }
+
+    GetContacts.getContactsAsync()
+    .then((contacts)=>{
+      // console.log('first out of async')
+      // console.log(contacts)
+      if (!contacts || !contacts.data) {
+        throw "error"
+      } else {
+        this.setState({contacts: contacts.data})
+        contacts.data.forEach((contact)=>{
+          if (contact.name) {
+            if (isNaN((contact.name)[0]) === true) {
+              const key = (contact.name)[0].toUpperCase()
+              sections[key.charCodeAt(0) - 65].data.push(contact)
+            }
+          }
+        })
+        this.setState({sections: sections})
+        }
+    }).catch((err) => {console.log(err)})
+
+  }
+
+  checkClientWithServer() {
+  return UsersApi.getGoogleId(this.state.userName, this.state.clientID)
+  // console.log(this.state.userName)
   }
 
 
   render() {
+    console.log(this)
     if (this.state.clientID.length > 0) {
-      this.putUsersToRails()
+      this.checkClientWithServer()
     } 
     let userOrWelcome = this.state.clientID ? this.state.userName : "welcome"
 
@@ -61,7 +98,7 @@ handleClick = (details) => {
               current={this.state}
             />}
         />
-        <Root />
+        <Root screenProps={{contacts: this.state.sections}}/>
       </View>
     )
   }
