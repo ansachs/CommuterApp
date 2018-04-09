@@ -119,7 +119,7 @@ export default class CommuteOptions extends React.Component {
 
   storeData(obj) {
 
-    let current = {method: obj.method, price: obj.price, duration:(obj.duration), icon:obj.icon}
+   
 
     let current = {method: obj.method, price: obj.price, duration:obj.duration, icon:obj.icon}
 
