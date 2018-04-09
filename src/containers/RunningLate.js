@@ -6,27 +6,29 @@ import Communications from 'react-native-communications';
 import { Button, ListItem } from 'react-native-elements';
 import RenderList from '../components/runningLate/renderList'
 import MenuBar from '../components/runningLate/menuBar'
+import ContactList from './ContactList'
 
 export default class RunningLate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorites: {data: [
+      favorites: [
         {name: "ray", number: "2342342342", type: "person"},
         {name: "aaron", number: "2342342344", type: "person"},
         {name: "dan", number: "2343443233", type: "person"}
-      ]},
+      ],
       selected: [
         {name: "alex", number: "2121232123", type: "person"},
         {name: "ray", number: "2342342342", type: "person"}
       ],
-      all: [
-        {name: "alex", number: "2121232123", type: "person"},
-        {name: "ray", number: "2342342342", type: "person"},
-        {name: "aaron", number: "2342342344", type: "person"},
-        {name: "dan", number: "2343443233", type: "person"},
-        {name: "jon", number: "2343444233", type: "person"}
-      ],
+      all: [{data: [
+        {name: "alex", number: "2121232123", type: "person", id: "567"},
+        {name: "ray", number: "2342342342", type: "person", id: "456"}],  key: "A", title: "A"},
+      {data:[
+        {name: "aaron", number: "2342342344", type: "person", id: "123"},
+        {name: "dan", number: "2343443233", type: "person", id: "234"},
+        {name: "jon", number: "2343444233", type: "person", id: "345"}
+        ], key: "B", title: "B"}],
       allVisible: true,
       favoritesVisible: false,
       selectedVisible: false,
@@ -34,17 +36,14 @@ export default class RunningLate extends React.Component {
     }
   }
 
-  // componentDidMount() {
-  //   if (this.props.screenProps.contacts) {
-  //     this.setState({all: this.props.screenProps.contacts})
-  //   } else {
-  //     // this.setState({all: "Please login to view contacts"})
-  //   }
-  // }
+  componentDidMount() {
+    if (this.props.screenProps.contacts) {
+      this.setState({all: this.props.screenProps.contacts})
+    } else {
+      // this.setState({all: "Please login to view contacts"})
+    }
+  }
 
-  // getContacts() {
-  //   this.props.navigation.navigate('contactPage')
-  // }
 
   sendMessage() {
       SendSMS.send({
@@ -71,6 +70,16 @@ export default class RunningLate extends React.Component {
   } 
 
   render() {
+    let currentList = this.state.currentList === "all" ? 
+      <ContactList 
+        contactList={this.state.all} 
+      />
+      : 
+      <RenderList 
+        currentList={this.state[this.state.currentList]}
+        handleClick={this.removePhoneNumber}
+      />
+
     console.log(this)
     return (
       <View contentContainerStyle={styles.container}>
@@ -80,15 +89,8 @@ export default class RunningLate extends React.Component {
         </View>
 
         <View>
-          <RenderList 
-            currentList={this.state[this.state.currentList]}
-            handleClick={this.removePhoneNumber}/>
+          {currentList}
         </View>
-
-        <Button
-          title="Add from contacts list"
-          onPress={this.getContacts.bind(this)}
-        />
 
         <Button
           title="send text"
