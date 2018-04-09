@@ -10,6 +10,7 @@ import lyftPage from '../containers/lyftPage.js';
 import drivePage from '../containers/drivePage.js';
 import UberPage from '../containers/UberPage.js';
 import RunningLate from '../containers/RunningLate.js';
+// import RunningLate2 from '../containers/RunningLate2.js';
 import ContactList from '../containers/ContactList';
 
 export const DestinationStack = StackNavigator({
@@ -113,7 +114,17 @@ export const Tabs = TabNavigator({
   }
 },
 {
-  tabBarPosition: 'bottom'
+  tabBarPosition: 'bottom',
+  navigationOptions: ({navigation}) => ({
+    tabBarOnPress: ({scene, jumpToIndex}) => {
+      if (scene.index === 1) {
+        jumpToIndex(0)
+      } else {
+        jumpToIndex(scene.index)
+      }
+      console.log(scene)
+    }
+  })
 });
 
 export const RunningLateStack = StackNavigator({

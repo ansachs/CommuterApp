@@ -53,7 +53,7 @@ export default class RunningLate extends React.Component {
       }, (completed, cancelled, error) => {
 
           console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
-   
+
       });
   }
 
@@ -67,20 +67,20 @@ export default class RunningLate extends React.Component {
   handleMenuClick = (obj) => {
     this.setState(obj);
     // console.log('jlkj')
-  } 
+  }
 
   render() {
-    let currentList = this.state.currentList === "all" ? 
-      <ContactList 
-        contactList={this.state.all} 
+    let currentList = this.state.currentList === "all" ?
+      <ContactList
+        contactList={this.state.all}
       />
-      : 
-      <RenderList 
+      :
+      <RenderList
         currentList={this.state[this.state.currentList]}
         handleClick={this.removePhoneNumber}
       />
 
-    console.log(this)
+    // console.log(this)
     return (
       <View contentContainerStyle={styles.container}>
 
