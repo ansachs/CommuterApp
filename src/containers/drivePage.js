@@ -4,16 +4,26 @@ import MapContainer from './MapContainer.js'
 import { Text, Linking, Button } from 'react-native';
 
 export default class drivePage extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      startDestination: this.props.navigation.state.params.startDestination,
+      endDestination: this.props.navigation.state.params.endDestination,
+      startLat: this.props.navigation.state.params.startLat,
+      startLng: this.props.navigation.state.params.startLng,
+      endLat: this.props.navigation.state.params.endLat,
+      endLng: this.props.navigation.state.params.endLng
+    }
+  }
 
-    let startLat = this.props.navigation.state.params.startLat;
-    let startLng = this.props.navigation.state.params.startLng;
-    let endLat = this.props.navigation.state.params.endLat;
-    let endLng = this.props.navigation.state.params.endLng;
+  render() {
+    let { startDestination, endDestination, startLat, startLng, endLat, endLng } = this.state
 
     return (
       <View style={styles.container}>
         <MapContainer
+          startDestination={startDestination}
+          endDestination={endDestination}
           startLat={startLat}
           startLng={startLng}
           endLat={endLat}
@@ -36,8 +46,8 @@ export default class drivePage extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // backgroundColor: '#fff',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
 });
