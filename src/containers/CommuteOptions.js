@@ -62,7 +62,7 @@ export default class CommuteOptions extends React.Component {
       .then((response) => {
         ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
           .then((response2) => {
-            this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:response2.min_price, icon:"car"})
+            this.storeData({method:"drive", duration:response.routes[0].legs[0].duration_in_traffic.text, price:response2.min_price, icon:"car"})
           })
           .catch((err) => {
           console.log("error in api", err)

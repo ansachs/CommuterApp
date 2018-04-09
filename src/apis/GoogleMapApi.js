@@ -15,7 +15,7 @@ const convertToLatLong = (startDestination) => {
 }
 
 const fetchModeByDrive = (startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng) => {
-  return fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${startDestinationLat},${startDestinationLng}&destination=${endDestinationLat},${endDestinationLng}&key=AIzaSyAgKeNtylo0q2-5FEXPFV1EoGfDqXUSofE`)
+  return fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${startDestinationLat},${startDestinationLng}&destination=${endDestinationLat},${endDestinationLng}&departure_time=now&key=AIzaSyAgKeNtylo0q2-5FEXPFV1EoGfDqXUSofE`)
     .then((response) => response.json())
     .then((json) => {
       if (json.status === "ZERO_RESULTS") {
