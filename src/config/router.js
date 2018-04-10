@@ -1,5 +1,5 @@
 import React from 'react';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator, NavigationActions } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DestinationForm from '../containers/DestinationForm.js';
 import CommuteOptions from '../containers/CommuteOptions.js';
@@ -11,6 +11,7 @@ import drivePage from '../containers/drivePage.js';
 import UberPage from '../containers/UberPage.js';
 import RunningLate from '../containers/RunningLate.js';
 import ContactList from '../containers/ContactList';
+
 
 export const DestinationStack = StackNavigator({
   DestinationForm: {
@@ -137,3 +138,25 @@ export const Root = StackNavigator({
   // mode: 'modal',
   headerMode: 'none'
 });
+
+const defaultRoot = Root.router.getStateForAction;
+
+// console.log(Root())
+// Root.router.getStateForAction = (action, state) => {
+//   console.log("************")
+//   console.log(action, state)
+  // if (state && action.type === 'PushTwoProfiles') {
+  //   const routes = [
+  //     ...state.routes,
+  //     {key: 'A', routeName: 'Profile', params: { name: action.name1 }},
+  //     {key: 'B', routeName: 'Profile', params: { name: action.name2 }},
+  //   ];
+  //   return {
+  //     ...state,
+  //     routes,
+  //     index: routes.length - 1,
+  //   };
+  // }
+//   return defaultRoot(action, state);
+// };
+
