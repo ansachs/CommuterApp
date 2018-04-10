@@ -3,12 +3,39 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 
 export default class RunningLate2 extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      sendTo: {
+        123: {
+          name: 'john',
+          number: '1111111',
+          relativeId: '1'
+        },
+        456: {
+          name: 'jane',
+          number: '2222222',
+          relativeId: '2'
+        }
+      }
+    }
+  }
+
+  getRecipients() {
+    let names = ''
+    for (let contact in this.state.sendTo) {
+      names += `${this.state.sendTo[contact].name}, `
+    }
+    return names
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text>To:</Text>
         <Input
-          leftIcon={
+          value={this.getRecipients()}
+          rightIcon={
             <Icon
               type='MaterialIcons'
               name='person-add'

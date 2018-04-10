@@ -89,14 +89,23 @@ const requestRide = (productId, startDestinationLat, startDestinationLng, endDes
 const cancelRide = () => {
   return fetch('https://sandbox-api.uber.com/v1.2/requests/current',
     {
-      header: {
-        'Authorization': 'Bearer KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IkJjT09DTFRKUjgrSWtScGorSXRUTmc9PSIsImV4cGlyZXNfYXQiOjE1MjU4ODE3MjcsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.y85BjRfGhLdIVyNqlAEA-xc6Nl_UwnqTsguMhQlcE0Q',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
         'Accept-Language': 'en_US'
       },
       method: 'DELETE'
     })
-  .then(response => {console.log(response.json())});
+  // .then(response => {
+  //   console.log(response)
+  //   response.json()
+  // })
+  // .then(json => {
+  //   console.log(json);
+  // })
+  // .catch(error => {
+  //   console.error(error)
+  // });
 }
 
 export default {
