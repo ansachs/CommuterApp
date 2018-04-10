@@ -5,6 +5,7 @@ import SendSMS from 'react-native-sms'
 import Communications from 'react-native-communications';
 import { Button, ListItem } from 'react-native-elements';
 import RenderList from '../components/runningLate/renderList'
+import UsersApi from '../apis/UsersApi.js'
 
 export default class RunningLate extends React.Component {
   constructor(props) {
@@ -33,9 +34,16 @@ export default class RunningLate extends React.Component {
     }
   }
 
+
   componentDidMount() {
     // call function to retrieve favorites
+   return UsersApi.saveFavoriteContacts(this.state.favorites[0].name, this.state.favorites[0].number)
+    console.log(this.state.favorites.name)
+  
   }
+
+
+ 
 
   getContacts() {
     this.props.navigation.navigate('contactPage')

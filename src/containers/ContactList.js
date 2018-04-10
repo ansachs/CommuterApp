@@ -4,6 +4,7 @@ import { Header, Input, Divider } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Contacts } from 'expo';
 import Scrubber from '../components/contacts/Scrubber';
+import UsersApi from '../apis/UsersApi.js'
 
 const itemHeight = 40;
 
@@ -79,6 +80,7 @@ export default class ContactList extends React.Component {
 
 
   componentDidMount() {
+    
 
     const sections =[];
 
