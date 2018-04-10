@@ -129,12 +129,9 @@ export default class RunningLate extends React.Component {
 
     let currentList = this.whichListToDisplay()
 
-  render() {
-
     // console.log(this)
     return (
       <View contentContainerStyle={styles.container}>
-
         <View style={styles.menuBar}>
           <MenuBar 
             handleMenuClick={this.handleMenuClick} 

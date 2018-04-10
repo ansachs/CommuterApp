@@ -58,16 +58,16 @@ export default class CommuteOptions extends React.Component {
     let endDestinationLng = this.props.navigation.state.params.endDestinationLng
 
 
-  try {
     GoogleMapApi.fetchModeByDrive(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => {
         ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
           .then((response2) => {
             this.storeData({method:"drive", duration:response.routes[0].legs[0].duration_in_traffic.text, price:response2.min_price, icon:"car"})
           })
-          .catch((err) => {
-          console.log("error in api", err)
-          });
+        })
+        .catch((err) => {
+        console.log("error in api", err)
+        });
 
 
       GoogleMapApi.fetchModeByWalking(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
@@ -110,8 +110,10 @@ export default class CommuteOptions extends React.Component {
         .catch((err) => {
         console.log("error in api", err)
         });
-    }
+    
   }
+
+
   convert(duration) {
     if (duration[2] === 'd' && duration[10] === 'h') {
       return ((parseInt(duration[0]) * 24) * (60)) + ((parseInt(duration[7])* 10) * 60) + (parseInt(duration[8])* 60)

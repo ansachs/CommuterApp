@@ -1,23 +1,23 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Modal, TouchableHighlight } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
+import ContactList from '../components/contacts/contactListModal'
 
 export default class RunningLate2 extends React.Component {
   constructor() {
     super();
     this.state = {
-      sendTo: {
-        123: {
+      sendTo: [{
           name: 'john',
           number: '1111111',
           relativeId: '1'
         },
-        456: {
+        {
           name: 'jane',
           number: '2222222',
           relativeId: '2'
-        }
-      }
+        }],
+      modalVisible: false
     }
   }
 
@@ -32,6 +32,11 @@ export default class RunningLate2 extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <View>
+           <ContactList.ContactListModal 
+            closeContactList={() => {this.setState({modalVisible: false})}} 
+            modalState={this.state.modalVisible} />
+        </View>
         <Text>To:</Text>
         <Input
           value={this.getRecipients()}
@@ -40,6 +45,7 @@ export default class RunningLate2 extends React.Component {
               type='MaterialIcons'
               name='person-add'
               size={30}
+              onPress={()=>{this.setState({modalVisible: true})}}
             />
           }
         />
