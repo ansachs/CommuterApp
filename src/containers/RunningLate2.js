@@ -17,7 +17,16 @@ export default class RunningLate2 extends React.Component {
           number: '2222222',
           relativeId: '2'
         }],
-      modalVisible: false
+      modalVisible: false,
+      contacts: []
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.screenProps.contacts) {
+      this.setState({contacts: this.props.screenProps.contacts})
+    } else {
+      this.setState({contacts: "Please login to view contacts"})
     }
   }
 
@@ -35,7 +44,8 @@ export default class RunningLate2 extends React.Component {
         <View>
            <ContactList.ContactListModal 
             closeContactList={() => {this.setState({modalVisible: false})}} 
-            modalState={this.state.modalVisible} />
+            modalState={this.state.modalVisible} 
+            contactList={this.state.contacts} />
         </View>
         <Text>To:</Text>
         <Input
