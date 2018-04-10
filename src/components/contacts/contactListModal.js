@@ -27,21 +27,26 @@ const renderHeader = ({section: section}) => {
     )
 }
 
-const renderItem = ({item, section, index}) => {
+const renderItem = ({item, section, index}, sendTo, handleFavoritesClick, favoriteContacts, closeContactList) => {
+  let heartStyle = favoriteContacts[item.id] ? 'favorite' : 'favorite-border'
     return (
         <TouchableOpacity
         style={styles.item} 
-        onPress={() => {this.props.handleContactItemClicked(item)}}>
+        onPress={() => {
+          sendTo(item)
+          closeContactList()
+        }}>
           <Text style={styles.itemText}>
             {item.name}
           </Text>
           <View style={styles.itemIcon}>
             <ElementIcon
-              name='favorite-border'
+              name={heartStyle}
               type='MaterialIcons'
               size={30}
               style={styles.addToFavorite}
-              onPress={() => this.props.addContactsToFavorites(section.key, index)}
+              onPress={() => {
+                handleFavoritesClick(item)}}
               />
           </View>
           }
@@ -99,7 +104,12 @@ const contactListModal = (props) => {
       <SectionList
           style={styles.list}
           sections={props.contactList}
-          renderItem={(a) => renderItem(a)}
+          renderItem={(item) => renderItem(item, 
+            props.addToSendTo, 
+            props.handleFavoritesClick,
+            props.favoriteContacts,
+            props.closeContactList
+            )}
           keyExtractor={(item) => {return(item.id)}}
           initialNumToRender="10"
           renderSectionHeader={renderHeader}
