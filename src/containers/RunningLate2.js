@@ -6,43 +6,61 @@ export default class RunningLate2 extends React.Component {
   constructor() {
     super();
     this.state = {
-      sendTo: {
-        123: {
+      sendTo: [
+        {
           name: 'john',
           number: '1111111',
-          relativeId: '1'
         },
-        456: {
+        {
           name: 'jane',
           number: '2222222',
-          relativeId: '2'
         }
-      }
+      ]
     }
   }
 
-  getRecipients() {
-    let names = ''
-    for (let contact in this.state.sendTo) {
-      names += `${this.state.sendTo[contact].name}, `
-    }
-    return names
+  getContacts() {
+    console.log('open contact list')
+  }
+
+  showContacts() {
+
+  }
+
+  removePhoneNumber = (index) => {
+    let currentList = this.state.sendTo
+    const newState = currentList.slice(0, index).concat(currentList.slice(index +1, currentList.length +1))
+    this.setState({sendTo: newState})
   }
 
   render() {
+    let names = this.state.sendTo.map((contact, index) => {
+      return (
+        <Text
+          key={index}
+          style={{fontSize:18, marginRight:10}}
+          onPress={() => this.removePhoneNumber(index)}
+        >{contact.name}
+          <Icon
+            name='ios-remove-circle-outline'
+            type='ionicon'
+            size={16}
+          />
+        </Text>
+      )
+    })
     return (
       <View style={styles.container}>
-        <Text>To:</Text>
-        <Input
-          value={this.getRecipients()}
-          rightIcon={
-            <Icon
-              type='MaterialIcons'
-              name='person-add'
-              size={30}
-            />
-          }
+        <Icon
+          type='MaterialIcons'
+          name='person-add'
+          size={30}
+          onPress={this.getContacts}
         />
+        <Text>To: </Text>
+        <View style={{flexDirection:'row'}}>
+        {names}
+        </View>
 
         <Text style={{marginTop:20}}>Message:</Text>
         <Input
