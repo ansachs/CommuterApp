@@ -79,6 +79,10 @@ export default class RunningLate extends React.Component {
     //   this.setState({checkedInContactsList: {...this.state.checkedInContactsList, [key]: newArray[index] = true}})
     // }
   }
+
+  handleContactItemClicked = (item) => {
+    this.setState({checkedInContactsList: [...this.state.checkedInContactsList, item]})
+  }
     
 
   handleFavoritesListCheckClicked = (key, index) => {
@@ -94,7 +98,7 @@ export default class RunningLate extends React.Component {
           <ContactList 
             contactList={this.state.all}
             addContactsToFavorites={this.addContactsToFavorites}
-            handleContactListCheckClicked={this.handleContactListCheckClicked}
+            handleContactItemClicked={this.handleContactItemClicked}
             checkedInContactsList={this.state.checkedInContactsList}
           />)
       } else {

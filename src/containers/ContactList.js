@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, ListView, SectionList, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, ListView, SectionList, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Header, Input, Divider, CheckBox } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Contacts } from 'expo';
 import Scrubber from '../components/contacts/Scrubber';
 
@@ -35,14 +35,12 @@ export default class ContactList extends React.Component {
   }
 
   renderItem = ({item, section, index}) => {
-    console.log(this.props.checkedInContactsList)
-    let currentIndex = (section.key.charCodeAt(0) - 65) * (index + 1)
-    let isChecked = this.props.checkedInContactsList[currentIndex] ? true : false;
+    // console.log(this.props.checkedInContactsList)
+    // let currentIndex = (section.key.charCodeAt(0) - 65) * (index + 1)
+    // let isChecked = this.props.checkedInContactsList[currentIndex] ? true : false;
     return (
-      <View 
-      style={styles.item}
-      > 
-        <CheckBox
+      <View style={styles.item}> 
+        {/*<CheckBox
           style={styles.itemCheckBox}
           checkedIcon='dot-circle-o'
           uncheckedIcon='circle-o'
@@ -54,17 +52,19 @@ export default class ContactList extends React.Component {
             }
           }
           
-        />
-        <Text style={styles.itemText}>
-          {item.name}
-        </Text>
-        <Icon
-            name='ios-add-circle-outline'
-            type='ionicon'
-            size={20}
-            style={styles.addToFavorite}
-            onPress={() => this.props.addContactsToFavorites(section.key, index)}
-            />
+        />*/}
+        <TouchableOpacity onPress={() => {this.props.handleContactItemClicked(item)}}>
+          <Text style={styles.itemText}>
+            {item.name}
+          </Text>
+          <Icon
+              name='favorite-border'
+              type='MaterialIcons'
+              size={20}
+              style={styles.addToFavorite}
+              onPress={() => this.props.addContactsToFavorites(section.key, index)}
+              />
+        </TouchableOpacity>
       </View>
     );
   };
