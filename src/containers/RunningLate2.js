@@ -7,6 +7,7 @@ export default class RunningLate2 extends React.Component {
   constructor() {
     super();
     this.state = {
+
       sendTo: [{
           name: 'john',
           number: '1111111',
@@ -42,6 +43,20 @@ export default class RunningLate2 extends React.Component {
     }
   }
 
+  getContacts() {
+    console.log('open contact list')
+  }
+
+  showContacts() {
+
+  }
+
+  removePhoneNumber = (index) => {
+    let currentList = this.state.sendTo
+    const newState = currentList.slice(0, index).concat(currentList.slice(index +1, currentList.length +1))
+    this.setState({sendTo: newState})
+  }
+
   getRecipients = () => {
     let names = ''
     for (const [key, value] of Object.entries(this.state.sendTo)) {
@@ -74,7 +89,22 @@ export default class RunningLate2 extends React.Component {
 
 
   render() {
-    console.log(this.state)
+    let names = this.state.sendTo.map((contact, index) => {
+      return (
+        <Text
+          key={index}
+          style={{fontSize:18, marginRight:10}}
+          onPress={() => this.removePhoneNumber(index)}
+        >{contact.name}
+          <Icon
+            name='ios-remove-circle-outline'
+            type='ionicon'
+            size={16}
+          />
+        </Text>
+      )
+    })
+
     return (
       <View style={styles.container}>
         <View>
@@ -87,18 +117,16 @@ export default class RunningLate2 extends React.Component {
             favoriteContacts={this.state.favoriteContacts}
             />
         </View>
-        <Text>To:</Text>
-        <Input
-          value={this.getRecipients()}
-          rightIcon={
-            <Icon
-              type='MaterialIcons'
-              name='person-add'
-              size={30}
-              onPress={()=>{this.setState({modalVisible: true})}}
-            />
-          }
+        <Icon
+          type='MaterialIcons'
+          name='person-add'
+          size={30}
+          onPress={() => this.setState({modalVisible: true})}
         />
+        <Text>To: </Text>
+        <View style={{flexDirection:'row'}}>
+        {names}
+        </View>
 
         <Text style={{marginTop:20}}>Message:</Text>
         <Input
