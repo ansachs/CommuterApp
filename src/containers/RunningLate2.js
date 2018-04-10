@@ -29,6 +29,15 @@ export default class RunningLate2 extends React.Component {
     return names
   }
 
+ sendMessage() {
+      var smsLink = require('sms-link')
+      smsLink({phone: '2253951571', body: 'Hello world'})
+  }
+
+
+
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -52,6 +61,7 @@ export default class RunningLate2 extends React.Component {
         <Button
           title='Send Text'
           buttonStyle={{marginTop:20}}
+          onPress={this.sendMessage.bind(this)}
         />
       </View>
     )
