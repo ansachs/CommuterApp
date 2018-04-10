@@ -28,7 +28,9 @@ export default class CommuteOptions extends React.Component {
       startLat: this.props.navigation.state.params.startDestinationLat,
       startLng: this.props.navigation.state.params.startDestinationLng,
       endLat: this.props.navigation.state.params.endDestinationLat,
-      endLng: this.props.navigation.state.params.endDestinationLng
+      endLng: this.props.navigation.state.params.endDestinationLng,
+      startDestination: this.props.navigation.state.params.startDestination,
+      endDestination: this.props.navigation.state.params.endDestination
     })
   }
 
@@ -60,7 +62,7 @@ export default class CommuteOptions extends React.Component {
       .then((response) => {
         ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
           .then((response2) => {
-            this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:response2.min_price, icon:"car"})
+            this.storeData({method:"drive", duration:response.routes[0].legs[0].duration_in_traffic.text, price:response2.min_price, icon:"car"})
           })
           .catch((err) => {
           console.log("error in api", err)
@@ -113,9 +115,55 @@ export default class CommuteOptions extends React.Component {
       });
     } catch(err) {console.log(err)}
   }
+  convert(duration) {
+    if (duration[2] === 'd' && duration[10] === 'h') {
+      return ((parseInt(duration[0]) * 24) * (60)) + ((parseInt(duration[7])* 10) * 60) + (parseInt(duration[8])* 60)
+    }
+    else if (duration[2] === 'd' && duration[9] === 'h'&& duration[5] === 's') {
+      return ((parseInt(duration[0]) * 24) * (60)) + (parseInt(duration[7]) * 60)
+    }
+     else if (duration[2] === 'd' && duration[9] === 'h' && duration[13] === 's') {
+      return ((parseInt(duration[0]) * 24) * (60)) + ((parseInt(duration[6]) * 10) * 60) + (parseInt(duration[7])* 60)
+    }
+    else if (duration[2] === 'd' && duration[8] === 'h') {
+      return ((parseInt(duration[0]) * 24) * (60)) + (parseInt(duration[6]) * 60)
+    }
+    else if (duration[3] === 'h' && duration[12] === 'm') {
+      return ((parseInt(duration[0]) * 10) * 60) + (parseInt(duration[1]) * 60) + (parseInt(duration[9]) * 10) + parseInt(duration[10])
+    }
+    else if (duration[3] === 'h' && duration[11] === 'm') {
+      return ((parseInt(duration[0]) * 10) * 60) + (parseInt(duration[1]) * 60) + parseInt(duration[9])  
+    }
+    else if (duration[2] === 'h' && duration[11] === 'm') {
+      return (parseInt(duration[0]) * 60) + ((parseInt(duration[8]) * 10)) + parseInt(duration[9])  
+    }
+    else if (duration[2] === 'h' && duration[10] === 'm' && duration[13] === 's') {
+      return (parseInt(duration[0]) * 60) + ((parseInt(duration[7]) * 10)) + parseInt(duration[8])
+    }
+    else if (duration[2] === 'h' && duration[10] === 'm') {
+      return (parseInt(duration[0]) * 60) + parseInt(duration[8])  
+    }
+    else if (duration[2] === 'h' && duration[9] === 'm') {
+      return (parseInt(duration[0]) * 60) + parseInt(duration[7])  
+    }
+    else if (duration[3] === 'm') {
+      return (parseInt(duration[0]) * 10) + parseInt(duration[1])  
+    }
+    else if (duration[2] === 'm') {
+      return parseInt(duration[0])
+    }
+  }
+
+
+
+
 
   storeData(obj) {
-    let current = {method: obj.method, price: obj.price, duration:parseInt(obj.duration.replace(/\D+/,'')), icon:obj.icon}
+
+   
+
+    let current = {method: obj.method, price: obj.price, duration:obj.duration, icon:obj.icon, convert:this.convert(obj.duration)}
+
     this.setState({transpo: [...this.state.transpo, current]})
   }
 
@@ -144,7 +192,6 @@ export default class CommuteOptions extends React.Component {
   }
 
   render() {
-    const list = [...this.state.transpo]
     const maxHeight = this.springValue.interpolate({
       inputRange: [0, 1],
       outputRange: ['6.5%', '100%']
@@ -156,7 +203,7 @@ export default class CommuteOptions extends React.Component {
     let startLng = this.props.navigation.state.params.startDestinationLng
     let endLat = this.props.navigation.state.params.endDestinationLat
     let endLng = this.props.navigation.state.params.endDestinationLng
-
+    console.log(this.state.transpo)
     return (
       <View style={styles.container}>
         <View style={styles.destinationContainer}>
@@ -229,7 +276,8 @@ export default class CommuteOptions extends React.Component {
             iconRight
           />
           <FlatList
-            data={this.state.transpo.sort((a , b) => parseFloat(a.duration) - parseFloat(b.duration))}
+            data={this.state.transpo.sort((a , b) => (a.convert) - (b.convert))}
+            data={this.state.transpo}
             renderItem={({item}) => (
               <ListItem
                 title={item.method.toUpperCase()}
@@ -312,4 +360,5 @@ const styles = StyleSheet.create({
   //   fontWeight: 'bold'
   // },
 })
+
 

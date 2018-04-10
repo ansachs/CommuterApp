@@ -1,14 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
-import { Button, ListItem } from 'react-native-elements';
+import { Button, ListItem, Icon, CheckBox } from 'react-native-elements';
 
-export default RenderList = (prop) => {
+export default RenderList = (props) => {
+    console.log(this)
     return(
     <FlatList
-      data={prop.currentList}
+      data={props.currentList}
       keyExtractor={item => item.number}
-      renderItem={({item}) => {
+      renderItem={({item, index},) => {
         return(
+        <View>
         <ListItem
           title={item.name}
           leftIcon={{
@@ -17,13 +19,20 @@ export default RenderList = (prop) => {
             // type: 'material-community',
             style: { marginRight: 20}
           }}
-          rightIcon={{
-            name: 'ios-remove-circle-outline',
-            type: 'ionicon',
-            size: 20,
-            style: { marginRight: 20}
-          }}
-          containerStyle={{backgroundColor: '#fff', borderBottomWidth:1}}
+          rightIcon={
+            // <Button
+            //   title='add to favorites'
+            //   titleStyle={{fontSize:15}}
+            // />
+            <Icon
+            name = 'ios-remove-circle-outline'
+            type = 'ionicon'
+            size = {20}
+            style = {{ 'marginRight': 20}}
+            onPress = {() => {props.handleClick(index)}}
+            />
+          }
+          containerStyle={{backgroundColor: '#fff', marginBottom:5}}
           subtitle={
             <View>
               <Text>name: {item.number}</Text>
@@ -31,6 +40,8 @@ export default RenderList = (prop) => {
           }
           // onPress={() => this.handleRowOnPress(item.method)}
         />
+        </View>
       )}}
     />
-  )}
+  )
+  }

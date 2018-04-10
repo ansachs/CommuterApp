@@ -10,6 +10,7 @@ import lyftPage from '../containers/lyftPage.js';
 import drivePage from '../containers/drivePage.js';
 import UberPage from '../containers/UberPage.js';
 import RunningLate from '../containers/RunningLate.js';
+import RunningLate2 from '../containers/RunningLate2.js';
 import ContactList from '../containers/ContactList';
 
 export const DestinationStack = StackNavigator({
@@ -105,7 +106,7 @@ export const Tabs = TabNavigator({
   },
 
   RunningLate2: {
-    screen: RunningLate,
+    screen: RunningLate2,
     navigationOptions: {
       tabBarLabel: 'Running Late',
       tabBarIcon: ({ tintColor }) => <Icon name="run-fast" size={35} color={tintColor} />
@@ -113,12 +114,23 @@ export const Tabs = TabNavigator({
   }
 },
 {
-  tabBarPosition: 'bottom'
+  tabBarPosition: 'bottom',
+  navigationOptions: ({navigation}) => ({
+    tabBarOnPress: ({scene, jumpToIndex}) => {
+      if (scene.route.params) {
+        jumpToIndex(scene.index)
+      } else if (!scene.route.params && scene.index === 0) {
+        jumpToIndex(0)
+      } else if (!scene.route.params && scene.index === 2) {
+        jumpToIndex(2)
+      }
+    }
+  })
 });
 
 export const RunningLateStack = StackNavigator({
   RunningLate: {
-    screen: RunningLate,
+    screen: RunningLate2,
     navigationOptions: {
       title: 'Running late?',
       header: null

@@ -22,10 +22,10 @@ DerivedData
 project.xcworkspace
 
 #expo
-.expo/*
+.expo
 
 #vscode
-.vscode/*
+.vscode
 
 # Gradle
 /build/

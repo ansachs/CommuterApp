@@ -58,7 +58,7 @@ export default class CommuteOptions extends React.Component {
           response.routes[0].legs[0].duration.text]
       }));
 
-    UberApi.getDriverEtaToLocation(UberApi.serverToken, startLatitude, startLongitude, endLatitude, endLongitude)
+    UberApi.getDriverEtaToLocation(UberApi.serverToken, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
       .then((response) => this.setState({
         uberOutput: {
           uberX: [
@@ -73,7 +73,7 @@ export default class CommuteOptions extends React.Component {
 
   render() {
 
-    console.log(this.state)
+   
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <View>
