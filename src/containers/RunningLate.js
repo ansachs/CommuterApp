@@ -6,6 +6,9 @@ import Communications from 'react-native-communications';
 import { Button, ListItem } from 'react-native-elements';
 import RenderList from '../components/runningLate/renderList'
 import UsersApi from '../apis/UsersApi.js'
+import MenuBar from '../components/runningLate/menuBar'
+import ContactList from './ContactList'
+
 
 export default class RunningLate extends React.Component {
   constructor(props) {
@@ -20,13 +23,14 @@ export default class RunningLate extends React.Component {
         {name: "alex", number: "2121232123", type: "person"},
         {name: "ray", number: "2342342342", type: "person"}
       ],
-      all: [
-        {name: "alex", number: "2121232123", type: "person"},
-        {name: "ray", number: "2342342342", type: "person"},
-        {name: "aaron", number: "2342342344", type: "person"},
-        {name: "dan", number: "2343443231", type: "person"},
-        {name: "jon", number: "2343443233", type: "person"}
-      ],
+      all: [{data: [
+        {name: "alex", number: "2121232123", type: "person", id: "567"},
+        {name: "ray", number: "2342342342", type: "person", id: "456"}],  key: "A", title: "A"},
+      {data:[
+        {name: "aaron", number: "2342342344", type: "person", id: "123"},
+        {name: "dan", number: "2343443233", type: "person", id: "234"},
+        {name: "jon", number: "2343444233", type: "person", id: "345"}
+        ], key: "B", title: "B"}],
       allVisible: true,
       favoritesVisible: false,
       selectedVisible: false,
@@ -36,6 +40,7 @@ export default class RunningLate extends React.Component {
 
 
   componentDidMount() {
+<<<<<<< HEAD
     // call function to retrieve favorites
    return UsersApi.saveFavoriteContacts(this.state.favorites[0].name, this.state.favorites[0].number)
     console.log(this.state.favorites.name)
@@ -48,6 +53,15 @@ export default class RunningLate extends React.Component {
   getContacts() {
     this.props.navigation.navigate('contactPage')
   }
+=======
+    if (this.props.screenProps.contacts) {
+      this.setState({all: this.props.screenProps.contacts})
+    } else {
+      // this.setState({all: "Please login to view contacts"})
+    }
+  }
+
+>>>>>>> 51908c0a81cbaccf65c5d51ef901ed258f28eeb1
 
   sendMessage() {
       SendSMS.send({
@@ -61,39 +75,40 @@ export default class RunningLate extends React.Component {
       });
   }
 
-  render() {
 
+  removePhoneNumber = (index) => {
+    let currentList = this.state[this.state.currentList]
+    const newState = currentList.slice(0, index).concat(currentList.slice(index +1, currentList.length +1))
+    this.setState({[this.state.currentList]: newState})
+  }
+
+  handleMenuClick = (obj) => {
+    this.setState(obj);
+    // console.log('jlkj')
+  }
+
+  render() {
+    let currentList = this.state.currentList === "all" ?
+      <ContactList
+        contactList={this.state.all}
+      />
+      :
+      <RenderList
+        currentList={this.state[this.state.currentList]}
+        handleClick={this.removePhoneNumber}
+      />
+
+    // console.log(this)
     return (
       <View contentContainerStyle={styles.container}>
-        <View style={styles.topBar}>
-          <Text
-          onPress={()=>{this.setState({currentList: "all"})}}
-          style={styles.topText}>
-            All
-          </Text>
-          <Text
-          onPress={()=>{this.setState({currentList: "favorites"})}}
-          style={styles.topText}>
-            Favorites
-          </Text>
-          <Text
-          onPress={()=>{this.setState({currentList: "selected"})}}
-          style={styles.topText}>
-            Selected
-          </Text>
-        </View>
-        <View style={styles.favoritesList}>
 
         <View>
-          <RenderList currentList={this.state[this.state.currentList]} />
+          <MenuBar handleMenuClick={this.handleMenuClick} />
         </View>
 
-      </View>
-        <Button
-        title="Add from contacts list"
-        onPress={this.getContacts.bind(this)}
-        />
-
+        <View>
+          {currentList}
+        </View>
 
         <Button
           title="send text"
@@ -113,18 +128,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  favoritesList: {
-    height: 250
-  },
-  topBar: {
-    flexDirection: "row",
-    backgroundColor: "#ccc"
-  },
-  topText: {
-    paddingLeft: 4,
-    paddingRight: 4,
-    paddingTop: 4,
-    paddingBottom: 4
   }
 });

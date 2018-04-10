@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import MapContainer from './MapContainer.js';
 import { Button } from 'react-native-elements';
 import UberApi from '../apis/UberApi.js'
-
 export default class uberPage extends React.Component {
   constructor(props) {
     super(props);
@@ -26,22 +25,18 @@ export default class uberPage extends React.Component {
     let endLat = this.state.endLat;
     let endLng = this.state.endLng;
 
-    UberApi.getFareId(productId, startLat, startLng, endLat, endLng)
+    UberApi.requestRide(productId, startLat, startLng, endLat, endLng)
     .then((response) => response.json())
-    .then((fareJson) => {
-      UberApi.requestRide(fareJson.fare.fare_id, productId, startLat, startLng, endLat, endLng)
-      .then((response) => response.json())
-      .then((requestJson) => {
-        console.log(requestJson)
-        this.setState({request_id: requestJson.request_id, status: requestJson.status})
-      })
+    .then((requestJson) => {
+      console.log(requestJson)
+      this.setState({request_id: requestJson.request_id, status: requestJson.status})
     })
   }
 
-  cancelRide(requestId) {
-    requestId = this.state.request_id
-    console.log(requestId)
-    UberApi.cancelRide(requestId)
+  cancelRide() {
+    // requestId = this.state.request_id
+    // console.log(requestId)
+    UberApi.cancelRide()
   }
 
   render() {
