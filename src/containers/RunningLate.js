@@ -48,7 +48,7 @@ export default class RunningLate extends React.Component {
       }, (completed, cancelled, error) => {
 
           console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
-   
+
       });
   }
 
@@ -129,7 +129,9 @@ export default class RunningLate extends React.Component {
 
     let currentList = this.whichListToDisplay()
 
-    console.log(this)
+  render() {
+
+    // console.log(this)
     return (
       <View contentContainerStyle={styles.container}>
 

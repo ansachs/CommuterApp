@@ -49,24 +49,21 @@ export default class CommuteOptions extends React.Component {
   }
 
   getCommuteOptionsData() {
-    if (this.props.navigation.state.params) {
-      let startDestination = this.props.navigation.state.params.startDestination
-      let endDestination = this.props.navigation.state.params.endDestination
-      let startDestinationLat = this.props.navigation.state.params.startDestinationLat
-      let startDestinationLng = this.props.navigation.state.params.startDestinationLng
-      let endDestinationLat = this.props.navigation.state.params.endDestinationLat
-      let endDestinationLng = this.props.navigation.state.params.endDestinationLng
+
+    let startDestination = this.props.navigation.state.params.startDestination
+    let endDestination = this.props.navigation.state.params.endDestination
+    let startDestinationLat = this.props.navigation.state.params.startDestinationLat
+    let startDestinationLng = this.props.navigation.state.params.startDestinationLng
+    let endDestinationLat = this.props.navigation.state.params.endDestinationLat
+    let endDestinationLng = this.props.navigation.state.params.endDestinationLng
 
 
-      GoogleMapApi.fetchModeByDrive(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
-        .then((response) => {
-          ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
-            .then((response2) => {
-              this.storeData({method:"drive", duration:response.routes[0].legs[0].duration.text, price:response2.min_price, icon:"car"})
-            })
-            .catch((err) => {
-            console.log("error in api", err)
-            });
+  try {
+    GoogleMapApi.fetchModeByDrive(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
+      .then((response) => {
+        ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
+          .then((response2) => {
+            this.storeData({method:"drive", duration:response.routes[0].legs[0].duration_in_traffic.text, price:response2.min_price, icon:"car"})
           })
           .catch((err) => {
           console.log("error in api", err)
