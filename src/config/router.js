@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert, View } from 'react-native'
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DestinationForm from '../containers/DestinationForm.js';
@@ -123,6 +124,8 @@ export const Tabs = TabNavigator({
         jumpToIndex(0)
       } else if (!scene.route.params && scene.index === 2) {
         jumpToIndex(2)
+      } else {
+        Alert.alert('Alert', 'Please fill out the form on the destination page', [{text: 'Ok'}]);
       }
     }
   })

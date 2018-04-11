@@ -23,10 +23,6 @@ export default class RunningLate2 extends React.Component {
     console.log('open contact list')
   }
 
-  showContacts() {
-
-  }
-
   removePhoneNumber = (index) => {
     let currentList = this.state.sendTo
     const newState = currentList.slice(0, index).concat(currentList.slice(index +1, currentList.length +1))

@@ -21,7 +21,7 @@ export default class DestinationForm extends React.Component {
 
   componentDidMount = () => {
     this.getLocation();
-    
+
   }
  getLocation = async () => {
     navigator.geolocation.getCurrentPosition(
@@ -37,9 +37,7 @@ export default class DestinationForm extends React.Component {
     (err)=> {console.log(err)})
   }
 
-  onPressSubmit(e) {
-    e.persist()
-
+  onPressSubmit() {
     if (this.state.startDestination.length < 1) {
       this.setState({startError: "must contain a value"});
     } else {
@@ -91,16 +89,14 @@ export default class DestinationForm extends React.Component {
         />
         <Text style={{marginTop:20}}>End Destination:</Text>
         <Input
-          onChangeText={(endDestination) => this.setState({endDestination})}
-          style={styles.textInput}
-          placeholder='enter end address'
           value={this.state.endDestination}
+          placeholder='enter end address'
           onChangeText={(val) => {this.setState({endDestination: val})}}
           errorStyle={{ color: 'red' }}
           errorMessage={this.state.endError}
         />
         <Button
-          onPress={(e) => {this.onPressSubmit(e)}}
+          onPress={() => {this.onPressSubmit()}}
           title="SUBMIT"
           color="#FFF"
           buttonStyle={{marginTop:20}}
