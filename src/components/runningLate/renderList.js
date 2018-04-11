@@ -6,7 +6,7 @@ export default RenderList = (props) => {
     console.log(this)
     return(
     <FlatList
-      data={props.currentList}
+      data={props.favoritesList}
       keyExtractor={item => item.number}
       renderItem={({item, index},) => {
         return(
