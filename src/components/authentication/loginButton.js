@@ -22,7 +22,7 @@ signInWithGoogleAsync = async () => {
         iosClientId: '277067014175-ehie9e21cqhlr3l9d19bss23kcm18gm4.apps.googleusercontent.com',
         webClientId: "277067014175-5mp1fefmgtq18g3e919567a730vvnva0.apps.googleusercontent.com",
         scopes: ['profile', 'email'],
-      })
+      }).catch((err) => {console.log(err)})
 
       if (result.type === 'success') {
         props.handleClick(result);

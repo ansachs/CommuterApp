@@ -1,5 +1,5 @@
 const getGoogleId = (userName, clientID) => {
-   fetch('http://localhost:3000/users/:id.json', {
+   ('http://localhost:3000/users/:id.json', {
     headers: {
       'Content-Type': 'application/json'
     },
