@@ -8,19 +8,10 @@ export default class RunningLate2 extends React.Component {
     super();
     this.state = {
 
-      sendTo: [{
-          name: 'john',
-          number: '1111111',
-          id: '1'
-        },
-        {
-          name: 'jane',
-          number: '2222222',
-          id: '2'
-        }],
+      sendTo: [],
       modalVisible: false,
       contacts: [],
-      favoriteContacts: 
+      favoriteContacts:
       {"2E73EE73-C03F-4D5F-B1E8-44E85A70F170": {id: "2E73EE73-C03F-4D5F-B1E8-44E85A70F170", name: "Hank M. Zakroff", phoneNumbers:[
           {countryCode: "us", number: "(555) 766-4823", digits: "5557664823"},
           {countryCode: "us", number: "(707) 555-1854", digits: "7075551854"}
@@ -31,7 +22,7 @@ export default class RunningLate2 extends React.Component {
           {countryCode: "us", number: "(707) 555-1854", digits: "7075551854"}
         ]}
       }
-  
+
     }
   }
 
@@ -41,10 +32,6 @@ export default class RunningLate2 extends React.Component {
     } else {
       this.setState({contacts: "Please login to view contacts"})
     }
-  }
-
-  getContacts() {
-    console.log('open contact list')
   }
 
   removePhoneNumber = (index) => {
@@ -60,6 +47,10 @@ export default class RunningLate2 extends React.Component {
     }
     return names
   }
+
+  // sendMessage() {
+  //   Linking.openURL('sms://5557664823&body=running late!')
+  // }
 
  // sendMessage() {
  //      var smsLink = require('sms-link')
@@ -89,7 +80,7 @@ export default class RunningLate2 extends React.Component {
       return (
         <Text
           key={index}
-          style={{fontSize:18, marginRight:10}}
+          style={styles.names}
           onPress={() => this.removePhoneNumber(index)}
         >{contact.name}
           <Icon
@@ -104,35 +95,40 @@ export default class RunningLate2 extends React.Component {
     return (
       <View style={styles.container}>
         <View>
-           <ContactList.ContactListModal 
-            closeContactList={() => {this.setState({modalVisible: false})}} 
-            modalState={this.state.modalVisible} 
-            contactList={this.state.contacts} 
+           <ContactList.ContactListModal
+            closeContactList={() => {this.setState({modalVisible: false})}}
+            modalState={this.state.modalVisible}
+            contactList={this.state.contacts}
             addToSendTo={this.addToSendTo}
             handleFavoritesClick={this.handleFavoritesClick}
             favoriteContacts={this.state.favoriteContacts}
             />
         </View>
         <Icon
+          containerStyle={styles.iconContainer}
           type='MaterialIcons'
           name='person-add'
           size={30}
           onPress={() => this.setState({modalVisible: true})}
         />
-        <Text>To: </Text>
-        <View style={{flexDirection:'row'}}>
+        <Text style={styles.toTitle}>To: </Text>
+        <View style={styles.namesContainer}>
         {names}
         </View>
 
-        <Text style={{marginTop:20}}>Message:</Text>
+        <Text style={styles.messageTitle}>Message:</Text>
         <Input
-            value='I am running late!'
+          value='I am running late!'
+          inputContainerStyle={{borderBottomColor:'#fff'}}
+          containerStyle={styles.message}
+          inputStyle={{height:120}}
+          multiline={true}
         />
 
         <Button
           title='Send Text'
-          buttonStyle={{marginTop:20}}
-          // onPress={this.sendMessage.bind(this)}
+          buttonStyle={styles.button}
+          onPress={this.sendMessage.bind(this)}
         />
       </View>
     )
@@ -142,8 +138,36 @@ export default class RunningLate2 extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingHorizontal:40,
+    justifyContent: 'center'
   },
+  names: {
+    fontSize:18,
+    marginRight:10,
+    marginBottom:5
+  },
+  iconContainer: {
+    alignItems:'flex-end'
+  },
+  namesContainer: {
+    flexDirection:'row',
+    flexWrap: 'wrap',
+    backgroundColor: '#fff',
+    padding:5
+  },
+  toTitle: {
+    marginBottom:5
+  },
+  messageTitle: {
+    marginTop:20,
+    marginBottom:5
+  },
+  message: {
+    width:'100%',
+    backgroundColor: '#fff',
+    flexWrap: 'wrap'
+  },
+  button : {
+    marginTop:15
+  }
 });

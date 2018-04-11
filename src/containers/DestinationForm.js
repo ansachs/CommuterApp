@@ -37,7 +37,8 @@ export default class DestinationForm extends React.Component {
     (err)=> {console.log(err)})
   }
 
-  onPressSubmit() {
+  onPressSubmit(e) {
+
     if (this.state.startDestination.length < 1) {
       this.setState({startError: "must contain a value"});
     } else {
@@ -77,7 +78,7 @@ export default class DestinationForm extends React.Component {
 
 
   render() {
-    loading = "loading..."
+    // loading = "loading..."
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Text>Start Destination:</Text>
@@ -89,14 +90,16 @@ export default class DestinationForm extends React.Component {
         />
         <Text style={{marginTop:20}}>End Destination:</Text>
         <Input
-          value={this.state.endDestination}
+          onChangeText={(endDestination) => this.setState({endDestination})}
+          style={styles.textInput}
           placeholder='enter end address'
+          value={this.state.endDestination}
           onChangeText={(val) => {this.setState({endDestination: val})}}
           errorStyle={{ color: 'red' }}
           errorMessage={this.state.endError}
         />
         <Button
-          onPress={() => {this.onPressSubmit()}}
+          onPress={(e) => {this.onPressSubmit(e)}}
           title="SUBMIT"
           color="#FFF"
           buttonStyle={{marginTop:20}}
