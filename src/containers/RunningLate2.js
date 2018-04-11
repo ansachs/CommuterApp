@@ -30,7 +30,8 @@ export default class RunningLate2 extends React.Component {
           {countryCode: "us", number: "(555) 766-4823", digits: "5557664823"},
           {countryCode: "us", number: "(707) 555-1854", digits: "7075551854"}
         ]}
-      }
+      },
+      clientID: ""
   
     }
   }
@@ -42,6 +43,16 @@ export default class RunningLate2 extends React.Component {
       this.setState({contacts: "Please login to view contacts"})
     }
   }
+
+  componentWillUpdate= () => {
+    debugger;
+    if ((this.state.clientID.length === 0) && (this.props.screenProps.clientID.length > 0)) {
+      this.setState({clientID: this.props.screenProps.clientID})
+    } else if (this.state.clientID && this.props.screenProps.clientID.length === 0) {
+      this.setState({clientID: "", favoriteContacts: {}})
+    }
+  }
+
 
   getContacts() {
     console.log('open contact list')
@@ -104,6 +115,8 @@ export default class RunningLate2 extends React.Component {
         </Text>
       )
     })
+
+    console.log(this)
 
     return (
       <View style={styles.container}>
