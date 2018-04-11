@@ -297,7 +297,9 @@ export default class CommuteOptions extends React.Component {
             )}
             keyExtractor={item => item.method}
           />
+
         </Animated.View>
+
       </View>
     );
   }
