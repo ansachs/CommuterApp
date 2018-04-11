@@ -8,21 +8,22 @@ export default MenuBar = (props) => {
 
 return (
   <View style={styles.topBar}>
-    <Text
-    onPress={()=> props.handleMenuClick({currentList: "all"})}
-    style={styles.topText}>
-      All
-    </Text>
-    <Text
-    onPress={() => props.handleMenuClick({currentList: "favorites"})}
-    style={styles.topText}>
-      Favorites
-    </Text>
-    <Text
-    onPress={() => props.handleMenuClick({currentList: "selected"})}
-    style={styles.topText}>
-      Selected
-    </Text>
+    <View style={styles.topBarSection}>
+      <Text
+      onPress={()=> props.handleMenuClick({currentList: "all"})}
+      style={styles.topBarText}>
+        All
+      </Text>
+    </View>
+    <View style={styles.topBarDivider}>
+    </View>
+    <View style={styles.topBarSection}>
+      <Text
+      onPress={() => props.handleMenuClick({currentList: "favorites"})}
+      style={styles.topBarText}>
+        Favorites
+      </Text>
+    </View>
   </View>
 
 )}
@@ -31,9 +32,17 @@ return (
 const styles = StyleSheet.create({
   topBar: {
     flexDirection: "row",
-    backgroundColor: "#ccc"
+    backgroundColor: "#ccc",
+    width: '50%',
   },
-  topText: {
+  topBarDivider: {
+    width: 1,
+    backgroundColor: 'blue'
+  },
+  topBarSection: {
+    width: '50%'
+  },
+  topBarText: {
     paddingLeft: 4,
     paddingRight: 4,
     paddingTop: 4,
