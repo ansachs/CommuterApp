@@ -1,5 +1,5 @@
 const getGoogleId = (userName, clientID) => {
-   fetch('http://localhost:3000/users/:id.json', {
+   fetch('https://quiet-retreat-95283.herokuapp.com/users/:id.json', {
     headers: {
       'Content-Type': 'application/json'
     },
@@ -9,7 +9,7 @@ const getGoogleId = (userName, clientID) => {
 }
  
 const saveFavoriteContacts = (name, phoneNumber, relativeID, clientID) => {
-  fetch(`http://localhost:3000/users/${clientID}/save`, {
+  fetch(`https://quiet-retreat-95283.herokuapp.com/users/${clientID}/save`, {
     headers: {
       'Content-Type': 'application/json'
     },
@@ -21,13 +21,13 @@ const saveFavoriteContacts = (name, phoneNumber, relativeID, clientID) => {
 
 
 const getFavoriteContacts = (clientID) => {
-    fetch(`http://localhost:3000/users/${clientID}/contacts`)
+    fetch(`https://quiet-retreat-95283.herokuapp.com/users/${clientID}/contacts`)
     .then((response) => response.json())
 
 }
 
 const deleteContact = (clientID, relativeID) => {
- fetch(`users/${clientID}/contacts/${relativeID}`, {
+ fetch(`https://quiet-retreat-95283.herokuapp.com/users/${clientID}/contacts/${relativeID}`, {
     headers: {
       'Content-Type': 'application/json'
     },

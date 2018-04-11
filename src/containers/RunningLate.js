@@ -5,10 +5,8 @@ import SendSMS from 'react-native-sms'
 import Communications from 'react-native-communications';
 import { Button, ListItem } from 'react-native-elements';
 import RenderList from '../components/runningLate/renderList'
-import UsersApi from '../apis/UsersApi.js'
 import MenuBar from '../components/runningLate/menuBar'
 import ContactList from './ContactList'
-
 
 export default class RunningLate extends React.Component {
   constructor(props) {
@@ -38,22 +36,7 @@ export default class RunningLate extends React.Component {
     }
   }
 
-
   componentDidMount() {
-<<<<<<< HEAD
-    // call function to retrieve favorites
-   return UsersApi.saveFavoriteContacts(this.state.favorites[0].name, this.state.favorites[0].number)
-    console.log(this.state.favorites.name)
-  
-  }
-
-
- 
-
-  getContacts() {
-    this.props.navigation.navigate('contactPage')
-  }
-=======
     if (this.props.screenProps.contacts) {
       this.setState({all: this.props.screenProps.contacts})
     } else {
@@ -61,19 +44,18 @@ export default class RunningLate extends React.Component {
     }
   }
 
->>>>>>> 51908c0a81cbaccf65c5d51ef901ed258f28eeb1
 
-  sendMessage() {
-      SendSMS.send({
-          body: 'The default body of the SMS!',
-          recipients: ['2253951571'],
-          successTypes: ['sent', 'queued']
-      }, (completed, cancelled, error) => {
+  // sendMessage() {
+  //     SendSMS.send({
+  //         body: 'The default body of the SMS!',
+  //         recipients: ['2253951571'],
+  //         successTypes: ['sent', 'queued']
+  //     }, (completed, cancelled, error) => {
 
-          console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
+  //         console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
 
-      });
-  }
+  //     });
+  // }
 
 
   removePhoneNumber = (index) => {

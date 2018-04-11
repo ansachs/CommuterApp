@@ -115,6 +115,7 @@ export default class CommuteOptions extends React.Component {
       });
     } catch(err) {console.log(err)}
   }
+  
   convert(duration) {
     if (duration[2] === 'd' && duration[10] === 'h') {
       return ((parseInt(duration[0]) * 24) * (60)) + ((parseInt(duration[7])* 10) * 60) + (parseInt(duration[8])* 60)
@@ -137,12 +138,13 @@ export default class CommuteOptions extends React.Component {
     else if (duration[2] === 'h' && duration[11] === 'm') {
       return (parseInt(duration[0]) * 60) + ((parseInt(duration[8]) * 10)) + parseInt(duration[9])  
     }
+    else if (duration[2] === 'h' && duration[10] === 'm' && duration[13] === 's'&& duration[6] === 's') {
+      return (parseInt(duration[0]) * 60) + parseInt(duration[8])  
+    }
     else if (duration[2] === 'h' && duration[10] === 'm' && duration[13] === 's') {
       return (parseInt(duration[0]) * 60) + ((parseInt(duration[7]) * 10)) + parseInt(duration[8])
     }
-    else if (duration[2] === 'h' && duration[10] === 'm') {
-      return (parseInt(duration[0]) * 60) + parseInt(duration[8])  
-    }
+    
     else if (duration[2] === 'h' && duration[9] === 'm') {
       return (parseInt(duration[0]) * 60) + parseInt(duration[7])  
     }
@@ -153,8 +155,6 @@ export default class CommuteOptions extends React.Component {
       return parseInt(duration[0])
     }
   }
-
-
 
 
 
