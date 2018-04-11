@@ -38,8 +38,7 @@ export default class DestinationForm extends React.Component {
   }
 
   onPressSubmit(e) {
-    e.persist()
-
+    
     if (this.state.startDestination.length < 1) {
       this.setState({startError: "must contain a value"});
     } else {

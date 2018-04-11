@@ -1,45 +1,74 @@
 import React from 'react';
-import { View, Text, ListView, SectionList, StyleSheet, ScrollView } from 'react-native';
-import { Header, Input, Divider } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View, Text, ListView, SectionList, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Header, Input, Divider, CheckBox } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Contacts } from 'expo';
 import Scrubber from '../components/contacts/Scrubber';
 import UsersApi from '../apis/UsersApi.js'
 
-const itemHeight = 40;
-
-const renderItem = ({ item }) => {
-    return (
-      <View style={styles.item}>
-        <Text style={styles.itemText}>{item.name}</Text>
-      </View>
-    );
-  };
+const itemHeight = 60;
 
 const renderHeader = ({section: section}) => {
 
   return(
     <View style={styles.sectionComplete}>
-    <Text style={styles.sectionHeader}>
-      {section.title}
-    </Text>
-    <View style={styles.sectionDivider}>
-      <Divider style={styles.divider} />
+      <View style={styles.sectionDivider1}>
+        <Divider style={styles.divider1} />
+      </View>
+      <Text style={styles.sectionHeader}>
+        {section.title}
+      </Text>
+      <View style={styles.sectionDivider2}>
+        <Divider style={styles.divider2} />
+      </View>
     </View>
-  </View>
     )
 }
 
 export default class ContactList extends React.Component {
   constructor(props) {
     super(props);
-    // const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
     contacts: [],
     selectedContact: "",
     sections: [{data:[{name:"Loading"}], key: "d"}]
     }
   }
+
+  renderItem = ({item, section, index}) => {
+    // console.log(this.props.checkedInContactsList)
+    // let currentIndex = (section.key.charCodeAt(0) - 65) * (index + 1)
+    // let isChecked = this.props.checkedInContactsList[currentIndex] ? true : false;
+    return (
+      <View style={styles.item}> 
+        {/*<CheckBox
+          style={styles.itemCheckBox}
+          checkedIcon='dot-circle-o'
+          uncheckedIcon='circle-o'
+          size={20} 
+          checked={isChecked}
+          onPress={() => {
+            console.log(section, index)
+            this.props.handleContactListCheckClicked(section.key, index)
+            }
+          }
+          
+        />*/}
+        <TouchableOpacity onPress={() => {this.props.handleContactItemClicked(item)}}>
+          <Text style={styles.itemText}>
+            {item.name}
+          </Text>
+          <Icon
+              name='favorite-border'
+              type='MaterialIcons'
+              size={20}
+              style={styles.addToFavorite}
+              onPress={() => this.props.addContactsToFavorites(section.key, index)}
+              />
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
 
   getItemLayout = (data, index) => {
@@ -48,7 +77,7 @@ export default class ContactList extends React.Component {
     index,
     length: itemHeight,
     offset: itemHeight * index
-  })
+    })
   };
 
   scrollToChar = char => {
@@ -63,39 +92,6 @@ export default class ContactList extends React.Component {
     });
   };
 
-
-  // componentDidMount() {
-
-  //   const sections =[];
-
-  //   for (i = 0; i < 26; i++) {
-  //     sections[i] = {data:[], key: String.fromCharCode(i + 65), title: String.fromCharCode(i + 65)}
-  //   }
-
-  //   this.showFirstContactAsync()
-  //   .then((contacts)=>{
-  //     console.log('first out of async')
-  //     console.log(contacts)
-  //     if (!contacts || !contacts.data) {
-  //       throw "error"
-  //     } else {
-  //       this.setState({contacts: contacts.data})
-  //       contacts.data.forEach((contact)=>{
-  //         if (contact.name) {
-  //           if (isNaN((contact.name)[0]) === true) {
-  //             const key = (contact.name)[0].toUpperCase()
-  //             sections[key.charCodeAt(0) - 65].data.push(contact)
-  //           }
-  //         }
-
-  //       })
-  //       this.setState({sections: sections})
-  //     }
-
-
-  //   }).catch((err) => {console.log(err)})
-
-  // }
 
   render() {
     
@@ -117,13 +113,12 @@ export default class ContactList extends React.Component {
         <SectionList
           // style={styles.list}
           sections={this.props.contactList}
-          renderItem={renderItem}
+          renderItem={(a) => this.renderItem(a)}
           keyExtractor={(item) => {return(item.id)}}
           initialNumToRender="10"
           renderSectionHeader={renderHeader}
           getItemLayout={this.getItemLayout}
           getSeparatorHeight={() => itemHeight}
-          // windowSize={3}
           ref={c => (this.listRef = c)}
         />
         <View style={styles.scrubber} pointerEvents="box-none">
@@ -145,32 +140,61 @@ const styles = StyleSheet.create({
   },
   item: {
     height: itemHeight,
+    flexDirection: 'row',
+    display: 'flex',
     // borderWidth: 1,
     // borderColor: '#CCCCCC',
-    justifyContent: 'center'
+    justifyContent: 'space-between',
+    alignItems: 'center'
 
   },
-  sectionComplete: {
-    height: itemHeight
-  },
   itemText: {
-    paddingLeft: 50,
-    textAlign: 'left'
+    flex: 3,
+    // paddingLeft: 90,
+    textAlign: 'left',
+    fontSize: 16
+  },
+  addToFavorite: {
+    flex: 1
+    // paddingLeft: '80%'
+  }, 
+  itemCheckBox: {
+    flex: 1,
+    alignSelf: 'center'
+  },
+  sectionComplete: {
+    height: itemHeight,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  sectionDivider1: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  divider1: {
+    backgroundColor: 'black',
+    height: 1,
+    width: '80%'
   },
   sectionHeader: {
     paddingLeft: 10,
     fontWeight: 'bold',
     fontSize: 16,
-    textAlign: 'left'
+    textAlign: 'center',
+    flex: 1
   },
-  divider: {
+  sectionDivider2: {
+    alignItems: 'center',
+    flex: 3,
+  },
+  divider2: {
     backgroundColor: 'black',
-    width: '75%',
-    position: "relative",
-    bottom: 10
-  },
-  sectionDivider: {
-    alignItems: "center"
+    height: 1,
+    width: '80%'
+    // flex: 1
+    // alignSelf: 'center',
+    // width: '80%',
+    // position: 'relative',
   },
   scrubber: {
     position: 'absolute',
