@@ -4,9 +4,7 @@ import { Root } from './src/config/router.js';
 import { Header, Icon } from 'react-native-elements';
 import LoginButton from './src/components/authentication/loginButton'
 import UsersApi from './src/apis/UsersApi.js'
-import ContactList from './src/containers/ContactList'
 import GetContacts from './src/components/contacts/getContacts'
-
 
 YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
@@ -75,7 +73,7 @@ export default class App extends React.Component {
   }
 
   checkClientWithServer() {
-  return UsersApi.getGoogleId(this.state.userName, this.state.clientID)
+    UsersApi.getGoogleId(this.state.userName, this.state.clientID)
   // console.log(this.state.userName)
   }
 
@@ -98,7 +96,7 @@ export default class App extends React.Component {
               current={this.state}
             />}
         />
-        <Root screenProps={{contacts: this.state.sections}}/>
+        <Root screenProps={{contacts: this.state.sections, clientID: this.state.clientID}}/>
       </View>
     )
   }
