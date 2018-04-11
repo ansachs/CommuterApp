@@ -189,120 +189,120 @@ export default class CommuteOptions extends React.Component {
   }
 
   render() {
-    // const maxHeight = this.springValue.interpolate({
-    //   inputRange: [0, 1],
-    //   outputRange: ['6.5%', '100%']
-    // })
+    const maxHeight = this.springValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['6.5%', '100%']
+    })
 
-    // let dropDownIcon = this.state.toggle ? 'arrow-down-drop-circle' : 'arrow-right-drop-circle'
+    let dropDownIcon = this.state.toggle ? 'arrow-down-drop-circle' : 'arrow-right-drop-circle'
 
-    // let startLat = this.props.navigation.state.params.startDestinationLat
-    // let startLng = this.props.navigation.state.params.startDestinationLng
-    // let endLat = this.props.navigation.state.params.endDestinationLat
-    // let endLng = this.props.navigation.state.params.endDestinationLng
+    let startLat = this.props.navigation.state.params.startDestinationLat
+    let startLng = this.props.navigation.state.params.startDestinationLng
+    let endLat = this.props.navigation.state.params.endDestinationLat
+    let endLng = this.props.navigation.state.params.endDestinationLng
     // console.log(this.state.transpo)
     return (
       <View style={styles.container}> 
-      {/*
-        // <View style={styles.destinationContainer}>
-        //   <View style={{flex:1, borderRightWidth:1, borderColor:'#ccc', paddingLeft:20}}>
-        //     <Text style={styles.destinationText}>Start Destination:</Text>
-        //     <Text style={styles.destinationText} numberOfLines={1}>{this.props.navigation.state.params.startDestination}</Text>
-        //   </View>
-        //   <View style={styles.destinationCol}>
-        //     <Text style={styles.destinationText}>End Destination:</Text>
-        //     <Text style={styles.destinationText} numberOfLines={1}>{this.props.navigation.state.params.endDestination}</Text>
-        //   </View>
-        // </View>
+      
+        <View style={styles.destinationContainer}>
+          <View style={{flex:1, borderRightWidth:1, borderColor:'#ccc', paddingLeft:20}}>
+            <Text style={styles.destinationText}>Start Destination:</Text>
+            <Text style={styles.destinationText} numberOfLines={1}>{this.props.navigation.state.params.startDestination}</Text>
+          </View>
+          <View style={styles.destinationCol}>
+            <Text style={styles.destinationText}>End Destination:</Text>
+            <Text style={styles.destinationText} numberOfLines={1}>{this.props.navigation.state.params.endDestination}</Text>
+          </View>
+        </View>
 
-        // <View style={styles.mapContainer}>
-        //   <MapView
-        //     initialRegion={{
-        //       latitude: startLat,
-        //       longitude: startLng,
-        //       latitudeDelta: 0.0922,
-        //       longitudeDelta: 0.0421,
-        //     }}
-        //     style={styles.map}
-        //   >
+        <View style={styles.mapContainer}>
+          <MapView
+            initialRegion={{
+              latitude: startLat,
+              longitude: startLng,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            style={styles.map}
+          >
 
-        //     <MapViewDirections
-        //       origin={{
-        //         latitude: startLat,
-        //         longitude: startLng
-        //       }}
-        //       destination={{
-        //         latitude: endLat,
-        //         longitude: endLng
-        //       }}
-        //       apikey={'AIzaSyD2_6K7CF1C1ooSwgDxxDq2WBx8bAIihIU'}
-        //       strokeWidth={3}
-        //       strokeColor="red"
-        //     />
+            <MapViewDirections
+              origin={{
+                latitude: startLat,
+                longitude: startLng
+              }}
+              destination={{
+                latitude: endLat,
+                longitude: endLng
+              }}
+              apikey={'AIzaSyD2_6K7CF1C1ooSwgDxxDq2WBx8bAIihIU'}
+              strokeWidth={3}
+              strokeColor="red"
+            />
 
-        //     <MapView.Marker
-        //       coordinate={{
-        //         latitude: startLat,
-        //         longitude: startLng
-        //       }}
-        //       title='Start Destination'
-        //     />
-        //     <MapView.Marker
-        //       coordinate={{
-        //         latitude: endLat,
-        //         longitude: endLng
-        //       }}
-        //       title='End Destination'
-        //     />
-        //   </MapView>
-        // </View>
+            <MapView.Marker
+              coordinate={{
+                latitude: startLat,
+                longitude: startLng
+              }}
+              title='Start Destination'
+            />
+            <MapView.Marker
+              coordinate={{
+                latitude: endLat,
+                longitude: endLng
+              }}
+              title='End Destination'
+            />
+          </MapView>
+        </View>
 
-        // <Animated.View
-        //   style={{maxHeight: maxHeight}}
-        // >
-        //   <Button
-        //     title='Commute Options'
-        //     onPress={this.spring.bind(this)}
-        //     icon={
-        //       <Icon
-        //         name={dropDownIcon}
-        //         size={20}
-        //         color='white'
-        //         type='material-community'
-        //       />
-        //     }
-        //     iconRight
-        //   />
-        //   <FlatList
-        //     data={this.state.transpo.sort((a , b) => (a.convert) - (b.convert))}
-        //     data={this.state.transpo}
-        //     renderItem={({item}) => (
-        //       <ListItem
-        //         title={item.method.toUpperCase()}
-        //         leftIcon={{
-        //           name: `${item.icon}`,
-        //           type: 'material-community',
-        //           style: { marginRight: 20, fontSize: 30 }
-        //         }}
-        //         rightIcon={{
-        //           name: 'chevron-right',
-        //           type: 'material-community',
-        //           style: { marginRight: 20, fontSize: 30 }
-        //         }}
-        //         containerStyle={{backgroundColor: '#fff', borderBottomWidth:1}}
-        //         subtitle={
-        //           <View>
-        //             <Text>Duration: {item.duration}</Text>
-        //             <Text>Price: {item.price}</Text>
-        //           </View>
-        //         }
-        //         onPress={() => this.handleRowOnPress(item.method)}
-        //       />
-        //     )}
-        //     keyExtractor={item => item.method}
-        //   />
-        // </Animated.View> 
-        */}
+        <Animated.View
+          style={{maxHeight: maxHeight}}
+        >
+          <Button
+            title='Commute Options'
+            onPress={this.spring.bind(this)}
+            icon={
+              <Icon
+                name={dropDownIcon}
+                size={20}
+                color='white'
+                type='material-community'
+              />
+            }
+            iconRight
+          />
+          <FlatList
+            data={this.state.transpo.sort((a , b) => (a.convert) - (b.convert))}
+            data={this.state.transpo}
+            renderItem={({item}) => (
+              <ListItem
+                title={item.method.toUpperCase()}
+                leftIcon={{
+                  name: `${item.icon}`,
+                  type: 'material-community',
+                  style: { marginRight: 20, fontSize: 30 }
+                }}
+                rightIcon={{
+                  name: 'chevron-right',
+                  type: 'material-community',
+                  style: { marginRight: 20, fontSize: 30 }
+                }}
+                containerStyle={{backgroundColor: '#fff', borderBottomWidth:1}}
+                subtitle={
+                  <View>
+                    <Text>Duration: {item.duration}</Text>
+                    <Text>Price: {item.price}</Text>
+                  </View>
+                }
+                onPress={() => this.handleRowOnPress(item.method)}
+              />
+            )}
+            keyExtractor={item => item.method}
+          />
+        </Animated.View> 
+        
       </View>
     );
   }

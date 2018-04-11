@@ -45,7 +45,6 @@ export default class RunningLate2 extends React.Component {
   }
 
   componentWillUpdate= () => {
-    debugger;
     if ((this.state.clientID.length === 0) && (this.props.screenProps.clientID.length > 0)) {
       this.setState({clientID: this.props.screenProps.clientID})
     } else if (this.state.clientID && this.props.screenProps.clientID.length === 0) {
@@ -75,11 +74,6 @@ export default class RunningLate2 extends React.Component {
     }
     return names
   }
-
- // sendMessage() {
- //      var smsLink = require('sms-link')
- //      smsLink({phone: '2253951571', body: 'Hello world'})
- //  }
 
   addToSendTo = (contact) => {
     if (this.state.sendTo.filter((currentContacts)=>currentContacts.id === contact.id).length > 0) {
@@ -116,7 +110,6 @@ export default class RunningLate2 extends React.Component {
       )
     })
 
-    console.log(this)
 
     return (
       <View style={styles.container}>
