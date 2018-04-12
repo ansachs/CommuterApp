@@ -275,7 +275,6 @@ export default class CommuteOptions extends React.Component {
           />
           <FlatList
             data={this.state.transpo.sort((a , b) => (a.convert) - (b.convert))}
-            data={this.state.transpo}
             renderItem={({item}) => (
               <ListItem
                 title={item.method.toUpperCase()}

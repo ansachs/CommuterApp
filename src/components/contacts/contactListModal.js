@@ -115,7 +115,10 @@ export default class ContactListModal extends React.Component {
           renderItem={({item, index}) => {
             return(
             <TouchableOpacity
-              onPress={() => this.props.addToSendTo(item)}
+              onPress={() => {
+                this.props.addToSendTo(item)
+                this.props.closeContactList()
+              }}
             >
             <ListItem
               title={item.name}

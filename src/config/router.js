@@ -12,7 +12,6 @@ import drivePage from '../containers/drivePage.js';
 import UberPage from '../containers/UberPage.js';
 import RunningLate2 from '../containers/RunningLate2.js';
 
-
 export const DestinationStack = StackNavigator({
   DestinationForm: {
     screen: DestinationForm,
@@ -110,8 +109,8 @@ export const Tabs = TabNavigator({
   navigationOptions: ({navigation}) => ({
     tabBarOnPress: ({scene, jumpToIndex}) => {
 
-      console.log(scene)
-      console.log(jumpToIndex)
+      // console.log(scene)
+      // console.log(jumpToIndex)
       if (scene.route.params) {
         jumpToIndex(scene.index)
       } else if (!scene.route.params && scene.index === 0) {

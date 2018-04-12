@@ -9,7 +9,8 @@ import GetContacts from './src/components/contacts/getContacts'
 YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
   'Warning: componentWillReceiveProps is deprecated',
-  'Remote debugger'
+  'Remote debugger',
+  'Warning: Each child in an array or iterator should have a unique "key" prop'
 ]);
 
 
