@@ -75,7 +75,6 @@ export default class RunningLate2 extends React.Component {
   if (this.state.clientID.length > 0) {
     if (this.state.favoriteContacts[item.id]){
       UsersApi.deleteContact(this.state.clientID, item.id)
-      console.log(this.state.clientID)
       delete this.state.favoriteContacts[item.id];
       this.setState({favoriteContacts: this.state.favoriteContacts});
     } else {
@@ -88,7 +87,7 @@ export default class RunningLate2 extends React.Component {
   }
 
   render() {
-    // console.log(this.state.contacts)
+    console.log(this.state)
     // console.log(this.state.favoriteContacts)
     let number = ""
     let names = this.state.sendTo.map((contact, index) => {
