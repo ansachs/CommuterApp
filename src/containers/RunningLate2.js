@@ -2,29 +2,17 @@ import React from 'react';
 import { StyleSheet, View, Text, Modal, TouchableHighlight } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import ContactList from '../components/contacts/contactListModal'
+import UsersApi from '../apis/UsersApi.js'
 
 export default class RunningLate2 extends React.Component {
   constructor() {
     super();
     this.state = {
-
       sendTo: [],
       modalVisible: false,
       contacts: [],
-      favoriteContacts: {
-        "410FE041-5C4E-48DA-B4DE-04C15EA3DBAC":{"id":16,"user_id":4,"name":"John","phone_number":"888-555-5512","relative_id":"410FE041-5C4E-48DA-B4DE-04C15EA3DBAC","created_at":"2018-04-11T21:02:43.151Z","updated_at":"2018-04-11T21:02:43.151Z"},"2E73EE73-C03F-4D5F-B1E8-44E85A70F170":{"id":14,"user_id":4,"name":"Hank M. Zakroff","phone_number":null,"relative_id":"2E73EE73-C03F-4D5F-B1E8-44E85A70F170","created_at":"2018-04-11T19:54:59.410Z","updated_at":"2018-04-11T19:54:59.410Z"}
-      },
-
-      // {"2E73EE73-C03F-4D5F-B1E8-44E85A70F170": {id: "2E73EE73-C03F-4D5F-B1E8-44E85A70F170", name: "Hank M. Zakroff", phoneNumbers:[
-      //     {countryCode: "us", number: "(555) 766-4823", digits: "5557664823"},
-      //     {countryCode: "us", number: "(707) 555-1854", digits: "7075551854"}
-      //   ]}
-      // ,
-      // "AB211C5F-9EC9-429F-9466-B9382FF61035": {id: "AB211C5F-9EC9-429F-9466-B9382FF61035", name: "Daniel Higgins Jr.", phoneNumbers:[
-      //     {countryCode: "us", number: "(555) 766-4823", digits: "5557664823"},
-      //     {countryCode: "us", number: "(707) 555-1854", digits: "7075551854"}
-      //   ]}
-      // },
+      favoriteContacts: {},
+      startError: '',
       clientID: ""
     }
   }
@@ -37,11 +25,19 @@ export default class RunningLate2 extends React.Component {
     }
   }
 
-  componentWillUpdate= () => {
+  componentWillUpdate = () => {
     if ((this.state.clientID.length === 0) && (this.props.screenProps.clientID.length > 0)) {
       this.setState({clientID: this.props.screenProps.clientID})
     } else if (this.state.clientID && this.props.screenProps.clientID.length === 0) {
       this.setState({clientID: "", favoriteContacts: {}})
+
+    }
+    //console.log(this.state.clientID)
+    //console.log(Object.keys(this.state.favoriteContacts).length === 0)
+    if (this.state.clientID.length > 0 && Object.keys(this.state.favoriteContacts).length === 0) {
+      UsersApi.getFavoriteContacts(this.state.clientID)
+      .then((response) => this.setState({favoriteContacts: response}))
+    //console.log(this.state.favoriteContacts)
     }
   }
 
@@ -57,6 +53,7 @@ export default class RunningLate2 extends React.Component {
       names += value.name + ", "
     }
     return names
+
   }
 
   // sendMessage() {
@@ -69,6 +66,8 @@ export default class RunningLate2 extends React.Component {
  //  }
 
   addToSendTo = (contact) => {
+    // console.log(contact)
+    // console.log(this.state.clientID)
     if (this.state.sendTo.filter((currentContacts)=>currentContacts.id === contact.id).length > 0) {
     } else {
       this.setState({sendTo: [...this.state.sendTo, contact]})
@@ -76,18 +75,24 @@ export default class RunningLate2 extends React.Component {
   }
 
   handleFavoritesClick = (item) => {
+  if (this.state.clientID.length > 0) {
     if (this.state.favoriteContacts[item.id]){
+      UsersApi.deleteContact(this.state.clientID, item.id)
+      console.log(this.state.clientID)
       delete this.state.favoriteContacts[item.id];
       this.setState({favoriteContacts: this.state.favoriteContacts});
     } else {
-      console.log('added')
       this.setState({favoriteContacts: {...this.state.favoriteContacts, [item.id]: item}})
+      UsersApi.saveFavoriteContacts(item.firstName, item.phoneNumbers[0].number, item.id, this.state.clientID)
+      }
+    } else {
+      return alert("You must Login To Add Favorites")
     }
   }
 
   render() {
     // console.log(this.state.contacts)
-    console.log(this.state.favoriteContacts)
+    // console.log(this.state.favoriteContacts)
     let names = this.state.sendTo.map((contact, index) => {
       return (
         <Text
@@ -103,7 +108,6 @@ export default class RunningLate2 extends React.Component {
         </Text>
       )
     })
-
 
     return (
       <View style={styles.container}>
@@ -174,6 +178,7 @@ const styles = StyleSheet.create({
   toTitle: {
     marginBottom:5
   },
+
   messageTitle: {
     marginTop:20,
     marginBottom:5

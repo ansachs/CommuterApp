@@ -152,6 +152,9 @@ export default class CommuteOptions extends React.Component {
     else if (duration[2] === 'm') {
       return parseInt(duration[0])
     }
+    else if (duration[4] === 'm') {
+      return (parseInt(duration[0]) * 100) + (parseInt(duration[1]) * 10) + parseInt(duration[2])
+    }
   }
 
   storeData(obj) {
@@ -198,6 +201,7 @@ export default class CommuteOptions extends React.Component {
     let endLat = this.props.navigation.state.params.endDestinationLat
     let endLng = this.props.navigation.state.params.endDestinationLng
 
+    //console.log(this.state.transpo)
     return (
       <View style={styles.container}>
         <View style={styles.destinationContainer}>

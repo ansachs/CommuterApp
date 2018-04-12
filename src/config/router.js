@@ -145,4 +145,5 @@ export const Root = StackNavigator({
 }, {
   // mode: 'modal',
   headerMode: 'none'
+
 });

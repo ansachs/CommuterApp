@@ -7,7 +7,6 @@ import {Icon as ElementIcon} from 'react-native-elements'
 
 import Scrubber from '../contacts/Scrubber';
 
-
 const itemHeight = 60;
 
 const renderHeader = ({section: section}) => {
@@ -54,7 +53,6 @@ const renderItem = ({item, section, index}, sendTo, handleFavoritesClick, favori
         </TouchableOpacity>
     );
   };
-
 
   const getItemLayout = (data, index) => {
 
