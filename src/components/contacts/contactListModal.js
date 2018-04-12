@@ -4,13 +4,9 @@ import {Icon as MaterialIcon} from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { Header, Input, Divider, Button, ListItem, Icon } from 'react-native-elements';
 import {Icon as ElementIcon} from 'react-native-elements'
-
 import Scrubber from '../contacts/Scrubber';
-
 const itemHeight = 60;
-
 const renderHeader = ({section: section}) => {
-
   return(
     <View style={styles.sectionComplete}>
       {/*<View style={styles.sectionDivider1}>
@@ -25,7 +21,6 @@ const renderHeader = ({section: section}) => {
     </View>
     )
 }
-
 const renderItem = ({item, section, index}, sendTo, handleFavoritesClick, favoriteContacts, closeContactList) => {
   let heartStyle = favoriteContacts[item.id] ? 'favorite' : 'favorite-border'
     return (
@@ -49,23 +44,18 @@ const renderItem = ({item, section, index}, sendTo, handleFavoritesClick, favori
               />
           </View>
           }
-
         </TouchableOpacity>
     );
   };
-
   const getItemLayout = (data, index) => {
-
     return ({
     index,
     length: itemHeight,
     offset: itemHeight * index
     })
   };
-
   const scrollToChar = (char) => {
     console.log("go to    ",char)
-
     this.listRef.scrollToLocation({
       sectionIndex: (char.charCodeAt(0) - 65),
       itemIndex: 0,
@@ -74,18 +64,14 @@ const renderItem = ({item, section, index}, sendTo, handleFavoritesClick, favori
       viewOffset: 0
     });
   };
-
-
 export default class ContactListModal extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       currentList: 'all',
       active: false,
     }
   }
-
   whichListToDisplay() {
     let favoriteContacts = Object.values(this.props.favoriteContacts)
     if (this.state.currentList === 'all') {
@@ -149,11 +135,9 @@ export default class ContactListModal extends React.Component {
       )
     }
   }
-
   tabClick(obj) {
     this.setState(obj)
   }
-
   renderScrubber() {
     return (
       <View style={styles.scrubber} pointerEvents="box-none">
@@ -161,12 +145,10 @@ export default class ContactListModal extends React.Component {
       </View>
     )
   }
-
   render() {
     let listref = "";
     let currentList = this.whichListToDisplay()
     let scrubber = this.renderScrubber()
-
     return(
       <Modal
         animationType="slide"
@@ -175,9 +157,7 @@ export default class ContactListModal extends React.Component {
         onRequestClose={() => {
           alert('Modal has been closed.');
         }}>
-
         <View style={styles.overallModal}>
-
           <View style={{marginTop:20}}>
               <IonIcon
                 name='ios-arrow-back'
@@ -208,16 +188,13 @@ export default class ContactListModal extends React.Component {
                 </Text>
               </View>
           </View>
-
           {currentList}
           {(this.state.currentList === 'all') && scrubber}
-
         </View>
       </Modal>
     )
   }
 }
-
 const styles = StyleSheet.create({
   // overallModal: {
   //   flexDirection: 'row',
@@ -234,7 +211,6 @@ const styles = StyleSheet.create({
     // borderColor: '#CCCCCC',
     justifyContent: 'space-between',
     alignItems: 'center'
-
   },
   itemText: {
     flex: 3,

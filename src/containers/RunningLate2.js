@@ -28,10 +28,9 @@ export default class RunningLate2 extends React.Component {
   componentWillUpdate = () => {
     if ((this.state.clientID.length === 0) && (this.props.screenProps.clientID.length > 0)) {
       UsersApi.getFavoriteContacts(this.props.screenProps.clientID)
-      this.setState({clientID: this.props.screenProps.clientID})
+      .then((response)=> { this.setState({clientID: this.props.screenProps.clientID, favoriteContacts: response}) })
     } else if (this.state.clientID && this.props.screenProps.clientID.length === 0) {
       this.setState({clientID: "", favoriteContacts: {}})
-
     }
     //console.log(this.state.clientID)
     //console.log(Object.keys(this.state.favoriteContacts).length === 0)
@@ -76,7 +75,6 @@ export default class RunningLate2 extends React.Component {
   if (this.state.clientID.length > 0) {
     if (this.state.favoriteContacts[item.id]){
       UsersApi.deleteContact(this.state.clientID, item.id)
-      console.log(this.state.clientID)
       delete this.state.favoriteContacts[item.id];
       this.setState({favoriteContacts: this.state.favoriteContacts});
     } else {
