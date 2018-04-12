@@ -27,6 +27,7 @@ export default class RunningLate2 extends React.Component {
 
   componentWillUpdate = () => {
     if ((this.state.clientID.length === 0) && (this.props.screenProps.clientID.length > 0)) {
+      UsersApi.getFavoriteContacts(this.props.screenProps.clientID)
       this.setState({clientID: this.props.screenProps.clientID})
     } else if (this.state.clientID && this.props.screenProps.clientID.length === 0) {
       this.setState({clientID: "", favoriteContacts: {}})
@@ -34,11 +35,11 @@ export default class RunningLate2 extends React.Component {
     }
     //console.log(this.state.clientID)
     //console.log(Object.keys(this.state.favoriteContacts).length === 0)
-    if (this.state.clientID.length > 0 && Object.keys(this.state.favoriteContacts).length === 0) {
-      UsersApi.getFavoriteContacts(this.state.clientID)
-      .then((response) => this.setState({favoriteContacts: response}))
+    // if (this.state.clientID.length > 0 && Object.keys(this.state.favoriteContacts).length === 0) {
+    //   UsersApi.getFavoriteContacts(this.state.clientID)
+    //   .then((response) => this.setState({favoriteContacts: response}))
     //console.log(this.state.favoriteContacts)
-    }
+    // }
   }
 
   removePhoneNumber = (index) => {
@@ -88,7 +89,7 @@ export default class RunningLate2 extends React.Component {
   }
 
   render() {
-    // console.log(this.state.contacts)
+    console.log(this.state)
     // console.log(this.state.favoriteContacts)
     let number = ""
     let names = this.state.sendTo.map((contact, index) => {
