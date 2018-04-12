@@ -87,7 +87,7 @@ const requestRide = (productId, startDestinationLat, startDestinationLng, endDes
 }
 
 const cancelRide = () => {
-  return fetch('https://sandbox-api.uber.com/v1.2/requests/current',
+  fetch('https://sandbox-api.uber.com/v1.2/requests/current',
     {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
