@@ -40,17 +40,17 @@ export default class RunningLate extends React.Component {
   }
 
 
-  sendMessage() {
-      SendSMS.send({
-          body: 'The default body of the SMS!',
-          recipients: ['2253951571'],
-          successTypes: ['sent', 'queued']
-      }, (completed, cancelled, error) => {
+  // sendMessage() {
+  //     SendSMS.send({
+  //         body: 'The default body of the SMS!',
+  //         recipients: ['2253951571'],
+  //         successTypes: ['sent', 'queued']
+  //     }, (completed, cancelled, error) => {
 
-          console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
+  //         console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
 
-      });
-  }
+  //     });
+  // }
 
 
   removePhoneNumber = (index) => {
@@ -164,7 +164,11 @@ const styles = StyleSheet.create({
   menuBar: {
     alignItems: 'center'
   }
+<<<<<<< HEAD
+});
+=======
 });
 
 
 
+>>>>>>> 957bf75d9499784987de23fefa2fa5e8b0695801

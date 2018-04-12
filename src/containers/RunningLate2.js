@@ -2,12 +2,13 @@ import React from 'react';
 import { StyleSheet, View, Text, Modal, TouchableHighlight } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import ContactList from '../components/contacts/contactListModal'
+import UsersApi from '../apis/UsersApi.js'
 
 export default class RunningLate2 extends React.Component {
   constructor() {
     super();
     this.state = {
-
+      startError: '',
       sendTo: [{
           name: 'john',
           number: '1111111',
@@ -21,15 +22,7 @@ export default class RunningLate2 extends React.Component {
       modalVisible: false,
       contacts: [],
       favoriteContacts: 
-      {"2E73EE73-C03F-4D5F-B1E8-44E85A70F170": {id: "2E73EE73-C03F-4D5F-B1E8-44E85A70F170", name: "Hank M. Zakroff", phoneNumbers:[
-          {countryCode: "us", number: "(555) 766-4823", digits: "5557664823"},
-          {countryCode: "us", number: "(707) 555-1854", digits: "7075551854"}
-        ]}
-      ,
-      "AB211C5F-9EC9-429F-9466-B9382FF61035": {id: "AB211C5F-9EC9-429F-9466-B9382FF61035", name: "Daniel Higgins Jr.", phoneNumbers:[
-          {countryCode: "us", number: "(555) 766-4823", digits: "5557664823"},
-          {countryCode: "us", number: "(707) 555-1854", digits: "7075551854"}
-        ]}
+      {
       },
       clientID: ""
   
@@ -37,21 +30,34 @@ export default class RunningLate2 extends React.Component {
   }
 
   componentDidMount() {
+
+
     if (this.props.screenProps.contacts) {
       this.setState({contacts: this.props.screenProps.contacts})
     } else {
       this.setState({contacts: "Please login to view contacts"})
     }
+   
+  
   }
 
-  componentWillUpdate= () => {
+
+  componentWillUpdate = () => {
     if ((this.state.clientID.length === 0) && (this.props.screenProps.clientID.length > 0)) {
       this.setState({clientID: this.props.screenProps.clientID})
     } else if (this.state.clientID && this.props.screenProps.clientID.length === 0) {
       this.setState({clientID: "", favoriteContacts: {}})
-    }
-  }
 
+    }
+    console.log(this.state.clientID)
+    console.log(Object.keys(this.state.favoriteContacts).length === 0)
+        if (this.state.clientID.length > 0 && Object.keys(this.state.favoriteContacts).length === 0) {
+          UsersApi.getFavoriteContacts(this.state.clientID)
+          .then((response) => this.setState({favoriteContacts: response}))
+    console.log(this.state.favoriteContacts)
+    
+  }
+}
 
   getContacts() {
     console.log('open contact list')
@@ -73,24 +79,37 @@ export default class RunningLate2 extends React.Component {
       names += value.name + ", "
     }
     return names
+
   }
 
   addToSendTo = (contact) => {
+    console.log(contact)
+    console.log(this.state.clientID)
+
     if (this.state.sendTo.filter((currentContacts)=>currentContacts.id === contact.id).length > 0) {
+
     } else {
       this.setState({sendTo: [...this.state.sendTo, contact]})
     }
+
   }
 
   handleFavoritesClick = (item) => {
+  if (this.state.clientID.length > 0) {
     if (this.state.favoriteContacts[item.id]){
+      UsersApi.deleteContact(this.state.clientID, item.id)
+      console.log(this.state.clientID)
       delete this.state.favoriteContacts[item.id];
       this.setState({favoriteContacts: this.state.favoriteContacts});
     } else {
-      console.log('added')
       this.setState({favoriteContacts: {...this.state.favoriteContacts, [item.id]: item}})
+      UsersApi.saveFavoriteContacts(item.firstName, item.phoneNumbers[0].number, item.id, this.state.clientID)
+      }
+    } else {
+      return alert("You must Login To Add Favorites")
     }
   }
+
 
 
   render() {
@@ -142,7 +161,9 @@ export default class RunningLate2 extends React.Component {
         <Button
           title='Send Text'
           buttonStyle={{marginTop:20}}
+
           // onPress={this.sendMessage.bind(this)}
+
         />
       </View>
     )

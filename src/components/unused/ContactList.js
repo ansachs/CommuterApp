@@ -4,6 +4,7 @@ import { Header, Input, Divider, CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Contacts } from 'expo';
 import Scrubber from '../components/contacts/Scrubber';
+import UsersApi from '../apis/UsersApi.js'
 
 const itemHeight = 60;
 

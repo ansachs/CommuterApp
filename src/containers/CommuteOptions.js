@@ -136,12 +136,13 @@ export default class CommuteOptions extends React.Component {
     else if (duration[2] === 'h' && duration[11] === 'm') {
       return (parseInt(duration[0]) * 60) + ((parseInt(duration[8]) * 10)) + parseInt(duration[9])  
     }
+    else if (duration[2] === 'h' && duration[10] === 'm' && duration[13] === 's'&& duration[6] === 's') {
+      return (parseInt(duration[0]) * 60) + parseInt(duration[8])  
+    }
     else if (duration[2] === 'h' && duration[10] === 'm' && duration[13] === 's') {
       return (parseInt(duration[0]) * 60) + ((parseInt(duration[7]) * 10)) + parseInt(duration[8])
     }
-    else if (duration[2] === 'h' && duration[10] === 'm') {
-      return (parseInt(duration[0]) * 60) + parseInt(duration[8])  
-    }
+    
     else if (duration[2] === 'h' && duration[9] === 'm') {
       return (parseInt(duration[0]) * 60) + parseInt(duration[7])  
     }
@@ -151,8 +152,10 @@ export default class CommuteOptions extends React.Component {
     else if (duration[2] === 'm') {
       return parseInt(duration[0])
     }
+    else if (duration[4] === 'm') {
+      return (parseInt(duration[0]) * 100) + (parseInt(duration[1]) * 10) + parseInt(duration[2])
+    }
   }
-
 
 
 
@@ -200,7 +203,7 @@ export default class CommuteOptions extends React.Component {
     let startLng = this.props.navigation.state.params.startDestinationLng
     let endLat = this.props.navigation.state.params.endDestinationLat
     let endLng = this.props.navigation.state.params.endDestinationLng
-    // console.log(this.state.transpo)
+    console.log(this.state.transpo)
     return (
       <View style={styles.container}> 
       
