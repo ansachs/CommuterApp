@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, Text, ListView, SectionList, StyleSheet, ScrollView, TouchableOpacity, TouchableHighlight, Modal } from 'react-native';
+import { View, Text, ListView, SectionList, StyleSheet, ScrollView, TouchableOpacity, TouchableHighlight, Modal, FlatList } from 'react-native';
 import {Icon as MaterialIcon} from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { Header, Input, Divider, CheckBox } from 'react-native-elements';
+import { Header, Input, Divider, Button, ListItem, Icon } from 'react-native-elements';
 import {Icon as ElementIcon} from 'react-native-elements'
 
 import Scrubber from '../contacts/Scrubber';
-
 
 const itemHeight = 60;
 
@@ -31,7 +30,7 @@ const renderItem = ({item, section, index}, sendTo, handleFavoritesClick, favori
   let heartStyle = favoriteContacts[item.id] ? 'favorite' : 'favorite-border'
     return (
         <TouchableOpacity
-        style={styles.item} 
+        style={styles.item}
         onPress={() => {
           sendTo(item)
           closeContactList()
@@ -55,7 +54,6 @@ const renderItem = ({item, section, index}, sendTo, handleFavoritesClick, favori
     );
   };
 
-
   const getItemLayout = (data, index) => {
 
     return ({
@@ -78,37 +76,28 @@ const renderItem = ({item, section, index}, sendTo, handleFavoritesClick, favori
   };
 
 
-const contactListModal = (props) => {
-  let listref = "";
+export default class ContactListModal extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return(
-  <Modal
-    animationType="slide"
-    transparent={false}
-    visible={props.modalState}
-    onRequestClose={() => {
-      alert('Modal has been closed.');
-    }}>
+    this.state = {
+      currentList: 'all',
+      active: false,
+    }
+  }
 
-    <View style={styles.overallModal}>
-
-      <View style={{paddingTop: 100}}>
-          <IonIcon
-            name='ios-arrow-back'
-            color='#517fa4'
-            size={30}
-            onPress={() => {props.closeContactList()}}
-          />
-      </View>
-
-      <SectionList
+  whichListToDisplay() {
+    let favoriteContacts = Object.values(this.props.favoriteContacts)
+    if (this.state.currentList === 'all') {
+      return (
+        <SectionList
           style={styles.list}
-          sections={props.contactList}
-          renderItem={(item) => renderItem(item, 
-            props.addToSendTo, 
-            props.handleFavoritesClick,
-            props.favoriteContacts,
-            props.closeContactList
+          sections={this.props.contactList}
+          renderItem={(item) => renderItem(item,
+            this.props.addToSendTo,
+            this.props.handleFavoritesClick,
+            this.props.favoriteContacts,
+            this.props.closeContactList
             )}
           keyExtractor={(item) => {return(item.id)}}
           initialNumToRender="10"
@@ -117,14 +106,116 @@ const contactListModal = (props) => {
           getSeparatorHeight={() => itemHeight}
           ref={c => (listRef = c)}
         />
-      
+      )
+    } else {
+      return (
+        <FlatList
+          data={favoriteContacts}
+          keyExtractor={item => item.relative_id}
+          renderItem={({item, index}) => {
+            return(
+            <TouchableOpacity
+              onPress={() => {
+                this.props.addToSendTo(item)
+                this.props.closeContactList()
+              }}
+            >
+            <ListItem
+              title={item.name}
+              subtitle={
+                <View>
+                  <Text>{item.phone_number && item.phone_number}</Text>
+                  <Text>{item.phoneNumbers && item.phoneNumbers[0].number}</Text>
+                </View>
+              }
+              // rightIcon={
+              //   // <Button
+              //   //   title='add to favorites'
+              //   //   titleStyle={{fontSize:15}}
+              //   // />
+              //   <Icon
+              //   name = 'ios-remove-circle-outline'
+              //   type = 'ionicon'
+              //   size = {20}
+              //   style = {{ 'marginRight': 20}}
+              //   onPress = {() => {props.handleClick(index)}}
+              //   />
+              // }
+              containerStyle={{backgroundColor: '#fff', borderBottomWidth:1}}
+            />
+            </TouchableOpacity>
+          )}}
+        />
+      )
+    }
+  }
+
+  tabClick(obj) {
+    this.setState(obj)
+  }
+
+  renderScrubber() {
+    return (
       <View style={styles.scrubber} pointerEvents="box-none">
         <Scrubber onScrub={scrollToChar} />
       </View>
+    )
+  }
 
-    </View> 
-  </Modal>)
+  render() {
+    let listref = "";
+    let currentList = this.whichListToDisplay()
+    let scrubber = this.renderScrubber()
 
+    return(
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={this.props.modalState}
+        onRequestClose={() => {
+          alert('Modal has been closed.');
+        }}>
+
+        <View style={styles.overallModal}>
+
+          <View style={{marginTop:20}}>
+              <IonIcon
+                name='ios-arrow-back'
+                color='#517fa4'
+                size={30}
+                onPress={() => {this.props.closeContactList()}}
+              />
+              <View style={{flexDirection:'row', alignSelf:'flex-end'}}>
+                <Text
+                  style={{
+                    borderWidth:1,
+                    backgroundColor: '#ccc',
+                    paddingHorizontal: 20,
+                    paddingVertical: 10,
+                  }}
+                  onPress={() => {this.tabClick({currentList:'all'})}}
+                >All
+                </Text>
+                <Text
+                  style={{
+                    borderWidth:1,
+                    backgroundColor: '#ccc',
+                    paddingHorizontal: 20,
+                    paddingVertical: 10
+                  }}
+                  onPress={() => {this.tabClick({currentList:'favorites'})}}
+                >Favorites
+                </Text>
+              </View>
+          </View>
+
+          {currentList}
+          {(this.state.currentList === 'all') && scrubber}
+
+        </View>
+      </Modal>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -158,7 +249,7 @@ const styles = StyleSheet.create({
   addToFavorite: {
     flex: 1
     // paddingLeft: '80%'
-  }, 
+  },
   itemCheckBox: {
     flex: 1,
     alignSelf: 'center'
@@ -205,9 +296,5 @@ const styles = StyleSheet.create({
     // alignSelf: 'center'
     // flex: 1,
     // justifyContent: 'flex-end'
-  }
+  },
 });
-
-export default {
-  ContactListModal: contactListModal
-}

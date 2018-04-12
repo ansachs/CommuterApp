@@ -9,7 +9,8 @@ import GetContacts from './src/components/contacts/getContacts'
 YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
   'Warning: componentWillReceiveProps is deprecated',
-  'Remote debugger'
+  'Remote debugger',
+  'Warning: Each child in an array or iterator should have a unique "key" prop'
 ]);
 
 
@@ -72,20 +73,18 @@ export default class App extends React.Component {
 
   checkClientWithServer() {
     UsersApi.getGoogleId(this.state.userName, this.state.clientID)
-  // console.log(this.state.userName)
   }
 
 
   render() {
     if (this.state.clientID.length > 0) {
       this.checkClientWithServer()
-    } 
+    }
     let userOrWelcome = this.state.clientID ? this.state.userName : "welcome"
 
     return (
       <View style={{flex: 1}}>
         <Header
-          leftComponent={{ icon: 'menu', color: '#fff' }}
           centerComponent={{ text: userOrWelcome, style: { color: '#fff' } }}
           rightComponent={
             <LoginButton

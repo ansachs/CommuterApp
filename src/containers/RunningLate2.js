@@ -8,39 +8,22 @@ export default class RunningLate2 extends React.Component {
   constructor() {
     super();
     this.state = {
-      startError: '',
-      sendTo: [{
-          name: 'john',
-          number: '1111111',
-          id: '1'
-        },
-        {
-          name: 'jane',
-          number: '2222222',
-          id: '2'
-        }],
+      sendTo: [],
       modalVisible: false,
       contacts: [],
-      favoriteContacts: 
-      {
-      },
+      favoriteContacts: {},
+      startError: '',
       clientID: ""
-  
     }
   }
 
   componentDidMount() {
-
-
     if (this.props.screenProps.contacts) {
       this.setState({contacts: this.props.screenProps.contacts})
     } else {
       this.setState({contacts: "Please login to view contacts"})
     }
-   
-  
   }
-
 
   componentWillUpdate = () => {
     if ((this.state.clientID.length === 0) && (this.props.screenProps.clientID.length > 0)) {
@@ -49,22 +32,13 @@ export default class RunningLate2 extends React.Component {
       this.setState({clientID: "", favoriteContacts: {}})
 
     }
-    console.log(this.state.clientID)
-    console.log(Object.keys(this.state.favoriteContacts).length === 0)
-        if (this.state.clientID.length > 0 && Object.keys(this.state.favoriteContacts).length === 0) {
-          UsersApi.getFavoriteContacts(this.state.clientID)
-          .then((response) => this.setState({favoriteContacts: response}))
-    console.log(this.state.favoriteContacts)
-    
-  }
-}
-
-  getContacts() {
-    console.log('open contact list')
-  }
-
-  showContacts() {
-
+    //console.log(this.state.clientID)
+    //console.log(Object.keys(this.state.favoriteContacts).length === 0)
+    if (this.state.clientID.length > 0 && Object.keys(this.state.favoriteContacts).length === 0) {
+      UsersApi.getFavoriteContacts(this.state.clientID)
+      .then((response) => this.setState({favoriteContacts: response}))
+    //console.log(this.state.favoriteContacts)
+    }
   }
 
   removePhoneNumber = (index) => {
@@ -82,16 +56,22 @@ export default class RunningLate2 extends React.Component {
 
   }
 
+  // sendMessage() {
+  //   Linking.openURL('sms://5557664823&body=running late!')
+  // }
+
+ // sendMessage() {
+ //      var smsLink = require('sms-link')
+ //      smsLink({phone: '2253951571', body: 'Hello world'})
+ //  }
+
   addToSendTo = (contact) => {
-    console.log(contact)
-    console.log(this.state.clientID)
-
+    // console.log(contact)
+    // console.log(this.state.clientID)
     if (this.state.sendTo.filter((currentContacts)=>currentContacts.id === contact.id).length > 0) {
-
     } else {
       this.setState({sendTo: [...this.state.sendTo, contact]})
     }
-
   }
 
   handleFavoritesClick = (item) => {
@@ -110,14 +90,14 @@ export default class RunningLate2 extends React.Component {
     }
   }
 
-
-
   render() {
+    // console.log(this.state.contacts)
+    // console.log(this.state.favoriteContacts)
     let names = this.state.sendTo.map((contact, index) => {
       return (
         <Text
           key={index}
-          style={{fontSize:18, marginRight:10}}
+          style={styles.names}
           onPress={() => this.removePhoneNumber(index)}
         >{contact.name}
           <Icon
@@ -129,41 +109,45 @@ export default class RunningLate2 extends React.Component {
       )
     })
 
-
     return (
       <View style={styles.container}>
         <View>
-           <ContactList.ContactListModal 
-            closeContactList={() => {this.setState({modalVisible: false})}} 
-            modalState={this.state.modalVisible} 
-            contactList={this.state.contacts} 
+           <ContactList
+            closeContactList={() => {this.setState({modalVisible: false})}}
+            modalState={this.state.modalVisible}
+            contactList={this.state.contacts}
+            favoritesList={this.state.favoriteContacts}
             addToSendTo={this.addToSendTo}
             handleFavoritesClick={this.handleFavoritesClick}
             favoriteContacts={this.state.favoriteContacts}
+            showFavoritesTab={this.showFavoritesTab}
             />
         </View>
         <Icon
+          containerStyle={styles.iconContainer}
           type='MaterialIcons'
           name='person-add'
           size={30}
           onPress={() => this.setState({modalVisible: true})}
         />
-        <Text>To: </Text>
-        <View style={{flexDirection:'row'}}>
+        <Text style={styles.toTitle}>To: </Text>
+        <View style={styles.namesContainer}>
         {names}
         </View>
 
-        <Text style={{marginTop:20}}>Message:</Text>
+        <Text style={styles.messageTitle}>Message:</Text>
         <Input
-            value='I am running late!'
+          value='I am running late!'
+          inputContainerStyle={{borderBottomColor:'#fff'}}
+          containerStyle={styles.message}
+          inputStyle={{height:120}}
+          multiline={true}
         />
 
         <Button
           title='Send Text'
-          buttonStyle={{marginTop:20}}
-
-          // onPress={this.sendMessage.bind(this)}
-
+          buttonStyle={styles.button}
+          //onPress={this.sendMessage.bind(this)}
         />
       </View>
     )
@@ -173,8 +157,38 @@ export default class RunningLate2 extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingHorizontal:40,
+    justifyContent: 'center'
   },
+  names: {
+    fontSize:18,
+    marginRight:10,
+    marginBottom:5
+  },
+  iconContainer: {
+    alignItems:'flex-end'
+  },
+  namesContainer: {
+    flexDirection:'row',
+    flexWrap: 'wrap',
+    backgroundColor: '#fff',
+    padding:5,
+    minHeight: 40
+  },
+  toTitle: {
+    marginBottom:5
+  },
+
+  messageTitle: {
+    marginTop:20,
+    marginBottom:5
+  },
+  message: {
+    width:'100%',
+    backgroundColor: '#fff',
+    flexWrap: 'wrap'
+  },
+  button : {
+    marginTop:15
+  }
 });

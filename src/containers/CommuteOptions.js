@@ -110,7 +110,7 @@ export default class CommuteOptions extends React.Component {
         .catch((err) => {
         console.log("error in api", err)
         });
-    
+
   }
 
 
@@ -131,23 +131,23 @@ export default class CommuteOptions extends React.Component {
       return ((parseInt(duration[0]) * 10) * 60) + (parseInt(duration[1]) * 60) + (parseInt(duration[9]) * 10) + parseInt(duration[10])
     }
     else if (duration[3] === 'h' && duration[11] === 'm') {
-      return ((parseInt(duration[0]) * 10) * 60) + (parseInt(duration[1]) * 60) + parseInt(duration[9])  
+      return ((parseInt(duration[0]) * 10) * 60) + (parseInt(duration[1]) * 60) + parseInt(duration[9])
     }
     else if (duration[2] === 'h' && duration[11] === 'm') {
-      return (parseInt(duration[0]) * 60) + ((parseInt(duration[8]) * 10)) + parseInt(duration[9])  
+      return (parseInt(duration[0]) * 60) + ((parseInt(duration[8]) * 10)) + parseInt(duration[9])
     }
     else if (duration[2] === 'h' && duration[10] === 'm' && duration[13] === 's'&& duration[6] === 's') {
-      return (parseInt(duration[0]) * 60) + parseInt(duration[8])  
+      return (parseInt(duration[0]) * 60) + parseInt(duration[8])
     }
     else if (duration[2] === 'h' && duration[10] === 'm' && duration[13] === 's') {
       return (parseInt(duration[0]) * 60) + ((parseInt(duration[7]) * 10)) + parseInt(duration[8])
     }
-    
+
     else if (duration[2] === 'h' && duration[9] === 'm') {
-      return (parseInt(duration[0]) * 60) + parseInt(duration[7])  
+      return (parseInt(duration[0]) * 60) + parseInt(duration[7])
     }
     else if (duration[3] === 'm') {
-      return (parseInt(duration[0]) * 10) + parseInt(duration[1])  
+      return (parseInt(duration[0]) * 10) + parseInt(duration[1])
     }
     else if (duration[2] === 'm') {
       return parseInt(duration[0])
@@ -156,9 +156,6 @@ export default class CommuteOptions extends React.Component {
       return (parseInt(duration[0]) * 100) + (parseInt(duration[1]) * 10) + parseInt(duration[2])
     }
   }
-
-
-
 
   storeData(obj) {
 
@@ -203,10 +200,10 @@ export default class CommuteOptions extends React.Component {
     let startLng = this.props.navigation.state.params.startDestinationLng
     let endLat = this.props.navigation.state.params.endDestinationLat
     let endLng = this.props.navigation.state.params.endDestinationLng
-    console.log(this.state.transpo)
+
+    //console.log(this.state.transpo)
     return (
-      <View style={styles.container}> 
-      
+      <View style={styles.container}>
         <View style={styles.destinationContainer}>
           <View style={{flex:1, borderRightWidth:1, borderColor:'#ccc', paddingLeft:20}}>
             <Text style={styles.destinationText}>Start Destination:</Text>
@@ -278,7 +275,6 @@ export default class CommuteOptions extends React.Component {
           />
           <FlatList
             data={this.state.transpo.sort((a , b) => (a.convert) - (b.convert))}
-            data={this.state.transpo}
             renderItem={({item}) => (
               <ListItem
                 title={item.method.toUpperCase()}
@@ -304,8 +300,9 @@ export default class CommuteOptions extends React.Component {
             )}
             keyExtractor={item => item.method}
           />
-        </Animated.View> 
-        
+
+        </Animated.View>
+
       </View>
     );
   }

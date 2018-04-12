@@ -21,7 +21,7 @@ export default class DestinationForm extends React.Component {
 
   componentDidMount = () => {
     this.getLocation();
-    
+
   }
  getLocation = async () => {
     navigator.geolocation.getCurrentPosition(
@@ -38,7 +38,7 @@ export default class DestinationForm extends React.Component {
   }
 
   onPressSubmit(e) {
-    
+
     if (this.state.startDestination.length < 1) {
       this.setState({startError: "must contain a value"});
     } else {

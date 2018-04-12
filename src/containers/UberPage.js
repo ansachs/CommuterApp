@@ -28,7 +28,7 @@ export default class uberPage extends React.Component {
     UberApi.requestRide(productId, startLat, startLng, endLat, endLng)
     .then((response) => response.json())
     .then((requestJson) => {
-      console.log(requestJson)
+      //console.log(requestJson)
       this.setState({request_id: requestJson.request_id, status: requestJson.status})
     })
   }
@@ -40,8 +40,8 @@ export default class uberPage extends React.Component {
   }
 
   render() {
-    console.log(this.state.request_id)
-    console.log(this.state.status)
+    // console.log(this.state.request_id)
+    // console.log(this.state.status)
     let { startDestination, endDestination, startLat, startLng, endLat, endLng } = this.state
 
     return (

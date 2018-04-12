@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert, View } from 'react-native'
 import { TabNavigator, StackNavigator, NavigationActions } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DestinationForm from '../containers/DestinationForm.js';
@@ -10,7 +11,6 @@ import lyftPage from '../containers/lyftPage.js';
 import drivePage from '../containers/drivePage.js';
 import UberPage from '../containers/UberPage.js';
 import RunningLate2 from '../containers/RunningLate2.js';
-
 
 export const DestinationStack = StackNavigator({
   DestinationForm: {
@@ -108,12 +108,17 @@ export const Tabs = TabNavigator({
   tabBarPosition: 'bottom',
   navigationOptions: ({navigation}) => ({
     tabBarOnPress: ({scene, jumpToIndex}) => {
+
+      // console.log(scene)
+      // console.log(jumpToIndex)
       if (scene.route.params) {
         jumpToIndex(scene.index)
       } else if (!scene.route.params && scene.index === 0) {
         jumpToIndex(0)
       } else if (!scene.route.params && scene.index === 2) {
         jumpToIndex(2)
+      } else {
+        Alert.alert('Alert', 'Please fill out the form on the destination page', [{text: 'Ok'}]);
       }
     }
   })
@@ -141,28 +146,3 @@ export const Root = StackNavigator({
   headerMode: 'none'
 
 });
-
-
-
-const defaultRoot = Root.router.getStateForAction;
-
-// console.log(Root())
-// Root.router.getStateForAction = (action, state) => {
-//   console.log("************")
-//   console.log(action, state)
-  // if (state && action.type === 'PushTwoProfiles') {
-  //   const routes = [
-  //     ...state.routes,
-  //     {key: 'A', routeName: 'Profile', params: { name: action.name1 }},
-  //     {key: 'B', routeName: 'Profile', params: { name: action.name2 }},
-  //   ];
-  //   return {
-  //     ...state,
-  //     routes,
-  //     index: routes.length - 1,
-  //   };
-  // }
-//   return defaultRoot(action, state);
-// };
-
-
