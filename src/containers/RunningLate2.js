@@ -56,14 +56,10 @@ export default class RunningLate2 extends React.Component {
 
   }
 
-  sendMessage() {
-    Linking.openURL(`sms://open?addresses=5555555,6666666&body=running late!`)
+  sendMessage(numbers) {
+    Linking.openURL(`sms://open?addresses=${numbers}&body=running late!`)
   }
 
- // sendMessage() {
- //      var smsLink = require('sms-link')
- //      smsLink({phone: '2253951571', body: 'Hello world'})
- //  }
 
   addToSendTo = (contact) => {
     // console.log(contact)
@@ -93,7 +89,9 @@ export default class RunningLate2 extends React.Component {
   render() {
     // console.log(this.state.contacts)
     // console.log(this.state.favoriteContacts)
+    let number = ""
     let names = this.state.sendTo.map((contact, index) => {
+      number += contact.phoneNumbers[0].digits + ","
       return (
         <Text
           key={index}
@@ -147,7 +145,7 @@ export default class RunningLate2 extends React.Component {
         <Button
           title='Send Text'
           buttonStyle={styles.button}
-          onPress={this.sendMessage.bind(this)}
+          onPress={() => {this.sendMessage(number)}}
         />
       </View>
     )
