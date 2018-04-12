@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Modal, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, Modal, TouchableHighlight, Linking } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import ContactList from '../components/contacts/contactListModal'
 import UsersApi from '../apis/UsersApi.js'
@@ -56,9 +56,9 @@ export default class RunningLate2 extends React.Component {
 
   }
 
-  // sendMessage() {
-  //   Linking.openURL('sms://5557664823&body=running late!')
-  // }
+  sendMessage() {
+    Linking.openURL(`sms://open?addresses=5555555,6666666&body=running late!`)
+  }
 
  // sendMessage() {
  //      var smsLink = require('sms-link')
@@ -147,7 +147,7 @@ export default class RunningLate2 extends React.Component {
         <Button
           title='Send Text'
           buttonStyle={styles.button}
-          //onPress={this.sendMessage.bind(this)}
+          onPress={this.sendMessage.bind(this)}
         />
       </View>
     )
