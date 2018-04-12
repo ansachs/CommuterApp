@@ -52,8 +52,6 @@ export default class App extends React.Component {
 
     GetContacts.getContactsAsync()
     .then((contacts)=>{
-      // console.log('first out of async')
-      // console.log(contacts)
       if (!contacts || !contacts.data) {
         throw "error"
       } else {
@@ -74,21 +72,18 @@ export default class App extends React.Component {
 
   checkClientWithServer() {
     UsersApi.getGoogleId(this.state.userName, this.state.clientID)
-  // console.log(this.state.userName)
   }
 
 
   render() {
-    console.log(this)
     if (this.state.clientID.length > 0) {
       this.checkClientWithServer()
-    } 
+    }
     let userOrWelcome = this.state.clientID ? this.state.userName : "welcome"
 
     return (
       <View style={{flex: 1}}>
         <Header
-          leftComponent={{ icon: 'menu', color: '#fff' }}
           centerComponent={{ text: userOrWelcome, style: { color: '#fff' } }}
           rightComponent={
             <LoginButton

@@ -109,6 +109,9 @@ export const Tabs = TabNavigator({
   tabBarPosition: 'bottom',
   navigationOptions: ({navigation}) => ({
     tabBarOnPress: ({scene, jumpToIndex}) => {
+
+      console.log(scene)
+      console.log(jumpToIndex)
       if (scene.route.params) {
         jumpToIndex(scene.index)
       } else if (!scene.route.params && scene.index === 0) {
@@ -143,25 +146,3 @@ export const Root = StackNavigator({
   // mode: 'modal',
   headerMode: 'none'
 });
-
-const defaultRoot = Root.router.getStateForAction;
-
-// console.log(Root())
-// Root.router.getStateForAction = (action, state) => {
-//   console.log("************")
-//   console.log(action, state)
-  // if (state && action.type === 'PushTwoProfiles') {
-  //   const routes = [
-  //     ...state.routes,
-  //     {key: 'A', routeName: 'Profile', params: { name: action.name1 }},
-  //     {key: 'B', routeName: 'Profile', params: { name: action.name2 }},
-  //   ];
-  //   return {
-  //     ...state,
-  //     routes,
-  //     index: routes.length - 1,
-  //   };
-  // }
-//   return defaultRoot(action, state);
-// };
-

@@ -78,7 +78,7 @@ export default class DestinationForm extends React.Component {
 
 
   render() {
-    // loading = "loading..."
+    loading = "loading..."
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Text>Start Destination:</Text>

@@ -11,17 +11,20 @@ export default class RunningLate2 extends React.Component {
       sendTo: [],
       modalVisible: false,
       contacts: [],
-      favoriteContacts:
-      {"2E73EE73-C03F-4D5F-B1E8-44E85A70F170": {id: "2E73EE73-C03F-4D5F-B1E8-44E85A70F170", name: "Hank M. Zakroff", phoneNumbers:[
-          {countryCode: "us", number: "(555) 766-4823", digits: "5557664823"},
-          {countryCode: "us", number: "(707) 555-1854", digits: "7075551854"}
-        ]}
-      ,
-      "AB211C5F-9EC9-429F-9466-B9382FF61035": {id: "AB211C5F-9EC9-429F-9466-B9382FF61035", name: "Daniel Higgins Jr.", phoneNumbers:[
-          {countryCode: "us", number: "(555) 766-4823", digits: "5557664823"},
-          {countryCode: "us", number: "(707) 555-1854", digits: "7075551854"}
-        ]}
+      favoriteContacts: {
+        "410FE041-5C4E-48DA-B4DE-04C15EA3DBAC":{"id":16,"user_id":4,"name":"John","phone_number":"888-555-5512","relative_id":"410FE041-5C4E-48DA-B4DE-04C15EA3DBAC","created_at":"2018-04-11T21:02:43.151Z","updated_at":"2018-04-11T21:02:43.151Z"},"2E73EE73-C03F-4D5F-B1E8-44E85A70F170":{"id":14,"user_id":4,"name":"Hank M. Zakroff","phone_number":null,"relative_id":"2E73EE73-C03F-4D5F-B1E8-44E85A70F170","created_at":"2018-04-11T19:54:59.410Z","updated_at":"2018-04-11T19:54:59.410Z"}
       },
+
+      // {"2E73EE73-C03F-4D5F-B1E8-44E85A70F170": {id: "2E73EE73-C03F-4D5F-B1E8-44E85A70F170", name: "Hank M. Zakroff", phoneNumbers:[
+      //     {countryCode: "us", number: "(555) 766-4823", digits: "5557664823"},
+      //     {countryCode: "us", number: "(707) 555-1854", digits: "7075551854"}
+      //   ]}
+      // ,
+      // "AB211C5F-9EC9-429F-9466-B9382FF61035": {id: "AB211C5F-9EC9-429F-9466-B9382FF61035", name: "Daniel Higgins Jr.", phoneNumbers:[
+      //     {countryCode: "us", number: "(555) 766-4823", digits: "5557664823"},
+      //     {countryCode: "us", number: "(707) 555-1854", digits: "7075551854"}
+      //   ]}
+      // },
       clientID: ""
     }
   }
@@ -40,15 +43,6 @@ export default class RunningLate2 extends React.Component {
     } else if (this.state.clientID && this.props.screenProps.clientID.length === 0) {
       this.setState({clientID: "", favoriteContacts: {}})
     }
-  }
-
-
-  getContacts() {
-    console.log('open contact list')
-  }
-
-  showContacts() {
-
   }
 
   removePhoneNumber = (index) => {
@@ -91,8 +85,9 @@ export default class RunningLate2 extends React.Component {
     }
   }
 
-
   render() {
+    // console.log(this.state.contacts)
+    console.log(this.state.favoriteContacts)
     let names = this.state.sendTo.map((contact, index) => {
       return (
         <Text
@@ -113,13 +108,15 @@ export default class RunningLate2 extends React.Component {
     return (
       <View style={styles.container}>
         <View>
-           <ContactList.ContactListModal
+           <ContactList
             closeContactList={() => {this.setState({modalVisible: false})}}
             modalState={this.state.modalVisible}
             contactList={this.state.contacts}
+            favoritesList={this.state.favoriteContacts}
             addToSendTo={this.addToSendTo}
             handleFavoritesClick={this.handleFavoritesClick}
             favoriteContacts={this.state.favoriteContacts}
+            showFavoritesTab={this.showFavoritesTab}
             />
         </View>
         <Icon
@@ -146,7 +143,7 @@ export default class RunningLate2 extends React.Component {
         <Button
           title='Send Text'
           buttonStyle={styles.button}
-          onPress={this.sendMessage.bind(this)}
+          //onPress={this.sendMessage.bind(this)}
         />
       </View>
     )
@@ -171,7 +168,8 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     flexWrap: 'wrap',
     backgroundColor: '#fff',
-    padding:5
+    padding:5,
+    minHeight: 40
   },
   toTitle: {
     marginBottom:5
