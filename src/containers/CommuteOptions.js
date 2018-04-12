@@ -112,12 +112,8 @@ export default class CommuteOptions extends React.Component {
         });
     
   }
-<<<<<<< HEAD
-  
-=======
 
 
->>>>>>> 957bf75d9499784987de23fefa2fa5e8b0695801
   convert(duration) {
     if (duration[2] === 'd' && duration[10] === 'h') {
       return ((parseInt(duration[0]) * 24) * (60)) + ((parseInt(duration[7])* 10) * 60) + (parseInt(duration[8])* 60)
@@ -156,7 +152,11 @@ export default class CommuteOptions extends React.Component {
     else if (duration[2] === 'm') {
       return parseInt(duration[0])
     }
+    else if (duration[4] === 'm') {
+      return (parseInt(duration[0]) * 100) + (parseInt(duration[1]) * 10) + parseInt(duration[2])
+    }
   }
+
 
 
 
@@ -203,7 +203,7 @@ export default class CommuteOptions extends React.Component {
     let startLng = this.props.navigation.state.params.startDestinationLng
     let endLat = this.props.navigation.state.params.endDestinationLat
     let endLng = this.props.navigation.state.params.endDestinationLng
-    // console.log(this.state.transpo)
+    console.log(this.state.transpo)
     return (
       <View style={styles.container}> 
       

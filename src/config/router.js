@@ -139,10 +139,10 @@ export const Root = StackNavigator({
 }, {
   // mode: 'modal',
   headerMode: 'none'
-<<<<<<< HEAD
+
 });
-=======
-});
+
+
 
 const defaultRoot = Root.router.getStateForAction;
 
@@ -165,4 +165,4 @@ const defaultRoot = Root.router.getStateForAction;
 //   return defaultRoot(action, state);
 // };
 
->>>>>>> 957bf75d9499784987de23fefa2fa5e8b0695801
+

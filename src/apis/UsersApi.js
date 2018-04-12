@@ -8,7 +8,7 @@ const getGoogleId = (userName, clientID) => {
   })
 }
  
-const saveFavoriteContacts = (name, phoneNumber, relativeID, clientID) => {
+const saveFavoriteContacts = async (name, phoneNumber, relativeID, clientID) => {
   fetch(`https://quiet-retreat-95283.herokuapp.com/users/${clientID}/save`, {
     headers: {
       'Content-Type': 'application/json'
@@ -20,8 +20,9 @@ const saveFavoriteContacts = (name, phoneNumber, relativeID, clientID) => {
 
 
 
-const getFavoriteContacts = (clientID) => {
-    fetch(`https://quiet-retreat-95283.herokuapp.com/users/${clientID}/contacts`)
+const getFavoriteContacts = async (clientID) => {
+  
+    return fetch(`https://quiet-retreat-95283.herokuapp.com/users/${clientID}/contacts`)
     .then((response) => response.json())
 
 }

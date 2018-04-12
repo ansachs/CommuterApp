@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    maxHeight: '80%'
+    maxHeight: '100%'
   },
 
   map: {

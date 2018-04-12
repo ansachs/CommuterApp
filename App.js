@@ -52,8 +52,6 @@ export default class App extends React.Component {
 
     GetContacts.getContactsAsync()
     .then((contacts)=>{
-      // console.log('first out of async')
-      // console.log(contacts)
       if (!contacts || !contacts.data) {
         throw "error"
       } else {
@@ -79,7 +77,6 @@ export default class App extends React.Component {
 
 
   render() {
-    console.log(this)
     if (this.state.clientID.length > 0) {
       this.checkClientWithServer()
     } 
