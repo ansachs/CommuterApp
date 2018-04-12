@@ -47,16 +47,17 @@ export default class RunningLate2 extends React.Component {
     this.setState({sendTo: newState})
   }
 
-  getRecipients = () => {
-    let names = ''
-    for (const [key, value] of Object.entries(this.state.sendTo)) {
-      names += value.name + ", "
-    }
-    return names
+  // getRecipients = () => {
+  //   let names = ''
+  //   for (const [key, value] of Object.entries(this.state.sendTo)) {
+  //     names += value.name + ", "
+  //   }
+  //   return names
 
-  }
+  // }
 
   sendMessage(numbers) {
+    numbers = numbers.slice(0, numbers.length-2)
     Linking.openURL(`sms://open?addresses=${numbers}&body=running late!`)
   }
 
