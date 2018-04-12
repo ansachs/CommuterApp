@@ -87,7 +87,7 @@ export default class RunningLate2 extends React.Component {
   }
 
   render() {
-    // console.log(this.state.contacts)
+    console.log(this.state)
     // console.log(this.state.favoriteContacts)
     let number = ""
     let names = this.state.sendTo.map((contact, index) => {
