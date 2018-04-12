@@ -20,7 +20,7 @@ signInWithGoogleAsync = async () => {
       const result = await Expo.Google.logInAsync({
         androidClientId: '277067014175-3stlk80kbu3o591cjk57ae3s2rd32f6f.apps.googleusercontent.com',
         iosClientId: '277067014175-ehie9e21cqhlr3l9d19bss23kcm18gm4.apps.googleusercontent.com',
-        webClientId: "277067014175-5mp1fefmgtq18g3e919567a730vvnva0.apps.googleusercontent.com",
+        webClientId: '277067014175-5mp1fefmgtq18g3e919567a730vvnva0.apps.googleusercontent.com',
         scopes: ['profile', 'email'],
       }).catch((err) => {console.log(err)})
 

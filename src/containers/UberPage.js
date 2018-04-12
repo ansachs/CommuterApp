@@ -55,7 +55,7 @@ export default class uberPage extends React.Component {
           endLng={endLng}
           mode='driving'
         />
-        <View>
+       {/* <View>
           <Button
             title='Request Ride'
             onPress={this.requestRide.bind(this)}
@@ -65,8 +65,8 @@ export default class uberPage extends React.Component {
             title='Cancel Ride'
             onPress={this.cancelRide.bind(this)}
           />
-        </View>
-      </View>
+        </View>*/}
+      </View> 
     )
   }
 }
