@@ -5,22 +5,21 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import { Header, Input, Divider, Button, ListItem, Icon } from 'react-native-elements';
 import {Icon as ElementIcon} from 'react-native-elements'
 import Scrubber from '../contacts/Scrubber';
+
 const itemHeight = 60;
+
 const renderHeader = ({section: section}) => {
   return(
     <View style={styles.sectionComplete}>
-      {/*<View style={styles.sectionDivider1}>
-        <Divider style={styles.divider1} />
-      </View>*/}
+
       <Text style={styles.sectionHeader}>
         {section.title}
       </Text>
-      {/*<View style={styles.sectionDivider2}>
-        <Divider style={styles.divider2} />
-      </View>*/}
+
     </View>
     )
 }
+
 const renderItem = ({item, section, index}, sendTo, handleFavoritesClick, favoriteContacts, closeContactList) => {
   let heartStyle = favoriteContacts[item.id] ? 'favorite' : 'favorite-border'
     return (
@@ -40,13 +39,15 @@ const renderItem = ({item, section, index}, sendTo, handleFavoritesClick, favori
               size={30}
               style={styles.addToFavorite}
               onPress={() => {
-                handleFavoritesClick(item)}}
-              />
+                handleFavoritesClick(item)
+              }}
+            />
           </View>
           }
         </TouchableOpacity>
     );
   };
+
   const getItemLayout = (data, index) => {
     return ({
     index,
@@ -54,6 +55,7 @@ const renderItem = ({item, section, index}, sendTo, handleFavoritesClick, favori
     offset: itemHeight * index
     })
   };
+
   const scrollToChar = (char) => {
     console.log("go to    ",char)
     this.listRef.scrollToLocation({
@@ -64,6 +66,7 @@ const renderItem = ({item, section, index}, sendTo, handleFavoritesClick, favori
       viewOffset: 0
     });
   };
+
 export default class ContactListModal extends React.Component {
   constructor(props) {
     super(props);
@@ -72,6 +75,7 @@ export default class ContactListModal extends React.Component {
       active: false,
     }
   }
+
   whichListToDisplay() {
     let favoriteContacts = Object.values(this.props.favoriteContacts)
     if (this.state.currentList === 'all') {
@@ -97,7 +101,7 @@ export default class ContactListModal extends React.Component {
       return (
         <FlatList
           data={favoriteContacts}
-          keyExtractor={item => item.relative_id}
+          keyExtractor={item => item.id}
           renderItem={({item, index}) => {
             return(
             <TouchableOpacity
@@ -110,23 +114,10 @@ export default class ContactListModal extends React.Component {
               title={item.name}
               subtitle={
                 <View>
-                  <Text>{item.phone_number && item.phone_number}</Text>
-                  <Text>{item.phoneNumbers && item.phoneNumbers[0].number}</Text>
+                  <Text>{item.phoneNumbers[0].digits}</Text>
                 </View>
               }
-              // rightIcon={
-              //   // <Button
-              //   //   title='add to favorites'
-              //   //   titleStyle={{fontSize:15}}
-              //   // />
-              //   <Icon
-              //   name = 'ios-remove-circle-outline'
-              //   type = 'ionicon'
-              //   size = {20}
-              //   style = {{ 'marginRight': 20}}
-              //   onPress = {() => {props.handleClick(index)}}
-              //   />
-              // }
+              
               containerStyle={{backgroundColor: '#fff', borderBottomWidth:1}}
             />
             </TouchableOpacity>
@@ -135,9 +126,11 @@ export default class ContactListModal extends React.Component {
       )
     }
   }
+
   tabClick(obj) {
     this.setState(obj)
   }
+
   renderScrubber() {
     return (
       <View style={styles.scrubber} pointerEvents="box-none">
@@ -145,6 +138,7 @@ export default class ContactListModal extends React.Component {
       </View>
     )
   }
+
   render() {
     let listref = "";
     let currentList = this.whichListToDisplay()
@@ -195,6 +189,7 @@ export default class ContactListModal extends React.Component {
     )
   }
 }
+
 const styles = StyleSheet.create({
   // overallModal: {
   //   flexDirection: 'row',

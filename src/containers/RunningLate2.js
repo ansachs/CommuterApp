@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Modal, TouchableHighlight, Linking } from 'react-native';
+import { StyleSheet, View, Text, Modal, TouchableHighlight, Linking, Alert } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import ContactList from '../components/contacts/contactListModal'
 import UsersApi from '../apis/UsersApi.js'
@@ -26,36 +26,25 @@ export default class RunningLate2 extends React.Component {
     }
   }
 
-  componentWillUpdate = () => {
+  componentDidUpdate = function(prevProps, prevState) {
+    this.addClientIDAndFavorites(); 
+  }
+
+
+  addClientIDAndFavorites = () => {
     if ((this.state.clientID.length === 0) && (this.props.screenProps.clientID.length > 0)) {
       UsersApi.getFavoriteContacts(this.props.screenProps.clientID)
-      .then((response)=> { this.setState({clientID: this.props.screenProps.clientID, favoriteContacts: response}) })
+      .then((response)=> {  
+        this.setState({clientID: this.props.screenProps.clientID, favoriteContacts: response}) })
     } else if (this.state.clientID && this.props.screenProps.clientID.length === 0) {
-      this.setState({clientID: "", favoriteContacts: {}})
+      this.setState({clientID: "", favoriteContacts: {}}, ()=>{console.log("after set state", this.state)})
     }
-    //console.log(this.state.clientID)
-    //console.log(Object.keys(this.state.favoriteContacts).length === 0)
-    // if (this.state.clientID.length > 0 && Object.keys(this.state.favoriteContacts).length === 0) {
-    //   UsersApi.getFavoriteContacts(this.state.clientID)
-    //   .then((response) => this.setState({favoriteContacts: response}))
-    //console.log(this.state.favoriteContacts)
-    // }
   }
 
-  removePhoneNumber = (index) => {
-    let currentList = this.state.sendTo
-    const newState = currentList.slice(0, index).concat(currentList.slice(index +1, currentList.length +1))
-    this.setState({sendTo: newState})
+  removePhoneNumber = (id) => {
+    delete this.state.sendTo[id]
+    this.setState({sendTo: this.state.sendTo})
   }
-
-  // getRecipients = () => {
-  //   let names = ''
-  //   for (const [key, value] of Object.entries(this.state.sendTo)) {
-  //     names += value.name + ", "
-  //   }
-  //   return names
-
-  // }
 
   sendMessage(numbers) {
     numbers = numbers.slice(0, numbers.length-2)
@@ -65,40 +54,38 @@ export default class RunningLate2 extends React.Component {
 
   addToSendTo = (contact) => {
     // console.log(contact)
-    // console.log(this.state.clientID)
-    if (this.state.sendTo.filter((currentContacts)=>currentContacts.id === contact.id).length > 0) {
-    } else {
-      this.setState({sendTo: [...this.state.sendTo, contact]})
-    }
+    if (!this.state.sendTo[contact.id]) {
+      this.state.sendTo[contact.id] = contact
+      this.setState({sendTo: {...this.state.sendTo}})
+    } 
   }
 
   handleFavoritesClick = (item) => {
-  if (this.state.clientID.length > 0) {
-    if (this.state.favoriteContacts[item.id]){
-      UsersApi.deleteContact(this.state.clientID, item.id)
-      delete this.state.favoriteContacts[item.id];
-      this.setState({favoriteContacts: this.state.favoriteContacts});
-    } else {
-      this.setState({favoriteContacts: {...this.state.favoriteContacts, [item.id]: item}})
-      console.log(item.phoneNumbers[0])
-      UsersApi.saveFavoriteContacts(item.firstName, item.phoneNumbers[0].number, item.id, this.state.clientID)
+    if (this.state.clientID.length > 0) {
+      if (this.state.favoriteContacts[item.id]){
+        UsersApi.deleteContact(this.state.clientID, item.id)
+        delete this.state.favoriteContacts[item.id];
+        this.setState({favoriteContacts: this.state.favoriteContacts});
+      } else {
+        UsersApi.saveFavoriteContacts(item.firstName, item.phoneNumbers[0].number, item.id, this.state.clientID)
+        this.setState({favoriteContacts: {...this.state.favoriteContacts, [item.id]: item}})
+        }
       }
-    } else {
-      return alert("You must Login To Add Favorites")
+     else {
+      alert("You must Login To Add Favorites")
     }
   }
 
   render() {
-    // console.log(this.state.message)
-    // console.log(this.state.favoriteContacts)
+
     let number = ""
-    let names = this.state.sendTo.map((contact, index) => {
+    let names = Object.values(this.state.sendTo).map((contact) => {
       number += contact.phoneNumbers[0].digits + ","
       return (
         <Text
-          key={index}
+          key={contact.id}
           style={styles.names}
-          onPress={() => this.removePhoneNumber(index)}
+          onPress={() => this.removePhoneNumber(contact.id)}
         >{contact.name}
           <Icon
             name='ios-remove-circle-outline'
