@@ -80,6 +80,7 @@ export default class RunningLate2 extends React.Component {
       this.setState({favoriteContacts: this.state.favoriteContacts});
     } else {
       this.setState({favoriteContacts: {...this.state.favoriteContacts, [item.id]: item}})
+      console.log(item.phoneNumbers[0])
       UsersApi.saveFavoriteContacts(item.firstName, item.phoneNumbers[0].number, item.id, this.state.clientID)
       }
     } else {
