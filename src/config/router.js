@@ -149,19 +149,19 @@ export const Root = StackNavigator({
 
 const defaultRoot = Tabs.router.getStateForAction;
 Tabs.router.getStateForAction = (action, state) => {
-  
-  console.log(action, state)
+
+  // console.log(action, state)
   // if(state && state.isTransitioning === false) {
     if (action.routeName === "CommuteOptions2"){
       if (state && !((state.routes && state.routes[1].params) || (action.params))) {
-        console.log("routes", Boolean(state.routes[1].params))
+        // console.log("routes", Boolean(state.routes[1].params))
         // if () {
-          console.log(state, action)
+          // console.log(state, action)
     // Alert.alert('Alert', 'Please fill out the form on the destination page', [{text: 'Ok'}]);
           return null;
         // }
       }
     }
-  
+
     return defaultRoot(action, state);
 };
