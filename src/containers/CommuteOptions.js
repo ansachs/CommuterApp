@@ -131,26 +131,26 @@ export default class CommuteOptions extends React.Component {
     return ((parseInt(duration[0]) * 10) * 60) + (parseInt(duration[1]) * 60) + (parseInt(duration[9]) * 10) + parseInt(duration[10])
   }
   else if (duration[3] === 'h' && duration[11] === 'm') {
-    return ((parseInt(duration[0]) * 10) * 60) + (parseInt(duration[1]) * 60) + parseInt(duration[9])  
+    return ((parseInt(duration[0]) * 10) * 60) + (parseInt(duration[1]) * 60) + parseInt(duration[9])
   }
   else if (duration[2] === 'h' && duration[11] === 'm') {
-    return (parseInt(duration[0]) * 60) + ((parseInt(duration[8]) * 10)) + parseInt(duration[9])  
+    return (parseInt(duration[0]) * 60) + ((parseInt(duration[8]) * 10)) + parseInt(duration[9])
   }
   else if (duration[2] === 'h' && duration[10] === 'm' && duration[13] === 's'&& duration[6] === 's') {
-    return (parseInt(duration[0]) * 60) + parseInt(duration[8])  
+    return (parseInt(duration[0]) * 60) + parseInt(duration[8])
   }
   else if (duration[2] === 'h' && duration[10] === 'm' && duration[13] === 's') {
     return (parseInt(duration[0]) * 60) + ((parseInt(duration[7]) * 10)) + parseInt(duration[8])
   }
-  
+
   else if (duration[2] === 'h' && duration[9] === 'm') {
-    return (parseInt(duration[0]) * 60) + parseInt(duration[7])  
+    return (parseInt(duration[0]) * 60) + parseInt(duration[7])
   }
    else if (duration[2] === 'h' && duration[10] === 'm') {
-    return (parseInt(duration[0]) * 60) + parseInt(duration[8])  
+    return (parseInt(duration[0]) * 60) + parseInt(duration[8])
   }
   else if (duration[3] === 'm') {
-    return (parseInt(duration[0]) * 10) + parseInt(duration[1])  
+    return (parseInt(duration[0]) * 10) + parseInt(duration[1])
   }
   else if (duration[2] === 'm') {
     return parseInt(duration[0])
