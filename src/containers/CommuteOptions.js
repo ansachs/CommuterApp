@@ -62,7 +62,7 @@ export default class CommuteOptions extends React.Component {
       .then((response) => {
         ParkWhizApi.fetchModeByLatLong(endDestinationLat, endDestinationLng)
           .then((response2) => {
-            this.storeData({method:"drive", duration:response.routes[0].legs[0].duration_in_traffic.text, price:response2.min_price, icon:"car"})
+            this.storeData({method:"drive", duration:response.routes[0].legs[0].duration_in_traffic.text, price: `$${response2.min_price}.00`, icon:"car"})
           })
         })
         .catch((err) => {
@@ -83,7 +83,7 @@ export default class CommuteOptions extends React.Component {
         console.log("error in api", err)
         });
       GoogleMapApi.fetchModeByTransit(startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng)
-        .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"2.00", icon:"train"})
+        .then((response) => this.storeData({method:"transit", duration:response.routes[0].legs[0].duration.text, price:"$2.50", icon:"train"})
           )
         .catch((err) => {
         console.log("error in api", err)
