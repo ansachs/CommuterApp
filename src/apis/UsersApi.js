@@ -19,11 +19,11 @@ const saveFavoriteContacts = async (name, phoneNumber, relativeID, clientID) => 
 }
 
 
-
 const getFavoriteContacts = async (clientID) => {
   
     return fetch(`https://quiet-retreat-95283.herokuapp.com/users/${clientID}/contacts`)
     .then((response) => response.json())
+    .then((json) => {console.log(json);return (json)})
 
 }
 

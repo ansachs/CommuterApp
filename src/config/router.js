@@ -106,22 +106,6 @@ export const Tabs = TabNavigator({
 },
 {
   tabBarPosition: 'bottom',
-  // navigationOptions: ({navigation}) => ({
-  //   tabBarOnPress: ({scene, jumpToIndex}) => {
-
-  //     // console.log(scene)
-  //     // console.log(jumpToIndex)
-  //     if (scene.route.params) {
-  //       jumpToIndex(scene.index)
-  //     } else if (!scene.route.params && scene.index === 0) {
-  //       jumpToIndex(0)
-  //     } else if (!scene.route.params && scene.index === 2) {
-  //       jumpToIndex(2)
-  //     } else {
-  //       Alert.alert('Alert', 'Please fill out the form on the destination page', [{text: 'Ok'}]);
-  //     }
-  //   }
-  // })
 });
 
 export const RunningLateStack = StackNavigator({
@@ -150,16 +134,9 @@ export const Root = StackNavigator({
 const defaultRoot = Tabs.router.getStateForAction;
 Tabs.router.getStateForAction = (action, state) => {
   
-  console.log(action, state)
-  // if(state && state.isTransitioning === false) {
     if (action.routeName === "CommuteOptions2"){
       if (state && !((state.routes && state.routes[1].params) || (action.params))) {
-        console.log("routes", Boolean(state.routes[1].params))
-        // if () {
-          console.log(state, action)
-    // Alert.alert('Alert', 'Please fill out the form on the destination page', [{text: 'Ok'}]);
           return null;
-        // }
       }
     }
   
