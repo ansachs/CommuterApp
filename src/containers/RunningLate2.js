@@ -47,7 +47,7 @@ export default class RunningLate2 extends React.Component {
   }
 
   sendMessage(numbers) {
-    numbers = numbers.slice(0, numbers.length-2)
+    numbers = numbers.slice(0, numbers.length-1)
     Linking.openURL(`sms://open?addresses=${numbers}&body=${this.state.message}`)
   }
 
