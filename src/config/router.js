@@ -139,6 +139,6 @@ Tabs.router.getStateForAction = (action, state) => {
           return null;
       }
     }
-  
+
     return defaultRoot(action, state);
 };

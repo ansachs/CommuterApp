@@ -13,7 +13,8 @@ export default class RunningLate2 extends React.Component {
       contacts: [],
       favoriteContacts: {},
       startError: '',
-      clientID: ""
+      clientID: '',
+      message: 'I am running late!'
     }
   }
 
@@ -47,7 +48,7 @@ export default class RunningLate2 extends React.Component {
 
   sendMessage(numbers) {
     numbers = numbers.slice(0, numbers.length-2)
-    Linking.openURL(`sms://open?addresses=${numbers}&body=running late!`)
+    Linking.openURL(`sms://open?addresses=${numbers}&body=${this.state.message}`)
   }
 
 
@@ -76,6 +77,7 @@ export default class RunningLate2 extends React.Component {
   }
 
   render() {
+
     let number = ""
     let names = Object.values(this.state.sendTo).map((contact) => {
       number += contact.phoneNumbers[0].digits + ","
@@ -122,7 +124,8 @@ export default class RunningLate2 extends React.Component {
 
         <Text style={styles.messageTitle}>Message:</Text>
         <Input
-          value='I am running late!'
+          value={this.state.message}
+          onChangeText={(message) => this.setState({message})}
           inputContainerStyle={{borderBottomColor:'#fff'}}
           containerStyle={styles.message}
           inputStyle={{height:120}}
