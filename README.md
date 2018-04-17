@@ -10,5 +10,5 @@ To run:
 2) run `exp ios` in top directory, different terminal window
 
 notes:
-app functions on ios in simulator and on device; however, android does not work well do issues with the Expo API and obtaining device contacts. 
+app functions on ios in simulator and on device; however, android does not work well do to issues with the Expo API and obtaining device contacts. 
 
