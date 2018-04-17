@@ -1,11 +1,10 @@
 import React from 'react';
+
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
+
 import GoogleMapApi from '../apis/GoogleMapApi.js'
 import CommuteOptions from './CommuteOptions.js'
-import SendSMS from 'react-native-sms'
-import Communications from 'react-native-communications';
-
 
 export default class DestinationForm extends React.Component {
   constructor() {
@@ -21,9 +20,9 @@ export default class DestinationForm extends React.Component {
 
   componentDidMount = () => {
     this.getLocation();
-
   }
- getLocation = async () => {
+
+  getLocation = async () => {
     navigator.geolocation.getCurrentPosition(
         (position) => {
           fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyD2_6K7CF1C1ooSwgDxxDq2WBx8bAIihIU`)
@@ -33,11 +32,12 @@ export default class DestinationForm extends React.Component {
                 startDestination: json.results[0].formatted_address
               })
             })
+            .catch((err) => {console.log(err)})
         },
     (err)=> {console.log(err)})
   }
 
-  onPressSubmit(e) {
+  onPressSubmit = () => {
 
     if (this.state.startDestination.length < 1) {
       this.setState({startError: "must contain a value"});
@@ -76,9 +76,8 @@ export default class DestinationForm extends React.Component {
     })
   }
 
-
   render() {
-    loading = "loading..."
+
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Text>Start Destination:</Text>
@@ -99,12 +98,11 @@ export default class DestinationForm extends React.Component {
           errorMessage={this.state.endError}
         />
         <Button
-          onPress={(e) => {this.onPressSubmit(e)}}
+          onPress={this.onPressSubmit}
           title="SUBMIT"
           color="#FFF"
           buttonStyle={{marginTop:20}}
         />
-
       </ScrollView>
     )
   }

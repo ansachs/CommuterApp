@@ -4,21 +4,24 @@ import MapView from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import getDirections from 'react-native-google-maps-directions'
 
-export default class Map extends React.Component {
+export default travelPageMap = (props) => {
+
+let { method, startDestination, endDestination, startDestinationLat, startDestinationLng, endDestinationLat, endDestinationLng } = props.params;
+
   handleGetGoogleMapDirections = () => {
     const data = {
       source: {
-        latitude: this.props.startLat,
-        longitude: this.props.startLng
+        latitude: startDestinationLat,
+        longitude: startDestinationLng
       },
       destination: {
-        latitude: this.props.endLat,
-        longitude: this.props.endLng
+        latitude: endDestinationLat,
+        longitude: endDestinationLng
       },
       params: [
         {
           key: 'travelmode',
-          value: this.props.mode
+          value: method
         },
         {
           key: 'dir_action',
@@ -30,26 +33,25 @@ export default class Map extends React.Component {
     getDirections(data)
   };
 
-  render() {
     return (
       <View style={styles.container}>
 
         <View style={styles.destinationContainer}>
           <View style={{flex:1, borderRightWidth:1, borderColor:'#ccc', paddingLeft:20}}>
             <Text style={styles.destinationText}>Start Destination:</Text>
-            <Text style={styles.destinationText} numberOfLines={1}>{this.props.startDestination}</Text>
+            <Text style={styles.destinationText} numberOfLines={1}>{startDestination}</Text>
           </View>
           <View style={styles.destinationCol}>
             <Text style={styles.destinationText}>End Destination:</Text>
-            <Text style={styles.destinationText} numberOfLines={1}>{this.props.endDestination}</Text>
+            <Text style={styles.destinationText} numberOfLines={1}>{endDestination}</Text>
           </View>
         </View>
 
         <View style={styles.mapContainer}>
           <MapView
             initialRegion={{
-              latitude: this.props.startLat,
-              longitude: this.props.startLng,
+              latitude: startDestinationLat,
+              longitude: startDestinationLng,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
@@ -58,23 +60,23 @@ export default class Map extends React.Component {
 
             <MapViewDirections
               origin={{
-                latitude: this.props.startLat,
-                longitude: this.props.startLng
+                latitude: startDestinationLat,
+                longitude: startDestinationLng
               }}
               destination={{
-                latitude: this.props.endLat,
-                longitude: this.props.endLng
+                latitude: endDestinationLat,
+                longitude: endDestinationLng
               }}
               apikey={'AIzaSyD2_6K7CF1C1ooSwgDxxDq2WBx8bAIihIU'}
               strokeWidth={3}
               strokeColor='red'
-              mode={this.props.mode}
+              mode={method}
             />
 
             <MapView.Marker
               coordinate={{
-                latitude: this.props.startLat,
-                longitude: this.props.startLng
+                latitude: startDestinationLat,
+                longitude: startDestinationLng
               }}
             >
               <MapView.Callout>
@@ -84,21 +86,19 @@ export default class Map extends React.Component {
 
             <MapView.Marker
               coordinate={{
-                latitude: this.props.endLat,
-                longitude: this.props.endLng
+                latitude: endDestinationLat,
+                longitude: endDestinationLng
               }}
               title='End Destination'
             >
-              <MapView.Callout onPress={this.handleGetGoogleMapDirections.bind(this)}>
+              <MapView.Callout onPress={handleGetGoogleMapDirections.bind(this)}>
                 <Text>Press to Get Direction</Text>
               </MapView.Callout>
             </MapView.Marker>
           </MapView>
         </View>
 
-      </View>
-    )
-  }
+      </View>)
 }
 
 const styles = StyleSheet.create({

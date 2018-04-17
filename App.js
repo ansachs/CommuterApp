@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { YellowBox, View, Text, StyleSheet } from 'react-native';
 import { Root } from './src/config/router.js';
 import { Header, Icon } from 'react-native-elements';
+
 import LoginButton from './src/components/authentication/loginButton'
 import UsersApi from './src/apis/UsersApi.js'
-import GetContacts from './src/components/contacts/getContacts'
+import GetContacts from './src/components/contactModal/getContacts'
 
 YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
@@ -41,10 +43,10 @@ export default class App extends React.Component {
   }
 
   componentDidMount = () => {
-    this.getContacts()
+    this.formatContacts()
   }
 
-  getContacts = async () => {
+  formatContacts = async () => {
     const sections =[];
 
     for (i = 0; i < 26; i++) {
@@ -68,11 +70,12 @@ export default class App extends React.Component {
         this.setState({sections: sections})
         }
     }).catch((err) => {console.log(err)})
-
   }
 
+
+
   checkClientWithServer() {
-    UsersApi.getGoogleId(this.state.userName, this.state.clientID)
+    UsersApi.checkGoogleIDWithServer(this.state.userName, this.state.clientID)
   }
 
 
@@ -80,6 +83,7 @@ export default class App extends React.Component {
     if (this.state.clientID.length > 0) {
       this.checkClientWithServer()
     }
+
     let userOrWelcome = this.state.clientID ? this.state.userName : "welcome"
 
     return (

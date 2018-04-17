@@ -4,13 +4,13 @@ import { TabNavigator, StackNavigator, NavigationActions } from 'react-navigatio
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DestinationForm from '../containers/DestinationForm.js';
 import CommuteOptions from '../containers/CommuteOptions.js';
-import walkPage from '../containers/walkPage.js';
-import bikePage from '../containers/bikePage.js';
-import transitPage from '../containers/transitPage.js';
-import lyftPage from '../containers/lyftPage.js';
-import drivePage from '../containers/drivePage.js';
-import UberPage from '../containers/UberPage.js';
-import RunningLate2 from '../containers/RunningLate2.js';
+// import walkPage from '../containers/walkPage.js';
+// import bikePage from '../containers/bikePage.js';
+// import transitPage from '../containers/transitPage.js';
+// import lyftPage from '../containers/lyftPage.js';
+import TravelPage from '../containers/TravelPage.js';
+// import UberPage from '../containers/UberPage.js';
+import RunningLate from '../containers/RunningLate.js';
 
 export const DestinationStack = StackNavigator({
   DestinationForm: {
@@ -29,53 +29,13 @@ export const DestinationStack = StackNavigator({
     }
   },
 
-  walkPage: {
-    screen: walkPage,
+  TravelPage: {
+    screen: TravelPage,
     navigationOptions: {
-      title: 'walkPage',
+      title: 'Commute Options',
       header: null
     }
-  },
-
-  bikePage: {
-    screen: bikePage,
-    navigationOptions: {
-      title: 'bikePage',
-      header: null
-    }
-  },
-
-  transitPage: {
-    screen: transitPage,
-    navigationOptions: {
-      title: 'transitPage',
-      header: null
-    }
-  },
-
-  lyftPage: {
-    screen: lyftPage,
-    navigationOptions: {
-      title: 'lyftPage',
-      header: null
-    }
-  },
-
-  drivePage: {
-    screen: drivePage,
-    navigationOptions: {
-      title: 'drivePage',
-      header: null
-    }
-  },
-
-  uberPage: {
-    screen: UberPage,
-    navigationOptions: {
-      title: 'uberPage',
-      header: null
-    }
-  },
+  }
 });
 
 export const Tabs = TabNavigator({
@@ -96,8 +56,8 @@ export const Tabs = TabNavigator({
     }
   },
 
-  RunningLate2: {
-    screen: RunningLate2,
+  RunningLate: {
+    screen: RunningLate,
     navigationOptions: {
       tabBarLabel: 'Running Late',
       tabBarIcon: ({ tintColor }) => <Icon name="run-fast" size={35} color={tintColor} />
@@ -110,7 +70,7 @@ export const Tabs = TabNavigator({
 
 export const RunningLateStack = StackNavigator({
   RunningLate: {
-    screen: RunningLate2,
+    screen: RunningLate,
     navigationOptions: {
       title: 'Running late?',
       header: null

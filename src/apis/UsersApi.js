@@ -1,4 +1,4 @@
-const getGoogleId = (userName, clientID) => {
+const checkGoogleIDWithServer = (userName, clientID) => {
    fetch('https://quiet-retreat-95283.herokuapp.com/users/:id.json', {
     headers: {
       'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ const deleteContact = (clientID, relativeID) => {
 }
 
 export default {
-  getGoogleId: getGoogleId,
+  checkGoogleIDWithServer: checkGoogleIDWithServer,
   getFavoriteContacts: getFavoriteContacts,
   saveFavoriteContacts: saveFavoriteContacts,
   deleteContact: deleteContact
